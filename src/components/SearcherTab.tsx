@@ -30,7 +30,7 @@ const getCardImageSrc = (englishName: string) => {
   if (englishName === "The Hierophant") fileName = "The HiePophant";
   else if (englishName === "The Lovers") fileName = "The Lover";
   else if (englishName === "Judgment") fileName = "Judgement";
-  return `/Card/${fileName}.jpg`;
+  return `${import.meta.env.BASE_URL}Card/${fileName}.jpg`;
 };
 
 export const SearcherTab: React.FC = () => {
