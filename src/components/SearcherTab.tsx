@@ -213,8 +213,9 @@ export const SearcherTab: React.FC = () => {
             className="w-full max-w-sm flex flex-col items-center flex-1 py-2 space-y-4 tracking-tight break-keep"
           >
             {/* Card Name Header */}
-            <h2 className="text-center text-white mt-2">
-              {selectedCard.name}
+            <h2 className="text-center text-white mt-2 flex flex-col items-center gap-1">
+              <span className="text-lg">{selectedCard.name}</span>
+              <span className="text-[14px] font-normal text-gray-400 font-sans tracking-normal">{selectedCard.englishName}</span>
             </h2>
 
             {/* Card Image Box (Sharp rectangle) */}
