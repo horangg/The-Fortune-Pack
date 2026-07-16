@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface RuleSlide {
@@ -148,15 +148,27 @@ export const RulebookTab: React.FC = () => {
     setCurrentIndex((prev) => (prev + 1) % slides.length);
   };
 
-  const handleInteraction = () => {
+  useEffect(() => {
     const scrollContainer = document.getElementById('rulebook-scroll');
     if (scrollContainer) {
-      // Check if scrollable and not at bottom
-      const isScrolledToBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 2;
+      scrollContainer.scrollTop = 0;
+    }
+  }, [currentIndex]);
+
+  const touchStartY = useRef(0);
+  const isSwiping = useRef(false);
+
+  const handleInteraction = () => {
+    if (isSwiping.current) return;
+    
+    const scrollContainer = document.getElementById('rulebook-scroll');
+    if (scrollContainer) {
+      const isScrollable = scrollContainer.scrollHeight > scrollContainer.clientHeight;
+      const isScrolledToBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 5;
       
-      if (!isScrolledToBottom) {
+      if (isScrollable && !isScrolledToBottom) {
         // Scroll down instead of moving to next slide
-        scrollContainer.scrollBy({ top: 60, behavior: 'smooth' });
+        scrollContainer.scrollBy({ top: 80, behavior: 'smooth' });
         return;
       }
     }
@@ -215,6 +227,15 @@ export const RulebookTab: React.FC = () => {
         {/* Bottom Double-Border Dialogue Frame */}
         <div 
           onClick={handleInteraction}
+          onTouchStart={(e) => {
+            touchStartY.current = e.touches[0].clientY;
+            isSwiping.current = false;
+          }}
+          onTouchMove={(e) => {
+            if (Math.abs(e.touches[0].clientY - touchStartY.current) > 10) {
+              isSwiping.current = true;
+            }
+          }}
           className="w-full relative cursor-pointer border border-white p-0.5 bg-black transition-all hover:border-neutral-300 active:scale-[0.99]"
         >
           <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
@@ -223,10 +244,10 @@ export const RulebookTab: React.FC = () => {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.15 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                   className="w-full flex flex-col min-h-full"
                 >
                   {slides[currentIndex].content}
