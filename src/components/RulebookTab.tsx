@@ -106,7 +106,7 @@ export const RulebookTab: React.FC = () => {
       title: '규칙 및 제약',
       boxText: '규칙 및 제약 사항',
       content: (
-        <div id="rulebook-scroll" className="space-y-2 text-left text-[12px] leading-[1.6] max-h-[140px] overflow-y-auto pr-1">
+        <div className="space-y-2 text-left text-[12px] leading-[1.6]">
           <p className="text-white">
             • 뽑힌 카드는 <span className="text-[#FF9900]">정방향으로만</span> 해석한다.
           </p>
@@ -210,14 +210,14 @@ export const RulebookTab: React.FC = () => {
         onClick={handleInteraction}
         className="w-full cursor-pointer border border-white p-0.5 bg-black transition-all hover:border-neutral-300 active:scale-[0.99]"
       >
-        <div className="border border-white p-4 min-h-[150px] flex flex-col justify-between relative bg-black">
+        <div className="border border-white p-4 h-[160px] flex flex-col justify-between relative bg-black">
           
           {/* Slide Title Indicator */}
-          <div className="absolute top-2 left-3 text-[10px] text-white uppercase">
+          <div className="absolute top-2 left-3 text-[10px] text-white uppercase z-10 bg-black pr-2">
             {slides[currentIndex].title}
           </div>
 
-          <div className="flex-1 flex flex-col justify-center py-4">
+          <div id="rulebook-scroll" className="flex-1 flex flex-col pt-2 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -225,7 +225,7 @@ export const RulebookTab: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.15 }}
-                className="w-full"
+                className="w-full flex flex-col justify-center min-h-full"
               >
                 {slides[currentIndex].content}
               </motion.div>
@@ -233,7 +233,7 @@ export const RulebookTab: React.FC = () => {
           </div>
 
           {/* Blinking ▽ pointer at the bottom center */}
-          <div className="text-center text-[10px] text-white animate-bounce mt-1">
+          <div className="text-center text-[10px] text-white animate-bounce mt-1 shrink-0 bg-black pt-1">
             ▽
           </div>
         </div>
