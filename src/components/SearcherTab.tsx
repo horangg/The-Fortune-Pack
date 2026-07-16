@@ -19,7 +19,7 @@ import { TarotCard } from '../types';
 // A custom image replacing the retro pixelated eye SVG
 const RetroEye: React.FC = () => (
   <img 
-    src="/custom-icon.png" 
+    src={`${import.meta.env.BASE_URL}custom-icon.png`} 
     alt="Custom Icon" 
     className="mx-auto opacity-90 w-[40px] h-auto object-contain"
   />

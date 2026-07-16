@@ -116,7 +116,7 @@ export const SpreadGuideTab: React.FC = () => {
       {/* TV / Table Outline mimicking Image 1 */}
       <div className="relative w-full max-w-[340px] mx-auto flex items-center justify-center py-4">
         {/* The Table Image */}
-        <img src="/Table.png" alt="Table" className="w-full h-auto object-contain pointer-events-none" />
+        <img src={`${import.meta.env.BASE_URL}Table.png`} alt="Table" className="w-full h-auto object-contain pointer-events-none" />
         
         {/* Overlay Cards Container */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 pb-8">
