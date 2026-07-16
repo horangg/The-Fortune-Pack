@@ -227,7 +227,7 @@ export const RulebookTab: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="w-full flex flex-col justify-center min-h-full"
+                  className="w-full flex flex-col min-h-full"
                 >
                   {slides[currentIndex].content}
                 </motion.div>

@@ -23,10 +23,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#050505] flex items-center justify-center p-0 sm:p-4 md:p-6 antialiased text-[13px] selection:bg-white selection:text-white">
+    <div className="min-h-[100dvh] w-full bg-[#050505] flex items-center justify-center p-0 sm:p-4 md:p-6 antialiased text-[13px] selection:bg-white selection:text-white">
       
       {/* Mobile viewport container matching standard screen aspect ratios */}
-      <div id="retro-container" className="w-full max-w-[420px] h-screen sm:h-[840px] bg-black sm:border sm:border-white/20 text-white flex flex-col relative overflow-hidden shadow-2xl">
+      <div id="retro-container" className="w-full max-w-[420px] h-[100dvh] sm:h-[840px] bg-black sm:border sm:border-white/20 text-white flex flex-col relative overflow-hidden shadow-2xl">
         
         {/* Main interactive viewport */}
         <main className="flex-1 relative overflow-y-auto pb-28 custom-scrollbar bg-black">
