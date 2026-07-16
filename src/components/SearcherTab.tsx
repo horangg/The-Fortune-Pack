@@ -13,6 +13,7 @@ import {
   Droplet, 
   Coins 
 } from 'lucide-react';
+import { Typewriter } from './Typewriter';
 import { findCardByCode } from '../data/tarotData';
 import { TarotCard } from '../types';
 
@@ -189,10 +190,10 @@ export const SearcherTab: React.FC = () => {
             <div className="w-full px-2">
               <div className="border border-white p-1 bg-black">
                 <div className="border border-white py-6 px-4 text-center space-y-4">
-                  <p className="text-white leading-relaxed">
+                  <p className="text-white leading-relaxed min-h-[44px]">
                     {searchError 
-                      ? "기록되지 않은 신비한 코드입니다. 다시 입력해 주세요."
-                      : <>네모칸을 클릭하여<br/>세 자리 숫자코드를 입력하세요.</>
+                      ? <Typewriter text="기록되지 않은 신비한 코드입니다. 다시 입력해 주세요." speed={40} />
+                      : <Typewriter text="네모칸을 클릭하여\n세 자리 숫자코드를 입력하세요." speed={40} />
                     }
                   </p>
                   <span className="text-white block pulsing-arrow">

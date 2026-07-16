@@ -1,0 +1,32 @@
+import React, { useState, useEffect } from 'react';
+
+interface TypewriterProps {
+  text: string;
+  speed?: number;
+  className?: string;
+}
+
+export const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 50, className = '' }) => {
+  const [displayedText, setDisplayedText] = useState('');
+
+  useEffect(() => {
+    let index = 0;
+    setDisplayedText('');
+    
+    const timer = setInterval(() => {
+      setDisplayedText(text.substring(0, index + 1));
+      index++;
+      if (index === text.length) {
+        clearInterval(timer);
+      }
+    }, speed);
+
+    return () => clearInterval(timer);
+  }, [text, speed]);
+
+  return (
+    <span className={`whitespace-pre-line ${className}`}>
+      {displayedText}
+    </span>
+  );
+};

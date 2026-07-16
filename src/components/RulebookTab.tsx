@@ -236,7 +236,7 @@ export const RulebookTab: React.FC = () => {
               isSwiping.current = true;
             }
           }}
-          className="w-full relative cursor-pointer border border-white p-0.5 bg-black transition-all hover:border-neutral-300 active:scale-[0.99]"
+          className="w-full relative cursor-pointer border border-white p-0.5 bg-black hover:border-neutral-300"
         >
           <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
             

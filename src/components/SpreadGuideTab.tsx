@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { RotateCcw } from 'lucide-react';
+import { Typewriter } from './Typewriter';
 
 interface PositionDef {
   id: number;
@@ -113,8 +114,8 @@ export const SpreadGuideTab: React.FC = () => {
       transition={{ duration: 0.2 }}
       className="flex-1 flex flex-col justify-center items-center w-full min-h-[500px]"
     >
-      <div className="text-white text-[14px] mb-6 tracking-wide">
-        어떤 것을 점쳐보시겠습니까?
+      <div className="text-white text-[14px] mb-6 tracking-wide min-h-[21px]">
+        <Typewriter text="어떤 것을 점쳐보시겠습니까?" speed={40} />
       </div>
       {/* TV / Table Outline mimicking Image 1 */}
       <div className="relative w-full max-w-[340px] mx-auto flex items-center justify-center py-4">
