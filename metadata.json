@@ -1,0 +1,6 @@
+{
+  "name": "타로술사 디지털 가이드",
+  "description": "티슈오피스의 타로게임 가이드: 3분 핵심 요약 인터랙티브 룰북, 3자리 고유 카드 코드 검색기, 상황별 카드 스프레드 배치도 가이드",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

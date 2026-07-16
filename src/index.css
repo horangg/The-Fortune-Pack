@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans KR", sans-serif;
+  --font-mono: "Noto Sans KR", sans-serif;
+  --font-serif: "Noto Sans KR", sans-serif;
+
+  --text-xs: 13.33px;
+  --text-sm: 13.33px;
+  --text-base: 13.33px;
+  --text-lg: 13.33px;
+  --text-xl: 13.33px;
+  --text-2xl: 13.33px;
+  --text-3xl: 13.33px;
+  --text-4xl: 13.33px;
+}
+
+/* Global resets for Noto Sans KR 10pt styling */
+*, ::before, ::after {
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-size: 13.33px !important; /* 10pt */
+  font-weight: 400 !important; /* Regular */
+}
+
+html, body {
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-size: 13.33px !important; /* 10pt */
+  font-weight: 400 !important; /* Regular */
+  background-color: #000000;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Retro game double border */
+.retro-double-border {
+  border: 4px double #ffffff;
+}
+
+/* Pulsing triangle at the bottom of the conversation box */
+@keyframes pulse-triangle {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(4px); opacity: 0.3; }
+}
+
+.pulsing-arrow {
+  animation: pulse-triangle 0.8s infinite;
+}
+
+/* Custom scrollbar for retro feels */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border: 1px solid #000000;
+}
