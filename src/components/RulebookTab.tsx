@@ -48,7 +48,7 @@ export const RulebookTab: React.FC = () => {
     },
     {
       id: 'step1',
-      title: '진행 방식 (1)',
+      title: '진행 방식',
       boxText: '타로카드 펼치기',
       content: (
         <div className="space-y-2 text-left px-2">
@@ -69,7 +69,7 @@ export const RulebookTab: React.FC = () => {
     },
     {
       id: 'step2',
-      title: '진행 방식 (2)',
+      title: '진행 방식',
       boxText: '타로 카드 해석',
       content: (
         <div className="space-y-3 text-left px-2">
@@ -86,7 +86,7 @@ export const RulebookTab: React.FC = () => {
     },
     {
       id: 'step3',
-      title: '진행 방식 (3)',
+      title: '진행 방식',
       boxText: '복채 전달 & 역할 교체',
       content: (
         <div className="space-y-3 text-left px-2">
@@ -241,18 +241,9 @@ export const RulebookTab: React.FC = () => {
           <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
             
             <div id="rulebook-scroll" className="flex-1 flex flex-col overflow-y-auto pr-2 pb-14 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full flex flex-col min-h-full"
-                >
-                  {slides[currentIndex].content}
-                </motion.div>
-              </AnimatePresence>
+              <div className="w-full flex flex-col min-h-full">
+                {slides[currentIndex].content}
+              </div>
             </div>
 
             {/* Gradient and Arrow at the bottom */}
