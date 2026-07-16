@@ -192,7 +192,7 @@ export const SearcherTab: React.FC = () => {
                   <p className="text-white leading-relaxed">
                     {searchError 
                       ? "기록되지 않은 신비한 코드입니다. 다시 입력해 주세요."
-                      : "세 자리 숫자코드를 입력하세요."
+                      : "네모칸을 클릭하여 세 자리 숫자코드를 입력하세요."
                     }
                   </p>
                   <span className="text-white block pulsing-arrow">

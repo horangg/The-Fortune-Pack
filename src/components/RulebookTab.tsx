@@ -205,36 +205,42 @@ export const RulebookTab: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom Double-Border Dialogue Frame (Matches Image) */}
-      <div 
-        onClick={handleInteraction}
-        className="w-full cursor-pointer border border-white p-0.5 bg-black transition-all hover:border-neutral-300 active:scale-[0.99]"
-      >
-        <div className="border border-white p-4 h-[160px] flex flex-col justify-between relative bg-black">
-          
-          {/* Slide Title Indicator */}
-          <div className="absolute top-2 left-3 text-[10px] text-white uppercase z-10 bg-black pr-2">
-            {slides[currentIndex].title}
-          </div>
+      {/* Bottom Area: Title + Dialogue Frame */}
+      <div className="w-full flex flex-col items-start gap-1">
+        {/* Slide Title Indicator (Outside box, top left) */}
+        <div className="text-[11px] text-white/90 uppercase pl-1 tracking-wider">
+          {slides[currentIndex].title}
+        </div>
 
-          <div id="rulebook-scroll" className="flex-1 flex flex-col pt-2 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.15 }}
-                className="w-full flex flex-col justify-center min-h-full"
-              >
-                {slides[currentIndex].content}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        {/* Bottom Double-Border Dialogue Frame */}
+        <div 
+          onClick={handleInteraction}
+          className="w-full relative cursor-pointer border border-white p-0.5 bg-black transition-all hover:border-neutral-300 active:scale-[0.99]"
+        >
+          <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
+            
+            <div id="rulebook-scroll" className="flex-1 flex flex-col overflow-y-auto pr-2 pb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="w-full flex flex-col justify-center min-h-full"
+                >
+                  {slides[currentIndex].content}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-          {/* Blinking ▽ pointer at the bottom center */}
-          <div className="text-center text-[10px] text-white animate-bounce mt-1 shrink-0 bg-black pt-1">
-            ▽
+            {/* Gradient and Arrow at the bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black via-black/90 to-transparent flex items-end justify-center pb-2 pointer-events-none">
+              <div className="text-[10px] text-white animate-bounce">
+                ▽
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
