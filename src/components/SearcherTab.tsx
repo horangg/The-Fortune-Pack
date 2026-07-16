@@ -193,7 +193,7 @@ export const SearcherTab: React.FC = () => {
                   <p className="text-white leading-relaxed min-h-[44px]">
                     {searchError 
                       ? <Typewriter text="기록되지 않은 신비한 코드입니다. 다시 입력해 주세요." speed={40} />
-                      : <Typewriter text="네모칸을 클릭하여\n세 자리 숫자코드를 입력하세요." speed={40} />
+                      : <Typewriter text={"네모칸을 클릭하여\n세 자리 숫자코드를 입력하세요."} speed={40} />
                     }
                   </p>
                   <span className="text-white block pulsing-arrow">
