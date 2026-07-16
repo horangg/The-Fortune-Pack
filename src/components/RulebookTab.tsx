@@ -219,7 +219,7 @@ export const RulebookTab: React.FC = () => {
         >
           <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
             
-            <div id="rulebook-scroll" className="flex-1 flex flex-col overflow-y-auto pr-2 pb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div id="rulebook-scroll" className="flex-1 flex flex-col overflow-y-auto pr-2 pb-14 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
