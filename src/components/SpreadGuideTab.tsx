@@ -1,17 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { RotateCcw, Sparkles } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { Typewriter } from './Typewriter';
-import { findCardByCode } from '../data/tarotData';
-import { TarotCard } from '../types';
-
-const getCardImageSrc = (englishName: string) => {
-  let fileName = englishName;
-  if (englishName === "The Hierophant") fileName = "The HiePophant";
-  else if (englishName === "The Lovers") fileName = "The Lover";
-  else if (englishName === "Judgment") fileName = "Judgement";
-  return `${import.meta.env.BASE_URL}Card/${fileName}.jpg`;
-};
 
 interface PositionDef {
   id: number;
@@ -141,40 +131,13 @@ const SPREADS: SpreadDef[] = [
   }
 ];
 
-export interface RegisteredCard {
-  card: TarotCard;
-  isReversed: boolean;
-}
-
 export const SpreadGuideTab: React.FC = () => {
   const [selectedSpread, setSelectedSpread] = useState<SpreadDef | null>(null);
   const [activePositionId, setActivePositionId] = useState<number>(1);
-  const [registeredCards, setRegisteredCards] = useState<Record<number, RegisteredCard>>({});
-  
-  // Registration Modal State
-  const [registrationPosId, setRegistrationPosId] = useState<number | null>(null);
-  const [codeInput, setCodeInput] = useState<string>('');
-  const [isReversedInput, setIsReversedInput] = useState<boolean>(false);
-  const [registrationError, setRegistrationError] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  // AI Reading State
-  const [isAiLoading, setIsAiLoading] = useState(false);
-  const [aiReading, setAiReading] = useState<string | null>(null);
-  const [question, setQuestion] = useState('');
-
-  useEffect(() => {
-    if (registrationPosId !== null) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
-  }, [registrationPosId]);
 
   const handleSelectSpread = (spread: SpreadDef) => {
     setSelectedSpread(spread);
     setActivePositionId(1);
-    setRegisteredCards({});
-    setAiReading(null);
-    setQuestion('');
   };
 
   const handleBack = () => {
@@ -183,88 +146,6 @@ export const SpreadGuideTab: React.FC = () => {
 
   const handleSlotClick = (pos: PositionDef) => {
     setActivePositionId(pos.id);
-  };
-
-  const handleSlotDoubleClick = (posId: number) => {
-    setRegistrationPosId(posId);
-    setCodeInput('');
-    setIsReversedInput(false);
-    setRegistrationError(false);
-  };
-
-  const handleRegisterCard = (e?: React.FormEvent) => {
-    e?.preventDefault();
-    if (codeInput.length !== 3) {
-      setRegistrationError(true);
-      return;
-    }
-    const card = findCardByCode(codeInput);
-    if (card && registrationPosId !== null) {
-      setRegisteredCards(prev => ({
-        ...prev,
-        [registrationPosId]: { card, isReversed: isReversedInput }
-      }));
-      setRegistrationPosId(null);
-    } else {
-      setRegistrationError(true);
-    }
-  };
-
-  const handleClearCard = () => {
-    if (registrationPosId !== null) {
-      setRegisteredCards(prev => {
-        const next = { ...prev };
-        delete next[registrationPosId];
-        return next;
-      });
-      setRegistrationPosId(null);
-    }
-  };
-
-  const handleAiReading = async () => {
-    if (Object.keys(registeredCards).length === 0) return;
-    setIsAiLoading(true);
-    try {
-      let prompt = `당신은 지혜롭고 신비로운 타로 마스터입니다. 사용자의 질문과 뽑힌 카드들을 바탕으로 깊이 있고 영감을 주는 타로 리딩을 제공해주세요.\n\n`;
-      prompt += `[사용자 질문]\n${question || '자유 리딩 (질문 없음)'}\n\n`;
-      prompt += `[스프레드 종류]\n${selectedSpread?.name}\n\n`;
-      prompt += `[뽑힌 카드 목록]\n`;
-      
-      Object.entries(registeredCards).forEach(([posId, reg]) => {
-        const pos = selectedSpread?.positions.find(p => p.id === Number(posId));
-        prompt += `- 위치 [${pos?.name}]: ${reg.card.name} (${reg.isReversed ? '역방향' : '정방향'})\n`;
-        prompt += `  * 기본 의미: ${reg.isReversed ? reg.card.reversedMeaning : reg.card.uprightMeaning}\n`;
-      });
-
-      prompt += `\n위 내용들을 종합하여, 1) 각 카드가 가지는 의미와 연관성 분석, 2) 주요 흐름 및 조언, 3) 최종 결론 및 긍정적인 메시지를 포함하여 한 편의 이야기처럼 자연스럽고 따뜻한 어조로 리딩을 완성해 주세요. 마크다운 포맷(볼드, 글머리기호 등)을 적절히 활용하여 스마트폰에서 읽기 좋게 단락을 나누어 작성해주세요.`;
-
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCjH5V-sLUuvmNFM6f87vT1ksoDftt0iXI';
-      
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{ text: prompt }]
-          }]
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('API request failed');
-      }
-
-      const data = await response.json();
-      const reading = data.candidates?.[0]?.content?.parts?.[0]?.text || "리딩을 생성할 수 없습니다.";
-      setAiReading(reading);
-    } catch (error) {
-      console.error(error);
-      alert('AI 리딩을 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-    } finally {
-      setIsAiLoading(false);
-    }
   };
 
   const renderTableSelection = () => (
@@ -323,36 +204,17 @@ export const SpreadGuideTab: React.FC = () => {
     // Shared card style
     const getCardStyle = (posId: number, widthClass: string = 'w-[63px]') => {
       const isSelected = activePositionId === posId;
-      const hasCard = !!registeredCards[posId];
-      return `${widthClass} aspect-[60/96] border-[1px] cursor-pointer transition-all flex flex-col items-center justify-center relative select-none ${
-        isSelected ? 'border-white z-10 shadow-lg shadow-white/20' : 'border-white/50'
-      } ${hasCard ? 'bg-transparent overflow-hidden' : (isSelected ? 'bg-[#111] p-1' : 'bg-black p-1')}`;
-    };
-
-    const renderSlotContent = (pos: PositionDef, textClass: string) => {
-      const registered = registeredCards[pos.id];
-      if (registered) {
-        return (
-          <img 
-            src={getCardImageSrc(registered.card.englishName)} 
-            alt={registered.card.name}
-            className={`w-full h-full object-cover pointer-events-none ${registered.isReversed ? 'rotate-180' : ''}`}
-          />
-        );
-      }
-      return <span className={textClass}>{pos.name}</span>;
+      return `${widthClass} aspect-[60/96] border-[1px] cursor-pointer transition-all flex flex-col items-center justify-center p-1 relative select-none ${
+        isSelected ? 'border-white bg-[#111] z-10' : 'border-white/50 bg-black'
+      }`;
     };
 
     if (spread.layout === '1-card') {
       const pos = spread.positions[0];
       return (
         <div className="flex justify-center mt-16">
-          <div 
-            onClick={() => handleSlotClick(pos)} 
-            onDoubleClick={() => handleSlotDoubleClick(pos.id)}
-            className={getCardStyle(pos.id)}
-          >
-            {renderSlotContent(pos, "text-white text-[12px] whitespace-pre-line text-center")}
+          <div onClick={() => handleSlotClick(pos)} className={getCardStyle(pos.id)}>
+            <span className="text-white text-[12px] whitespace-pre-line text-center">{pos.name}</span>
           </div>
         </div>
       );
@@ -362,13 +224,8 @@ export const SpreadGuideTab: React.FC = () => {
       return (
         <div className="flex justify-center gap-3 mt-16">
           {spread.positions.map((pos) => (
-            <div 
-              key={pos.id} 
-              onClick={() => handleSlotClick(pos)} 
-              onDoubleClick={() => handleSlotDoubleClick(pos.id)}
-              className={getCardStyle(pos.id)}
-            >
-              {renderSlotContent(pos, "text-white text-[12px] whitespace-pre-line text-center")}
+            <div key={pos.id} onClick={() => handleSlotClick(pos)} className={getCardStyle(pos.id)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{pos.name}</span>
             </div>
           ))}
         </div>
@@ -379,22 +236,13 @@ export const SpreadGuideTab: React.FC = () => {
       // 1 on top, 3 below
       return (
         <div className="flex flex-col items-center gap-4 mt-8">
-          <div 
-            onClick={() => handleSlotClick(spread.positions[0])} 
-            onDoubleClick={() => handleSlotDoubleClick(spread.positions[0].id)}
-            className={getCardStyle(1)}
-          >
-            {renderSlotContent(spread.positions[0], "text-white text-[12px] whitespace-pre-line text-center")}
+          <div onClick={() => handleSlotClick(spread.positions[0])} className={getCardStyle(1)}>
+            <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[0].name}</span>
           </div>
           <div className="flex justify-center gap-3">
             {spread.positions.slice(1, 4).map((pos) => (
-              <div 
-                key={pos.id} 
-                onClick={() => handleSlotClick(pos)} 
-                onDoubleClick={() => handleSlotDoubleClick(pos.id)}
-                className={getCardStyle(pos.id)}
-              >
-                {renderSlotContent(pos, "text-white text-[12px] whitespace-pre-line text-center")}
+              <div key={pos.id} onClick={() => handleSlotClick(pos)} className={getCardStyle(pos.id)}>
+                <span className="text-white text-[12px] whitespace-pre-line text-center">{pos.name}</span>
               </div>
             ))}
           </div>
@@ -408,32 +256,32 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[280px] mt-4 flex items-center justify-center max-w-[340px] mx-auto">
            {/* Center */}
            <div style={{ position: 'absolute', left: '50%', top: '20%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[0])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[0].id)} className={getCardStyle(1)}>
-                {renderSlotContent(spread.positions[0], "text-white text-[11px] whitespace-pre-line text-center")}
+             <div onClick={() => handleSlotClick(spread.positions[0])} className={getCardStyle(1)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center">{spread.positions[0].name}</span>
              </div>
            </div>
            {/* Left Mid */}
            <div style={{ position: 'absolute', left: '25%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[1])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[1].id)} className={getCardStyle(2)}>
-                {renderSlotContent(spread.positions[1], "text-white text-[11px] whitespace-pre-line text-center")}
+             <div onClick={() => handleSlotClick(spread.positions[1])} className={getCardStyle(2)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center">{spread.positions[1].name}</span>
              </div>
            </div>
            {/* Left Bottom */}
            <div style={{ position: 'absolute', left: '15%', top: '80%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[2])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[2].id)} className={getCardStyle(3)}>
-                {renderSlotContent(spread.positions[2], "text-white text-[11px] whitespace-pre-line text-center")}
+             <div onClick={() => handleSlotClick(spread.positions[2])} className={getCardStyle(3)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center">{spread.positions[2].name}</span>
              </div>
            </div>
            {/* Right Mid */}
            <div style={{ position: 'absolute', left: '75%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[3])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[3].id)} className={getCardStyle(4)}>
-                {renderSlotContent(spread.positions[3], "text-white text-[11px] whitespace-pre-line text-center")}
+             <div onClick={() => handleSlotClick(spread.positions[3])} className={getCardStyle(4)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center">{spread.positions[3].name}</span>
              </div>
            </div>
            {/* Right Bottom */}
            <div style={{ position: 'absolute', left: '85%', top: '80%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[4])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[4].id)} className={getCardStyle(5)}>
-                {renderSlotContent(spread.positions[4], "text-white text-[11px] whitespace-pre-line text-center")}
+             <div onClick={() => handleSlotClick(spread.positions[4])} className={getCardStyle(5)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center">{spread.positions[4].name}</span>
              </div>
            </div>
         </div>
@@ -444,13 +292,8 @@ export const SpreadGuideTab: React.FC = () => {
       return (
         <div className="grid grid-cols-2 gap-x-4 gap-y-4 mt-6 mx-auto w-fit pb-8">
           {spread.positions.map(pos => (
-            <div 
-              key={pos.id} 
-              onClick={() => handleSlotClick(pos)} 
-              onDoubleClick={() => handleSlotDoubleClick(pos.id)}
-              className={getCardStyle(pos.id, 'w-[55px]')}
-            >
-              {renderSlotContent(pos, "text-white text-[11px] whitespace-pre-line text-center leading-tight")}
+            <div key={pos.id} onClick={() => handleSlotClick(pos)} className={getCardStyle(pos.id, 'w-[55px]')}>
+              <span className="text-white text-[11px] whitespace-pre-line text-center leading-tight">{pos.name}</span>
             </div>
           ))}
         </div>
@@ -462,32 +305,32 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[320px] mt-4 flex items-center justify-center max-w-[340px] mx-auto">
            {/* Top: 4 */}
            <div style={{ position: 'absolute', left: '50%', top: '15%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[3])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[3].id)} className={getCardStyle(4)}>
-                {renderSlotContent(spread.positions[3], "text-white text-[11px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[3])} className={getCardStyle(4)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center leading-tight">{spread.positions[3].name}</span>
              </div>
            </div>
            {/* Left: 2 */}
            <div style={{ position: 'absolute', left: '25%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[1])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[1].id)} className={getCardStyle(2)}>
-                {renderSlotContent(spread.positions[1], "text-white text-[11px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[1])} className={getCardStyle(2)}>
+                <span className="text-white text-[11px] whitespace-pre-line text-center leading-tight">{spread.positions[1].name}</span>
              </div>
            </div>
            {/* Center: 1 */}
            <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[0])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[0].id)} className={getCardStyle(1)}>
-                {renderSlotContent(spread.positions[0], "text-white text-[10px] whitespace-pre-line text-center leading-[1.1]")}
+             <div onClick={() => handleSlotClick(spread.positions[0])} className={getCardStyle(1)}>
+                <span className="text-white text-[10px] whitespace-pre-line text-center leading-[1.1]">{spread.positions[0].name}</span>
              </div>
            </div>
            {/* Right: 3 */}
            <div style={{ position: 'absolute', left: '75%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[2])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[2].id)} className={getCardStyle(3)}>
-                {renderSlotContent(spread.positions[2], "text-white text-[10px] whitespace-pre-line text-center leading-[1.1]")}
+             <div onClick={() => handleSlotClick(spread.positions[2])} className={getCardStyle(3)}>
+                <span className="text-white text-[10px] whitespace-pre-line text-center leading-[1.1]">{spread.positions[2].name}</span>
              </div>
            </div>
            {/* Bottom: 5 */}
            <div style={{ position: 'absolute', left: '50%', top: '85%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[4])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[4].id)} className={getCardStyle(5)}>
-                {renderSlotContent(spread.positions[4], "text-white text-[10px] whitespace-pre-line text-center leading-[1.1]")}
+             <div onClick={() => handleSlotClick(spread.positions[4])} className={getCardStyle(5)}>
+                <span className="text-white text-[10px] whitespace-pre-line text-center leading-[1.1]">{spread.positions[4].name}</span>
              </div>
            </div>
         </div>
@@ -499,60 +342,60 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[360px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
            {/* Left: 4 */}
            <div style={{ position: 'absolute', left: '15%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[3])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[3].id)} className={getCardStyle(4, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[3], "text-white text-[9px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[3])} className={getCardStyle(4, 'w-[45px]')}>
+                <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{spread.positions[3].name}</span>
              </div>
            </div>
            {/* Center: 1 */}
            <div style={{ position: 'absolute', left: '40%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[0])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[0].id)} className={getCardStyle(1, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[0], "text-white text-[9px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[0])} className={getCardStyle(1, 'w-[45px]')}>
+                <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{spread.positions[0].name}</span>
              </div>
            </div>
            {/* Center Crossed: 2 */}
            <div style={{ position: 'absolute', left: '40%', top: '50%', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[1])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[1].id)} className={getCardStyle(2, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[1], "text-white text-[9px] whitespace-pre-line text-center leading-tight transform -rotate-90")}
+             <div onClick={() => handleSlotClick(spread.positions[1])} className={getCardStyle(2, 'w-[45px]')}>
+                <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight transform -rotate-90">{spread.positions[1].name}</span>
              </div>
            </div>
            {/* Bottom: 3 */}
            <div style={{ position: 'absolute', left: '40%', top: '80%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[2])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[2].id)} className={getCardStyle(3, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[2], "text-white text-[9px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[2])} className={getCardStyle(3, 'w-[45px]')}>
+                <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{spread.positions[2].name}</span>
              </div>
            </div>
            {/* Top: 5 */}
            <div style={{ position: 'absolute', left: '40%', top: '20%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[4])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[4].id)} className={getCardStyle(5, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[4], "text-white text-[9px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[4])} className={getCardStyle(5, 'w-[45px]')}>
+                <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{spread.positions[4].name}</span>
              </div>
            </div>
            {/* Right: 6 */}
            <div style={{ position: 'absolute', left: '65%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[5])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[5].id)} className={getCardStyle(6, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[5], "text-white text-[9px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[5])} className={getCardStyle(6, 'w-[45px]')}>
+                <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{spread.positions[5].name}</span>
              </div>
            </div>
            
            {/* Right Column */}
            <div style={{ position: 'absolute', left: '90%', top: '85%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[6])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[6].id)} className={getCardStyle(7, 'w-[42px]')}>
-                {renderSlotContent(spread.positions[6], "text-white text-[8px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[6])} className={getCardStyle(7, 'w-[42px]')}>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[6].name}</span>
              </div>
            </div>
            <div style={{ position: 'absolute', left: '90%', top: '61%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[7])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[7].id)} className={getCardStyle(8, 'w-[42px]')}>
-                {renderSlotContent(spread.positions[7], "text-white text-[8px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[7])} className={getCardStyle(8, 'w-[42px]')}>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[7].name}</span>
              </div>
            </div>
            <div style={{ position: 'absolute', left: '90%', top: '37%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[8])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[8].id)} className={getCardStyle(9, 'w-[42px]')}>
-                {renderSlotContent(spread.positions[8], "text-white text-[8px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[8])} className={getCardStyle(9, 'w-[42px]')}>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[8].name}</span>
              </div>
            </div>
            <div style={{ position: 'absolute', left: '90%', top: '13%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[9])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[9].id)} className={getCardStyle(10, 'w-[42px]')}>
-                {renderSlotContent(spread.positions[9], "text-white text-[8px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[9])} className={getCardStyle(10, 'w-[42px]')}>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[9].name}</span>
              </div>
            </div>
         </div>
@@ -575,8 +418,8 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[320px] mt-4 flex items-center justify-center max-w-[340px] mx-auto">
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[0])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[0].id)} className={getCardStyle(1, 'w-[48px]')}>
-                {renderSlotContent(spread.positions[0], "text-white text-[8px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[0])} className={getCardStyle(1, 'w-[48px]')}>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[0].name}</span>
              </div>
           </div>
           {/* Circular items */}
@@ -587,8 +430,8 @@ export const SpreadGuideTab: React.FC = () => {
             const top = `calc(50% + ${Math.sin(angleRad) * radius}px)`;
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
-                 <div onClick={() => handleSlotClick(pos)} onDoubleClick={() => handleSlotDoubleClick(pos.id)} className={getCardStyle(pos.id, 'w-[45px]')}>
-                    {renderSlotContent(pos, "text-white text-[9px] whitespace-pre-line text-center leading-tight")}
+                 <div onClick={() => handleSlotClick(pos)} className={getCardStyle(pos.id, 'w-[45px]')}>
+                    <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{pos.name}</span>
                  </div>
               </div>
             );
@@ -603,8 +446,8 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[380px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div onClick={() => handleSlotClick(spread.positions[0])} onDoubleClick={() => handleSlotDoubleClick(spread.positions[0].id)} className={getCardStyle(1, 'w-[45px]')}>
-                {renderSlotContent(spread.positions[0], "text-white text-[8px] whitespace-pre-line text-center leading-tight")}
+             <div onClick={() => handleSlotClick(spread.positions[0])} className={getCardStyle(1, 'w-[45px]')}>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[0].name}</span>
              </div>
           </div>
           {/* Clock items */}
@@ -615,8 +458,8 @@ export const SpreadGuideTab: React.FC = () => {
             const top = `calc(50% + ${Math.sin(angleRad) * radius}px)`;
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
-                 <div onClick={() => handleSlotClick(pos)} onDoubleClick={() => handleSlotDoubleClick(pos.id)} className={getCardStyle(pos.id, 'w-[36px]')}>
-                    {renderSlotContent(pos, "text-white text-[7px] whitespace-pre-line text-center leading-tight")}
+                 <div onClick={() => handleSlotClick(pos)} className={getCardStyle(pos.id, 'w-[36px]')}>
+                    <span className="text-white text-[7px] whitespace-pre-line text-center leading-tight">{pos.name}</span>
                  </div>
               </div>
             );
@@ -638,7 +481,6 @@ export const SpreadGuideTab: React.FC = () => {
 
   const renderDetailView = (spread: SpreadDef) => {
     const activePosition = spread.positions.find(p => p.id === activePositionId) || spread.positions[0];
-    const registered = registeredCards[activePositionId];
 
     return (
       <motion.div
@@ -666,32 +508,8 @@ export const SpreadGuideTab: React.FC = () => {
           {renderDetailLayout(spread)}
         </div>
 
-        {/* AI Integration */}
-        {Object.keys(registeredCards).length > 0 && (
-          <div className="w-full px-2 mt-6 space-y-3 shrink-0">
-            <input 
-              type="text"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              placeholder="타로 마스터에게 물어볼 질문 (선택사항)"
-              className="w-full px-3 py-2.5 bg-black border border-white/50 text-white text-[12px] focus:outline-none focus:border-white transition-colors placeholder:text-white/40"
-            />
-            <button
-               onClick={handleAiReading}
-               disabled={isAiLoading}
-               className="w-full py-3 border border-white bg-white text-black font-bold hover:bg-[#eee] transition-colors text-[13px] flex justify-center items-center gap-2"
-             >
-               {isAiLoading ? (
-                 <span className="animate-pulse">🔮 마스터가 리딩을 준비중입니다...</span>
-               ) : (
-                 <>🔮 AI 마스터에게 통합 리딩 받기</>
-               )}
-             </button>
-          </div>
-        )}
-
         {/* Bottom Dialogue Box */}
-        <div className="w-full px-2 mt-4 pb-4 shrink-0">
+        <div className="w-full px-2 mt-auto pb-4">
           <div className="border border-white p-1 bg-black">
             <div className="border border-white py-6 px-5 text-center min-h-[145px] flex flex-col justify-between">
               <AnimatePresence mode="wait">
@@ -704,39 +522,19 @@ export const SpreadGuideTab: React.FC = () => {
                   className="space-y-3 flex-1 flex flex-col justify-center"
                 >
                   <div className="space-y-3">
-                    <h3 className="text-white uppercase font-bold text-[13px] mb-2">
+                    <h3 className="text-white uppercase font-bold text-[13px]">
                       {activePosition.name}
-                      {registered && <span className="text-[#ffd700] font-normal ml-2 text-[12px]">({registered.card.name} {registered.isReversed ? '역방향' : '정방향'})</span>}
                     </h3>
-                    
-                    {!registered ? (
-                      <p className="text-white/90 leading-relaxed max-w-xs mx-auto text-[12px]">
-                        {activePosition.meaning}
-                      </p>
-                    ) : (
-                      <div className="text-left space-y-2.5 mt-2">
-                        <p className="text-white/90 text-[12px] leading-relaxed">
-                          <strong className="text-white bg-white/20 px-1 rounded mr-1">[{activePosition.name}]</strong>
-                          {activePosition.meaning}
-                        </p>
-                        <div className="pt-2 border-t border-white/20">
-                          <p className="text-[#ffd700] text-[12px] leading-relaxed">
-                            <strong className="font-bold block mb-1 text-[11px] text-white/80">💡 종합 해석 힌트</strong>
-                            해당 자리에 <strong className="text-white">[{registered.card.name}]</strong> 카드가 나와 있습니다.<br/>
-                            따라서 이 상황은 <strong className="text-white underline decoration-[#ffd700]/50 underline-offset-2">"{registered.isReversed ? registered.card.reversedMeaning : registered.card.uprightMeaning}"</strong> (이)라는 관점으로 연결해서 해석해 볼 수 있습니다.
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                    <p className="text-white/90 leading-relaxed max-w-xs mx-auto text-[12px]">
+                      {activePosition.meaning}
+                    </p>
                   </div>
                 </motion.div>
               </AnimatePresence>
 
-              {!registered && (
-                <span className="text-white/50 block mt-4 text-[10px]">
-                  (자리를 더블클릭하여 카드를 등록하세요)
-                </span>
-              )}
+              <span className="text-white block pulsing-arrow mt-4">
+                ▽
+              </span>
             </div>
           </div>
         </div>
@@ -745,115 +543,9 @@ export const SpreadGuideTab: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center px-6 py-4 min-h-[580px] text-white bg-black w-full overflow-y-auto custom-scrollbar relative">
+    <div className="flex-1 flex flex-col items-center px-6 py-4 min-h-[580px] text-white bg-black w-full overflow-y-auto custom-scrollbar">
       <AnimatePresence mode="wait">
         {!selectedSpread ? renderTableSelection() : renderDetailView(selectedSpread)}
-      </AnimatePresence>
-
-      {/* Registration Modal */}
-      <AnimatePresence>
-        {registrationPosId !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-50 px-6 backdrop-blur-sm"
-          >
-            <div className="w-full max-w-[280px] border border-white p-6 bg-black flex flex-col items-center gap-4">
-              <h3 className="text-white text-[14px] font-bold">카드 등록</h3>
-              <p className="text-white/60 text-[11px] text-center leading-tight mb-2">
-                리딩북에 적힌 3자리 카드를 입력하세요.<br />
-                (예: 421)
-              </p>
-              
-              <form onSubmit={handleRegisterCard} className="w-full flex flex-col gap-4">
-                <input
-                  ref={inputRef}
-                  type="number"
-                  placeholder="000"
-                  value={codeInput}
-                  onChange={(e) => {
-                    const val = e.target.value.slice(0, 3);
-                    setCodeInput(val);
-                    setRegistrationError(false);
-                  }}
-                  className={`w-full bg-transparent border-b-2 text-center text-2xl py-2 focus:outline-none transition-colors ${
-                    registrationError ? 'border-red-500 text-red-500' : 'border-white text-white'
-                  }`}
-                />
-                
-                <label className="flex items-center justify-center gap-2 text-white text-[12px] cursor-pointer mt-2">
-                  <input 
-                    type="checkbox" 
-                    checked={isReversedInput}
-                    onChange={(e) => setIsReversedInput(e.target.checked)}
-                    className="accent-white w-4 h-4"
-                  />
-                  이 카드는 역방향입니다
-                </label>
-
-                {registrationError && (
-                  <p className="text-red-500 text-[11px] text-center">올바른 카드를 찾을 수 없습니다.</p>
-                )}
-
-                <div className="flex gap-2 w-full mt-2">
-                  <button
-                    type="button"
-                    onClick={() => setRegistrationPosId(null)}
-                    className="flex-1 py-2 border border-white/50 text-white/70 hover:bg-white/10 text-[12px]"
-                  >
-                    취소
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 py-2 bg-white text-black font-bold hover:bg-[#eee] text-[12px]"
-                  >
-                    등록
-                  </button>
-                </div>
-                {registeredCards[registrationPosId] && (
-                  <button
-                    type="button"
-                    onClick={handleClearCard}
-                    className="w-full py-2 border border-red-500/50 text-red-400 hover:bg-red-500/10 text-[12px] mt-2"
-                  >
-                    등록 해제
-                  </button>
-                )}
-              </form>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* AI Reading Modal */}
-      <AnimatePresence>
-        {aiReading && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="absolute inset-0 bg-black z-50 flex flex-col p-4 sm:p-6 pb-24 overflow-y-auto custom-scrollbar"
-          >
-             <div className="flex justify-between items-center mb-6 sticky top-0 bg-black py-2 border-b border-white/20">
-               <h3 className="text-white text-[16px] font-bold">🔮 AI 통합 리딩 결과</h3>
-               <button onClick={() => setAiReading(null)} className="text-white/60 hover:text-white p-2">
-                 ✕
-               </button>
-             </div>
-             
-             <div className="text-white/90 text-[13px] leading-relaxed whitespace-pre-line space-y-4 font-serif">
-               {aiReading}
-             </div>
-             
-             <button 
-               onClick={() => setAiReading(null)}
-               className="w-full mt-10 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors"
-             >
-               리딩 종료하기
-             </button>
-          </motion.div>
-        )}
       </AnimatePresence>
     </div>
   );
