@@ -53,11 +53,11 @@ export default function App() {
               onClick={() => setActiveTab('rulebook')}
               className="flex flex-col items-center justify-center cursor-pointer transition-opacity active:opacity-70"
             >
-              <div 
-                className={`w-6 h-6 mb-1.5 transition-all ${
-                  activeTab === 'rulebook' 
-                    ? 'bg-white' 
-                    : 'border-[1px] border-white bg-transparent'
+              <img 
+                src={`${import.meta.env.BASE_URL}icon/dice.png`} 
+                alt="Rulebook" 
+                className={`w-6 h-6 mb-1.5 object-contain transition-all ${
+                  activeTab === 'rulebook' ? 'opacity-100' : 'opacity-40'
                 }`} 
               />
               <span className={`text-[11px] ${
@@ -72,11 +72,11 @@ export default function App() {
               onClick={() => setActiveTab('searcher')}
               className="flex flex-col items-center justify-center cursor-pointer transition-opacity active:opacity-70"
             >
-              <div 
-                className={`w-6 h-6 mb-1.5 transition-all ${
-                  activeTab === 'searcher' 
-                    ? 'bg-white' 
-                    : 'border-[1px] border-white bg-transparent'
+              <img 
+                src={`${import.meta.env.BASE_URL}icon/Serch.png`} 
+                alt="Reading Book" 
+                className={`w-6 h-6 mb-1.5 object-contain transition-all ${
+                  activeTab === 'searcher' ? 'opacity-100' : 'opacity-40'
                 }`} 
               />
               <span className={`text-[11px] ${
@@ -91,11 +91,11 @@ export default function App() {
               onClick={() => setActiveTab('spread')}
               className="flex flex-col items-center justify-center cursor-pointer transition-opacity active:opacity-70"
             >
-              <div 
-                className={`w-6 h-6 mb-1.5 transition-all ${
-                  activeTab === 'spread' 
-                    ? 'bg-white' 
-                    : 'border-[1px] border-white bg-transparent'
+              <img 
+                src={`${import.meta.env.BASE_URL}icon/card.png`} 
+                alt="Spread" 
+                className={`w-6 h-6 mb-1.5 object-contain transition-all ${
+                  activeTab === 'spread' ? 'opacity-100' : 'opacity-40'
                 }`} 
               />
               <span className={`text-[11px] ${

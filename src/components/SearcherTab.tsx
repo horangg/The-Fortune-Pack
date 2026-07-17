@@ -197,8 +197,12 @@ export const SearcherTab: React.FC = () => {
                       : <Typewriter text={"네모칸을 클릭하여\n세 자리 숫자코드를 입력하세요."} speed={40} />
                     }
                   </p>
-                  <span className="text-white block pulsing-arrow">
-                    ▽
+                  <span className="block pulsing-arrow flex justify-center">
+                    <img 
+                      src={`${import.meta.env.BASE_URL}icon/dowm.png`} 
+                      alt="Down" 
+                      className="w-4 h-4 object-contain opacity-80"
+                    />
                   </span>
                 </div>
               </div>
@@ -261,7 +265,7 @@ export const SearcherTab: React.FC = () => {
                 onClick={handleClear} 
                 className="flex flex-col items-center gap-2 text-white hover:opacity-80 transition-opacity cursor-pointer group"
               >
-                <RotateCcw className="w-6 h-6 text-white" />
+                <img src={`${import.meta.env.BASE_URL}icon/back.png`} alt="Back" className="w-5 h-5 object-contain" />
                 <span className="text-[11px]">돌아가기</span>
               </button>
 

@@ -248,8 +248,12 @@ export const RulebookTab: React.FC = () => {
 
             {/* Gradient and Arrow at the bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black via-black/90 to-transparent flex items-end justify-center pb-2 pointer-events-none">
-              <div className="text-[10px] text-white animate-bounce">
-                ▽
+              <div className="animate-bounce">
+                <img 
+                  src={`${import.meta.env.BASE_URL}icon/dowm.png`} 
+                  alt="Down" 
+                  className="w-4 h-4 object-contain opacity-80"
+                />
               </div>
             </div>
             

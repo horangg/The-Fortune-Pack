@@ -274,7 +274,7 @@ export const SpreadGuideTab: React.FC = () => {
             onClick={handleBack}
             className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity"
           >
-            <RotateCcw className="w-5 h-5" />
+            <img src={`${import.meta.env.BASE_URL}icon/back.png`} alt="Back" className="w-5 h-5 object-contain" />
             <span className="text-[14px]">돌아가기</span>
           </button>
           <span className="text-white font-bold text-[14px]">{spread.name}</span>
