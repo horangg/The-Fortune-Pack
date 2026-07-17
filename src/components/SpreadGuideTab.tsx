@@ -225,38 +225,43 @@ export const SpreadGuideTab: React.FC = () => {
     if (Object.keys(registeredCards).length === 0) return;
     setIsAiLoading(true);
     try {
-      const cardsData = Object.entries(registeredCards).map(([posId, reg]) => {
+      let prompt = `당신은 지혜롭고 신비로운 타로 마스터입니다. 사용자의 질문과 뽑힌 카드들을 바탕으로 깊이 있고 영감을 주는 타로 리딩을 제공해주세요.\n\n`;
+      prompt += `[사용자 질문]\n${question || '자유 리딩 (질문 없음)'}\n\n`;
+      prompt += `[스프레드 종류]\n${selectedSpread?.name}\n\n`;
+      prompt += `[뽑힌 카드 목록]\n`;
+      
+      Object.entries(registeredCards).forEach(([posId, reg]) => {
         const pos = selectedSpread?.positions.find(p => p.id === Number(posId));
-        return {
-          positionName: pos?.name || '',
-          cardName: reg.card.name,
-          isReversed: reg.isReversed,
-          meaning: reg.isReversed ? reg.card.reversedMeaning : reg.card.uprightMeaning
-        };
+        prompt += `- 위치 [${pos?.name}]: ${reg.card.name} (${reg.isReversed ? '역방향' : '정방향'})\n`;
+        prompt += `  * 기본 의미: ${reg.isReversed ? reg.card.reversedMeaning : reg.card.uprightMeaning}\n`;
       });
 
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tarot-reader`, {
+      prompt += `\n위 내용들을 종합하여, 1) 각 카드가 가지는 의미와 연관성 분석, 2) 주요 흐름 및 조언, 3) 최종 결론 및 긍정적인 메시지를 포함하여 한 편의 이야기처럼 자연스럽고 따뜻한 어조로 리딩을 완성해 주세요. 마크다운 포맷(볼드, 글머리기호 등)을 적절히 활용하여 스마트폰에서 읽기 좋게 단락을 나누어 작성해주세요.`;
+
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCjH5V-sLUuvmNFM6f87vT1ksoDftt0iXI';
+      
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify({
-          question: question,
-          spreadName: selectedSpread?.name,
-          cards: cardsData
+          contents: [{
+            parts: [{ text: prompt }]
+          }]
         })
       });
 
       if (!response.ok) {
-        throw new Error('AI 리딩을 가져오는데 실패했습니다.');
+        throw new Error('API request failed');
       }
 
       const data = await response.json();
-      setAiReading(data.reading);
+      const reading = data.candidates?.[0]?.content?.parts?.[0]?.text || "리딩을 생성할 수 없습니다.";
+      setAiReading(reading);
     } catch (error) {
       console.error(error);
-      alert('AI 리딩을 불러오는 중 오류가 발생했습니다. (백엔드 설정을 완료했는지 확인해주세요)');
+      alert('AI 리딩을 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     } finally {
       setIsAiLoading(false);
     }
