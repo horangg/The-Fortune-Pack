@@ -21,9 +21,9 @@ interface SpreadDef {
 
 const SPREADS: SpreadDef[] = [
   {
-    id: 'topic',
-    name: '주제',
-    displayName: '주제',
+    id: 'my-question',
+    name: '내 질문',
+    displayName: '내\n질문',
     layout: '4-card',
     positions: [
       { id: 1, name: '주제', meaning: '상담하고자 하는 주요 주제나 현재 가장 집중해야 할 핵심 문제입니다.' },
@@ -33,24 +33,34 @@ const SPREADS: SpreadDef[] = [
     ]
   },
   {
+    id: 'love',
+    name: '연애운',
+    displayName: '연애운',
+    layout: 'placeholder',
+    positions: [{ id: 1, name: '연애운', meaning: '현재 당신의 연애 에너지와 다가올 관계의 흐름입니다.' }]
+  },
+  {
+    id: 'yearly',
+    name: '1년 운세',
+    displayName: '1년\n운세',
+    layout: 'placeholder',
+    positions: [{ id: 1, name: '1년 흐름', meaning: '올 한 해 동안 펼쳐질 전반적인 운의 흐름과 주요 테마입니다.' }]
+  },
+  {
     id: 'yesno',
     name: 'Yes / No',
-    displayName: 'Yes\n/\nNo',
+    displayName: 'Yes\n·\nNo',
     layout: '1-card',
     positions: [
       { id: 1, name: '결과', meaning: '질문에 대한 명확한 긍정(Yes) 또는 부정(No)의 대답과 그 이유입니다.' }
     ]
   },
   {
-    id: 'past-present-future',
-    name: '과거 현재 미래',
-    displayName: '과거\n현재\n미래',
-    layout: '3-card',
-    positions: [
-      { id: 1, name: '과거', meaning: '이 문제의 원인이 되었던 흘러간 흐름과 상황의 출발점입니다.' },
-      { id: 2, name: '현재', meaning: '당신이 처해 있는 지금 이 순간의 실질적인 상황과 직면한 상태입니다.' },
-      { id: 3, name: '미래', meaning: '현재의 에너지가 그대로 유지될 때 마주하게 될 다가올 결과입니다.' }
-    ]
+    id: 'detailed-answer',
+    name: '자세한 답변',
+    displayName: '자세한\n답변',
+    layout: 'placeholder',
+    positions: [{ id: 1, name: '자세한 답변', meaning: '질문에 대한 깊이 있는 분석과 숨겨진 의미를 파악합니다.' }]
   },
   {
     id: 'choices',
@@ -66,13 +76,6 @@ const SPREADS: SpreadDef[] = [
     ]
   },
   {
-    id: 'yearly',
-    name: '1년 운세',
-    displayName: '1년\n운세',
-    layout: 'placeholder',
-    positions: [{ id: 1, name: '1년 흐름', meaning: '올 한 해 동안 펼쳐질 전반적인 운의 흐름과 주요 테마입니다.' }]
-  },
-  {
     id: 'monthly',
     name: '1달 운세',
     displayName: '1달\n운세',
@@ -80,11 +83,11 @@ const SPREADS: SpreadDef[] = [
     positions: [{ id: 1, name: '이달의 흐름', meaning: '이번 달 당신에게 다가올 주요 사건과 에너지의 흐름입니다.' }]
   },
   {
-    id: 'unknown',
-    name: '?',
-    displayName: '?',
+    id: 'weekly',
+    name: '일주일 운세',
+    displayName: '일주일\n운세',
     layout: 'placeholder',
-    positions: [{ id: 1, name: '알 수 없음', meaning: '아직 개방되지 않은 미지의 스프레드입니다.' }]
+    positions: [{ id: 1, name: '주간 흐름', meaning: '이번 주 당신에게 다가올 주요 사건과 에너지의 흐름입니다.' }]
   }
 ];
 
@@ -138,9 +141,9 @@ export const SpreadGuideTab: React.FC = () => {
               </button>
             ))}
           </div>
-          {/* Bottom Row: 3 cards centered */}
+          {/* Bottom Row: 4 cards centered */}
           <div className="flex justify-center gap-2 w-full">
-            {SPREADS.slice(4, 7).map((spread) => (
+            {SPREADS.slice(4, 8).map((spread) => (
               <button
                 key={spread.id}
                 onClick={() => handleSelectSpread(spread)}
