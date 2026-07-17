@@ -52,6 +52,7 @@ export const SearcherTab: React.FC = () => {
       if (card) {
         setSelectedCard(card);
         setSearchError(false);
+        inputRef.current?.blur();
       } else {
         setSelectedCard(null);
         setSearchError(true);
