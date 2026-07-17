@@ -77,21 +77,6 @@ export const SearcherTab: React.FC = () => {
     }, 50);
   };
 
-  const handleShare = () => {
-    if (!selectedCard) return;
-    const shareText = `[Tarot Card Guide] 내가 찾은 운명의 카드: ${selectedCard.name} (${selectedCard.englishName}) - "${selectedCard.uprightMeaning}"`;
-    if (navigator.share) {
-      navigator.share({
-        title: 'Tarot Card Guide',
-        text: shareText,
-        url: window.location.href,
-      }).catch(err => console.log(err));
-    } else {
-      navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
-      alert('결과가 클립보드에 복사되었습니다!');
-    }
-  };
-
   // Helper to get card symbol icon
   const getSymbolIcon = (type: string, symbol: string) => {
     const size = "w-8 h-8 text-white";
@@ -269,13 +254,6 @@ export const SearcherTab: React.FC = () => {
                 <span className="text-[11px]">돌아가기</span>
               </button>
 
-              <button 
-                onClick={handleShare} 
-                className="flex flex-col items-center gap-2 text-white hover:opacity-80 transition-opacity cursor-pointer group"
-              >
-                <Send className="w-6 h-6 text-white" />
-                <span className="text-[11px]">공유하기</span>
-              </button>
             </div>
           </motion.div>
         )}
