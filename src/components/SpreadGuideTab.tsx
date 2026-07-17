@@ -118,7 +118,7 @@ export const SpreadGuideTab: React.FC = () => {
         <Typewriter text="어떤 것을 점쳐보시겠습니까?" speed={40} />
       </div>
       {/* TV / Table Outline mimicking Image 1 */}
-      <div className="relative w-full max-w-[340px] mx-auto flex items-center justify-center py-4">
+      <div className="relative w-full max-w-[408px] mx-auto flex items-center justify-center py-4">
         {/* The Table Image */}
         <img src={`${import.meta.env.BASE_URL}Table.png`} alt="Table" className="w-full h-auto object-contain pointer-events-none" />
         
@@ -130,9 +130,9 @@ export const SpreadGuideTab: React.FC = () => {
               <button
                 key={spread.id}
                 onClick={() => handleSelectSpread(spread)}
-                className="w-[50px] aspect-[60/96] border border-white flex items-center justify-center hover:bg-white/20 transition-colors bg-black"
+                className="w-[60px] aspect-[60/96] border border-white flex items-center justify-center hover:bg-white/20 transition-colors bg-black"
               >
-                <span className="text-white text-[10px] whitespace-pre-line text-center leading-[1.1]">
+                <span className="text-white text-[11px] whitespace-pre-line text-center leading-[1.1]">
                   {spread.displayName}
                 </span>
               </button>
@@ -144,9 +144,9 @@ export const SpreadGuideTab: React.FC = () => {
               <button
                 key={spread.id}
                 onClick={() => handleSelectSpread(spread)}
-                className="w-[50px] aspect-[60/96] border border-white flex items-center justify-center hover:bg-white/20 transition-colors bg-black"
+                className="w-[60px] aspect-[60/96] border border-white flex items-center justify-center hover:bg-white/20 transition-colors bg-black"
               >
-                <span className="text-white text-[10px] whitespace-pre-line text-center leading-[1.1]">
+                <span className="text-white text-[11px] whitespace-pre-line text-center leading-[1.1]">
                   {spread.displayName}
                 </span>
               </button>
