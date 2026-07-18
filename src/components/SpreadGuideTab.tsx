@@ -97,26 +97,28 @@ const SPREADS: SpreadDef[] = [
       { stepLabel: 'Step 3', text: '총 10장의 카드를 순서대로 십자가와 우측 세로 기둥 모양으로 배치합니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.' },
       { stepLabel: 'Step 3', text: '본인 / 질문과 관련된 현재 상황 (중앙에 놓음)', highlightPositionId: 1 },
       { stepLabel: 'Step 3', text: '장애물 혹은 보완 요소 (1번 카드 위에 가로질러 놓음)', highlightPositionId: 2 },
-      { stepLabel: 'Step 3', text: '도달할 수 있는 최고의 목표/환경적 최선 (1번의 위)', highlightPositionId: 3 },
-      { stepLabel: 'Step 3', text: '무의식적 기초 / 리딩을 하게 된 근본적 이유 (1번의 아래)', highlightPositionId: 4 },
-      { stepLabel: 'Step 3', text: '과거의 영향 (1번의 왼쪽)', highlightPositionId: 5 },
-      { stepLabel: 'Step 3', text: '가까운 미래 (1번의 오른쪽)', highlightPositionId: 6 },
-      { stepLabel: 'Step 3', text: '본인의 현재 태도나 마음가짐 (우측 세로 열의 맨 아래)', highlightPositionId: 7 },
-      { stepLabel: 'Step 3', text: '주변 환경 및 외적 영향력 (7번의 위)', highlightPositionId: 8 },
-      { stepLabel: 'Step 3', text: '희망 혹은 두려움 (8번의 위)', highlightPositionId: 9 },
-      { stepLabel: 'Step 3', text: '최종 결과 (9번의 위, 세로 열의 맨 꼭대기)', highlightPositionId: 10 }
+      { stepLabel: 'Step 3', text: '1 현재 (본인 / 질문과 관련된 현재 상황)', highlightPositionId: 1 },
+      { stepLabel: 'Step 3', text: '2 장애물, 과제 (1번 카드 위에 가로질러 놓음)', highlightPositionId: 2 },
+      { stepLabel: 'Step 3', text: '3 무의식 (1번의 아래)', highlightPositionId: 3 },
+      { stepLabel: 'Step 3', text: '4 과거 (1번의 왼쪽)', highlightPositionId: 4 },
+      { stepLabel: 'Step 3', text: '5 의식, 목표, 가능성 (1번의 위)', highlightPositionId: 5 },
+      { stepLabel: 'Step 3', text: '6 가까운 미래 (1번의 오른쪽)', highlightPositionId: 6 },
+      { stepLabel: 'Step 3', text: '7 태도 (우측 세로 열의 맨 아래)', highlightPositionId: 7 },
+      { stepLabel: 'Step 3', text: '8 외부 영향 (7번의 위)', highlightPositionId: 8 },
+      { stepLabel: 'Step 3', text: '9 희망/두려움 (8번의 위)', highlightPositionId: 9 },
+      { stepLabel: 'Step 3', text: '10 결과 (9번의 위, 세로 열의 맨 꼭대기)', highlightPositionId: 10 }
     ],
     positions: [
-      { id: 1, name: '1번 카드', meaning: '본인 / 질문과 관련된 현재 상황 (중앙에 놓음)' },
-      { id: 2, name: '2번 카드', meaning: '장애물 혹은 보완 요소 (1번 카드 위에 가로질러 놓음)' },
-      { id: 3, name: '3번 카드', meaning: '도달할 수 있는 최고의 목표/환경적 최선 (1번의 위)' },
-      { id: 4, name: '4번 카드', meaning: '무의식적 기초 / 리딩을 하게 된 근본적 이유 (1번의 아래)' },
-      { id: 5, name: '5번 카드', meaning: '과거의 영향 (1번의 왼쪽)' },
-      { id: 6, name: '6번 카드', meaning: '가까운 미래 (1번의 오른쪽)' },
-      { id: 7, name: '7번 카드', meaning: '본인의 현재 태도나 마음가짐 (우측 세로 열의 맨 아래)' },
-      { id: 8, name: '8번 카드', meaning: '주변 환경 및 외적 영향력 (7번의 위)' },
-      { id: 9, name: '9번 카드', meaning: '희망 혹은 두려움 (8번의 위)' },
-      { id: 10, name: '10번 카드', meaning: '최종 결과 (9번의 위, 세로 열의 맨 꼭대기)' }
+      { id: 1, name: '1\n현재', meaning: '본인 / 질문과 관련된 현재 상황 (중앙에 놓음)' },
+      { id: 2, name: '2\n장애물, 과제', meaning: '장애물 혹은 보완 요소 (1번 카드 위에 가로질러 놓음)' },
+      { id: 3, name: '3\n무의식', meaning: '무의식적 기초 / 리딩을 하게 된 근본적 이유 (1번의 아래)' },
+      { id: 4, name: '4\n과거', meaning: '과거의 영향 (1번의 왼쪽)' },
+      { id: 5, name: '5\n의식\n목표\n가능성', meaning: '도달할 수 있는 최고의 목표/환경적 최선 (1번의 위)' },
+      { id: 6, name: '6\n가까운\n미래', meaning: '가까운 미래 (1번의 오른쪽)' },
+      { id: 7, name: '7\n태도', meaning: '본인의 현재 태도나 마음가짐 (우측 세로 열의 맨 아래)' },
+      { id: 8, name: '8\n외부 영향', meaning: '주변 환경 및 외적 영향력 (7번의 위)' },
+      { id: 9, name: '9\n희망/\n두려움', meaning: '희망 혹은 두려움 (8번의 위)' },
+      { id: 10, name: '10\n결과', meaning: '최종 결과 (9번의 위, 세로 열의 맨 꼭대기)' }
     ]
   },
   {
@@ -596,62 +598,62 @@ export const SpreadGuideTab: React.FC = () => {
 
     if (spread.layout === 'celtic-cross') {
       return (
-        <div className="relative w-full h-[350px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
+        <div className="relative w-full h-[360px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
           {/* pos 1 (Center) */}
-          <div style={{ position: 'absolute', left: '35%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-            <div className={getCardStyle(1, 'w-[42px]')}>
+          <div style={{ position: 'absolute', left: '32%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(1, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
             </div>
           </div>
           {/* pos 2 (Across 1) */}
-          <div style={{ position: 'absolute', left: '35%', top: '50%', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
-            <div className={getCardStyle(2, 'w-[42px]')}>
-              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[1].name}</span>
+          <div style={{ position: 'absolute', left: '32%', top: '50%', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
+            <div className={getCardStyle(2, 'w-[44px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed" style={{ transform: 'rotate(-90deg)', display: 'inline-block' }}>{spread.positions[1].name}</span>
             </div>
           </div>
-          {/* pos 3 (Top) */}
-          <div style={{ position: 'absolute', left: '35%', top: '15%', transform: 'translate(-50%, -50%)' }}>
-            <div className={getCardStyle(3, 'w-[42px]')}>
+          {/* pos 3 (Bottom) */}
+          <div style={{ position: 'absolute', left: '32%', top: '80%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(3, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[2].name}</span>
             </div>
           </div>
-          {/* pos 4 (Bottom) */}
-          <div style={{ position: 'absolute', left: '35%', bottom: '15%', transform: 'translate(-50%, 50%)' }}>
-            <div className={getCardStyle(4, 'w-[42px]')}>
+          {/* pos 4 (Left) */}
+          <div style={{ position: 'absolute', left: '8%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(4, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[3].name}</span>
             </div>
           </div>
-          {/* pos 5 (Left) */}
-          <div style={{ position: 'absolute', left: '10%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-            <div className={getCardStyle(5, 'w-[42px]')}>
+          {/* pos 5 (Top) */}
+          <div style={{ position: 'absolute', left: '32%', top: '20%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(5, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[4].name}</span>
             </div>
           </div>
           {/* pos 6 (Right) */}
-          <div style={{ position: 'absolute', left: '60%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-            <div className={getCardStyle(6, 'w-[42px]')}>
+          <div style={{ position: 'absolute', left: '56%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(6, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[5].name}</span>
             </div>
           </div>
 
           {/* Right Column: 7, 8, 9, 10 */}
-          <div style={{ position: 'absolute', left: '90%', bottom: '10%', transform: 'translate(-50%, 50%)' }}>
-            <div className={getCardStyle(7, 'w-[42px]')}>
+          <div style={{ position: 'absolute', left: '88%', top: '85%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(7, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[6].name}</span>
             </div>
           </div>
-          <div style={{ position: 'absolute', left: '90%', bottom: '38%', transform: 'translate(-50%, 50%)' }}>
-            <div className={getCardStyle(8, 'w-[42px]')}>
+          <div style={{ position: 'absolute', left: '88%', top: '60%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(8, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[7].name}</span>
             </div>
           </div>
-          <div style={{ position: 'absolute', left: '90%', top: '38%', transform: 'translate(-50%, -50%)' }}>
-            <div className={getCardStyle(9, 'w-[42px]')}>
+          <div style={{ position: 'absolute', left: '88%', top: '35%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(9, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[8].name}</span>
             </div>
           </div>
-          <div style={{ position: 'absolute', left: '90%', top: '10%', transform: 'translate(-50%, -50%)' }}>
-            <div className={getCardStyle(10, 'w-[42px]')}>
+          <div style={{ position: 'absolute', left: '88%', top: '10%', transform: 'translate(-50%, -50%)' }}>
+            <div className={getCardStyle(10, 'w-[44px]')}>
               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[9].name}</span>
             </div>
           </div>
