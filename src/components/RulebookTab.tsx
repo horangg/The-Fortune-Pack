@@ -13,7 +13,7 @@ export const RulebookTab: React.FC = () => {
 
   const slides: RuleSlide[] = [
     {
-      id: 'overview',
+      id: 'overview1',
       title: '게임 개요',
       boxText: '개요 및 목적',
       content: (
@@ -22,6 +22,15 @@ export const RulebookTab: React.FC = () => {
           <p className="text-white leading-[1.6] text-[13px]">
             이 게임은 '엉터리 타로술사'가 되어 서로의 고민을 상담해 주는 파티 게임입니다. 카드의 정해진 의미를 억지로 외울 필요는 없습니다.
           </p>
+        </div>
+      ),
+    },
+    {
+      id: 'overview2',
+      title: '게임 개요',
+      boxText: '개요 및 목적',
+      content: (
+        <div className="space-y-2 text-center mt-4">
           <p className="text-white leading-[1.6] text-[13px]">
             당신의 말이 곧 카드의 해석입니다.<br />가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아, 가장 많은 복채를 획득해 최고의 타로술사가 되어보세요!
           </p>
@@ -107,10 +116,7 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-2 text-left text-[12px] leading-[1.6]">
           <p className="text-white">
-            • 뽑힌 카드는 <span className="text-[#FF9900]">정방향으로만</span> 해석한다.
-          </p>
-          <p className="text-white">
-            • 타로술사는 필요하다면 추가로 1장의 카드를 뽑아 이미 의뢰인이 뽑은 3장의 카드 중 1장을 가리고 새로운 카드로 대체할 수 있다.
+            - 타로술사는 필요하다면 추가로 1장의 카드를 뽑아 이미 의뢰인이 뽑은 3장의 카드 중 1장을 가리고 새로운 카드로 대체할 수 있다.
           </p>
           <p className="text-white pl-2">
             - 이때, 추가로 뽑은 카드는 <span className="text-[#FF9900]">반드시 사용</span>해야 한다.
@@ -236,7 +242,7 @@ export const RulebookTab: React.FC = () => {
           }}
           className="w-full relative cursor-pointer border border-white p-0.5 bg-black hover:border-neutral-300"
         >
-          <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
+          <div className="border border-white p-4 h-auto min-h-[140px] max-h-[50vh] flex flex-col relative bg-black overflow-hidden">
 
             <div id="rulebook-scroll" className="flex-1 flex flex-col overflow-y-auto pr-2 pb-14 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <div className="w-full flex flex-col min-h-full">
@@ -260,7 +266,7 @@ export const RulebookTab: React.FC = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setCurrentIndex(Math.min(slides.length - 1, currentIndex + 1));
+                  handleInteraction();
                 }}
                 className={`flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 pointer-events-auto ${currentIndex === slides.length - 1 ? 'opacity-0 pointer-events-none' : 'animate-bounce-right'}`}
               >
