@@ -456,7 +456,7 @@ export const SpreadGuideTab: React.FC = () => {
   const renderDetailLayout = (spread: SpreadDef, highlightId: number) => {
     const getCardStyle = (posId: number, widthClass: string = 'w-[63px]') => {
       const isSelected = highlightId === posId;
-      return `${widthClass} aspect-[60/96] border-[1px] transition-all flex flex-col items-center justify-center p-1 relative select-none ${isSelected ? 'border-[#ffd700] bg-[#111] z-10 shadow-[0_0_8px_rgba(255,215,0,0.5)]' : 'border-white/50 bg-black'
+      return `${widthClass} aspect-[60/96] border-[1px] transition-all flex flex-col items-center justify-center p-1 relative select-none ${isSelected ? 'border-[#FF9900] bg-[#111] z-10 shadow-[0_0_8px_rgba(255,153,0,0.5)]' : 'border-white/50 bg-black'
         }`;
     };
 
@@ -800,7 +800,7 @@ export const SpreadGuideTab: React.FC = () => {
                       setTimeout(() => document.getElementById('search-input-0')?.focus(), 0);
                     }
                   }}
-                  className="w-9 h-9 border border-white bg-black text-white text-center text-[15px] focus:outline-none focus:border-[#E19D3B]"
+                  className="w-9 h-9 border border-white bg-black text-white text-center text-[15px] focus:outline-none focus:border-[#FF9900]"
                 />
               ))}
             </div>
@@ -853,7 +853,7 @@ export const SpreadGuideTab: React.FC = () => {
             if (currentStep?.subText) return currentStep.subText;
             if (highlightId !== -1) {
               const meaning = spread.positions.find(p => p.id === highlightId)?.meaning;
-              return meaning ? `(${meaning})` : undefined;
+              return meaning ? meaning : undefined;
             }
             return undefined;
           })()}
