@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Typewriter } from './Typewriter';
+import { TAROT_CARDS } from '../data/tarotData';
+import { TarotCard } from '../types';
 
 interface PositionDef {
   id: number;
@@ -57,8 +59,8 @@ const SPREADS: SpreadDef[] = [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
       { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 좌, 중, 우 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 2 },
-      { stepLabel: 'Step 4', text: '뽑힌 카드들이 긍정(Yes), 부정(No), 중립(Neutral) 카드인지 분류합니다.\n3장이 모두 Yes면 확실한 긍정, 2장이 Yes면 긍정적이나 시간이 걸릴 수 있음을 뜻하며, No가 많거나 중립이 섞여 있다면 부정적인 결론에 가깝습니다.' },
-      { stepLabel: 'Step 4', text: '*역방향 카드를 사용하는 경우 역방향은 무조건 No로 해석합니다.' },
+      { stepLabel: 'Step 4', text: '뽑힌 카드들이 긍정, 부정, 중립 인지 확인합니다.' },
+      { stepLabel: 'Step 5', text: '3장이 모두 Yes면 확실한 긍정,\n2장이 Yes면 긍정적이나 시간이 걸릴 수 있음,\nNo가 많다면 부정적인 결론에 가깝습니다.\n*역방향 카드를 사용하는 경우 역방향은 무조건 No로 해석합니다.' },
       { stepLabel: '상세 해석', text: '* Yes 카드: 아래의 No, 중립, 예외 카드를 제외한 모든 카드\n* No 카드\n  * 메이저: 죽음, 악마, 탑, 달\n  * 마이너: 검(3, 5, 6, 7, 8, 9, 10, 기사), 컵(5, 7, 8), 펜타클(5)' },
       { stepLabel: '상세 해석', text: '* 중립 카드: 은둔자, 매달린 사람, 검 4, 컵 4\n* 조건부 Yes : 지팡이 5, 7\n  *해당 카드가 나오면 결과는 Yes이지만 원하는 것을 얻기 위해 치열하게 노력하고 싸워야 함을 뜻한다.' },
       { stepLabel: '상세 해석', text: '* 알 수 없음 : 검 2, 지팡이 10\n  * 해당 카드가 나오면 현재로서는 결과를 알 수 없는 상태를 의미한다.' }
@@ -292,6 +294,13 @@ export const SpreadGuideTab: React.FC = () => {
   
   const [activeSpread, setActiveSpread] = useState<SpreadDef | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [searchCode, setSearchCode] = useState<string[]>(['', '', '']);
+
+  const getCardDisplayName = (card: TarotCard) => {
+    if (card.type === 'major') return `[${card.englishName}]`;
+    const typeName: Record<string, string> = { swords: 'Sword', cups: 'Cup', wands: 'Wand', pentacles: 'Pentacle' };
+    return `[${typeName[card.type] || card.type} ${card.name}]`;
+  };
 
   const handlePreviewSpread = (spread: SpreadDef) => {
     setPreviewSpread(spread);
@@ -711,6 +720,64 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="flex-1 w-full max-w-sm mx-auto min-h-[300px]">
           {renderDetailLayout(spread, highlightId)}
         </div>
+
+        {/* Yes/No Card Search UI */}
+        {spread.id === 'yesno' && currentStepIndex >= 3 && (
+          <div className="flex flex-col items-center mb-2 shrink-0">
+            <div className="flex gap-4">
+              {[0, 1, 2].map((idx) => (
+                <input
+                  key={idx}
+                  id={`search-input-${idx}`}
+                  type="text"
+                  maxLength={1}
+                  value={searchCode[idx]}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/[^0-9]/g, '');
+                    const newCode = [...searchCode];
+                    newCode[idx] = val;
+                    setSearchCode(newCode);
+                    if (val && idx < 2) {
+                      document.getElementById(`search-input-${idx + 1}`)?.focus();
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Backspace' && !searchCode[idx] && idx > 0) {
+                      const newCode = [...searchCode];
+                      newCode[idx - 1] = '';
+                      setSearchCode(newCode);
+                      document.getElementById(`search-input-${idx - 1}`)?.focus();
+                    }
+                  }}
+                  className="w-10 h-10 border border-white bg-black text-white text-center text-[16px] focus:outline-none focus:border-[#E19D3B]"
+                />
+              ))}
+            </div>
+            {(() => {
+              const codeStr = searchCode.join('');
+              if (codeStr.length === 3) {
+                const card = TAROT_CARDS.find(c => c.code === codeStr);
+                if (card) {
+                  const yesNoInfo = getYesNoStatus(card);
+                  return (
+                    <div className="flex flex-col items-center mt-4 h-[60px]">
+                      <span className="text-[#E19D3B] text-[13px] font-bold tracking-widest">{getCardDisplayName(card)}</span>
+                      <span className={`${yesNoInfo.color} text-[13px] font-bold tracking-widest mt-1`}>{yesNoInfo.status}</span>
+                      {yesNoInfo.desc && (
+                        <span className="text-white/60 text-[10px] mt-1 max-w-[280px] text-center leading-relaxed break-keep">
+                          {yesNoInfo.desc}
+                        </span>
+                      )}
+                    </div>
+                  );
+                } else {
+                  return <div className="flex flex-col items-center mt-4 h-[60px]"><span className="text-red-500 text-[13px] mt-1">존재하지 않는 코드입니다</span></div>;
+                }
+              }
+              return <div className="h-[60px] mt-4"></div>;
+            })()}
+          </div>
+        )}
 
         {/* Bottom Dialogue Box */}
         <DialogueBox 
