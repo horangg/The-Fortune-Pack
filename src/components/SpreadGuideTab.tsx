@@ -65,7 +65,7 @@ const SPREADS: SpreadDef[] = [
   {
     id: 'yesno',
     name: '예스 or 노 스프레드 (Yes or No?)',
-    displayName: 'Yes\n·\nNo',
+    displayName: 'Yes\nNo',
     layout: '3-card',
     description: '빠르게 명확한 결정을 내리고 싶을 때 적합합니다.',
     readingSteps: [
@@ -249,7 +249,7 @@ const DialogueBox: React.FC<{
               </p>
               
               {subText && (
-                <p className="text-white/60 text-[12px] text-center mt-3 break-keep tracking-wide w-full px-2">
+                <p className="text-white/60 text-[12px] text-center mt-3 break-keep leading-relaxed tracking-wide w-full px-2">
                   {disableTyping ? subText : <Typewriter text={subText} speed={30} delay={typingDelay + (text.length * 30)} />}
                 </p>
               )}
@@ -337,7 +337,7 @@ export const SpreadGuideTab: React.FC = () => {
       className="flex-1 flex flex-col justify-between w-full h-full"
     >
       <div className="flex-1 flex flex-col justify-center items-center w-full">
-        <div className="text-white text-[14px] mb-6 tracking-wide min-h-[21px]">
+        <div className="text-white text-[14px] mb-6 leading-relaxed tracking-wide min-h-[21px]">
         <Typewriter text="어떤 것을 점쳐보시겠습니까?" speed={40} />
       </div>
 
@@ -358,7 +358,7 @@ export const SpreadGuideTab: React.FC = () => {
                   previewSpread?.id === spread.id ? 'bg-white text-black font-bold border-white' : 'border-white bg-black hover:bg-white/20 text-white'
                 }`}
               >
-                <span className="text-[9px] whitespace-pre-line text-center leading-[1.1]">
+                <span className="text-[9px] whitespace-pre-line text-center leading-relaxed">
                   {spread.displayName}
                 </span>
               </button>
@@ -374,7 +374,7 @@ export const SpreadGuideTab: React.FC = () => {
                   previewSpread?.id === spread.id ? 'bg-white text-black font-bold border-white' : 'border-white bg-black hover:bg-white/20 text-white'
                 }`}
               >
-                <span className="text-[9px] whitespace-pre-line text-center leading-[1.1]">
+                <span className="text-[9px] whitespace-pre-line text-center leading-relaxed">
                   {spread.displayName}
                 </span>
               </button>
@@ -492,12 +492,12 @@ export const SpreadGuideTab: React.FC = () => {
             <div key={`row-${row}`} className="flex justify-center gap-8 w-full border-b border-white/10 pb-2 mb-2 last:border-0">
                <div className="flex flex-col items-center gap-1">
                  <div className={getCardStyle(row * 2 + 1, 'w-[50px]')}>
-                    <span className="text-white text-[10px] whitespace-pre-line text-center leading-tight">{spread.positions[row * 2].name}</span>
+                    <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[row * 2].name}</span>
                  </div>
                </div>
                <div className="flex flex-col items-center gap-1">
                  <div className={getCardStyle(row * 2 + 2, 'w-[50px]')}>
-                    <span className="text-white text-[10px] whitespace-pre-line text-center leading-tight">{spread.positions[row * 2 + 1].name}</span>
+                    <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[row * 2 + 1].name}</span>
                  </div>
                </div>
             </div>
@@ -549,59 +549,59 @@ export const SpreadGuideTab: React.FC = () => {
           {/* pos 1 (Center) */}
           <div style={{ position: 'absolute', left: '35%', top: '50%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(1, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[0].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
              </div>
           </div>
           {/* pos 2 (Across 1) */}
           <div style={{ position: 'absolute', left: '35%', top: '50%', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
              <div className={getCardStyle(2, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[1].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[1].name}</span>
              </div>
           </div>
           {/* pos 3 (Top) */}
           <div style={{ position: 'absolute', left: '35%', top: '15%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(3, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[2].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[2].name}</span>
              </div>
           </div>
           {/* pos 4 (Bottom) */}
           <div style={{ position: 'absolute', left: '35%', bottom: '15%', transform: 'translate(-50%, 50%)' }}>
              <div className={getCardStyle(4, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[3].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[3].name}</span>
              </div>
           </div>
           {/* pos 5 (Left) */}
           <div style={{ position: 'absolute', left: '10%', top: '50%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(5, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[4].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[4].name}</span>
              </div>
           </div>
           {/* pos 6 (Right) */}
           <div style={{ position: 'absolute', left: '60%', top: '50%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(6, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[5].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[5].name}</span>
              </div>
           </div>
 
           {/* Right Column: 7, 8, 9, 10 */}
           <div style={{ position: 'absolute', left: '90%', bottom: '10%', transform: 'translate(-50%, 50%)' }}>
              <div className={getCardStyle(7, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[6].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[6].name}</span>
              </div>
           </div>
           <div style={{ position: 'absolute', left: '90%', bottom: '38%', transform: 'translate(-50%, 50%)' }}>
              <div className={getCardStyle(8, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[7].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[7].name}</span>
              </div>
           </div>
           <div style={{ position: 'absolute', left: '90%', top: '38%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(9, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[8].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[8].name}</span>
              </div>
           </div>
           <div style={{ position: 'absolute', left: '90%', top: '10%', transform: 'translate(-50%, -50%)' }}>
             <div className={getCardStyle(10, 'w-[42px]')}>
-               <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[9].name}</span>
+               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[9].name}</span>
             </div>
           </div>
         </div>
@@ -625,7 +625,7 @@ export const SpreadGuideTab: React.FC = () => {
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(1, 'w-[48px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[0].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
              </div>
           </div>
           {/* Circular items */}
@@ -637,7 +637,7 @@ export const SpreadGuideTab: React.FC = () => {
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
                  <div className={getCardStyle(pos.id, 'w-[45px]')}>
-                    <span className="text-white text-[9px] whitespace-pre-line text-center leading-tight">{pos.name}</span>
+                    <span className="text-white text-[9px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
                  </div>
               </div>
             );
@@ -653,7 +653,7 @@ export const SpreadGuideTab: React.FC = () => {
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
              <div className={getCardStyle(1, 'w-[45px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-tight">{spread.positions[0].name}</span>
+                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
              </div>
           </div>
           {/* Clock items */}
@@ -665,7 +665,7 @@ export const SpreadGuideTab: React.FC = () => {
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
                  <div className={getCardStyle(pos.id, 'w-[36px]')}>
-                    <span className="text-white text-[7px] whitespace-pre-line text-center leading-tight">{pos.name}</span>
+                    <span className="text-white text-[7px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
                  </div>
               </div>
             );
