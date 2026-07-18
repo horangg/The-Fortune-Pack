@@ -775,6 +775,8 @@ export const SpreadGuideTab: React.FC = () => {
                   key={idx}
                   id={`search-input-${idx}`}
                   type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   maxLength={1}
                   value={searchCode[idx]}
                   onChange={(e) => {
