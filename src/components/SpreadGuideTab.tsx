@@ -60,17 +60,14 @@ const SPREADS: SpreadDef[] = [
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
-      { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 좌, 중, 우 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 2 },
+      { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 2 },
       { stepLabel: 'Step 4', text: '뽑힌 카드들이 긍정, 부정, 중립 인지\n확인합니다.', subText: '*세 자리 숫자코드를 입력하면 확인할 수\n있습니다.' },
-      { stepLabel: 'Step 5', text: '3장이 모두 Yes면 확실한 긍정,\n2장이 Yes면 긍정적이나 시간이 걸릴 수 있음,\nNo가 많다면 부정적인 결론에 가깝습니다.\n*역방향 카드를 사용하는 경우 역방향은 무조건 No로 해석합니다.' },
-      { stepLabel: '상세 해석', text: '* Yes 카드: 아래의 No, 중립, 예외 카드를 제외한 모든 카드\n* No 카드\n  * 메이저: 죽음, 악마, 탑, 달\n  * 마이너: 검(3, 5, 6, 7, 8, 9, 10, 기사), 컵(5, 7, 8), 펜타클(5)' },
-      { stepLabel: '상세 해석', text: '* 중립 카드: 은둔자, 매달린 사람, 검 4, 컵 4\n* 조건부 Yes : 지팡이 5, 7\n  *해당 카드가 나오면 결과는 Yes이지만 원하는 것을 얻기 위해 치열하게 노력하고 싸워야 함을 뜻한다.' },
-      { stepLabel: '상세 해석', text: '* 알 수 없음 : 검 2, 지팡이 10\n  * 해당 카드가 나오면 현재로서는 결과를 알 수 없는 상태를 의미한다.' }
+      { stepLabel: 'Step 5', text: '3장이 모두 Yes면 확실한 긍정,\n2장이 Yes면 긍정적이나 시간이 걸릴 수 있음,\nNo가 많다면 부정적인 결론에 가깝습니다.\n*역방향은 무조건 No로 해석합니다.' }
     ],
     positions: [
-      { id: 1, name: '좌', meaning: '뽑힌 카드들이 긍정(Yes), 부정(No), 중립(Neutral) 카드인지 분류합니다.' },
-      { id: 2, name: '중', meaning: '뽑힌 카드들이 긍정(Yes), 부정(No), 중립(Neutral) 카드인지 분류합니다.' },
-      { id: 3, name: '우', meaning: '뽑힌 카드들이 긍정(Yes), 부정(No), 중립(Neutral) 카드인지 분류합니다.' }
+      { id: 1, name: '?', meaning: '' },
+      { id: 2, name: '?', meaning: '' },
+      { id: 3, name: '?', meaning: '' }
     ]
   },
   {
@@ -240,13 +237,13 @@ const DialogueBox: React.FC<{
     <div className="w-full max-w-[340px] mt-auto pb-4 mx-auto font-serif shrink-0">
       <div className="border-[1.5px] border-white p-[3px] bg-black h-[155px]">
         <div className="border-[1.5px] border-white h-full relative">
-          
+
           <div className="absolute inset-x-4 top-2 bottom-10 overflow-y-auto custom-scrollbar flex flex-col">
             <div className="my-auto flex flex-col items-center py-1">
               <p className="text-white text-[14px] text-center whitespace-pre-wrap break-keep leading-relaxed tracking-wide w-full px-2">
                 {disableTyping ? text : <Typewriter text={text} speed={30} delay={typingDelay} />}
               </p>
-              
+
               {subText && (
                 <p className="text-white/60 text-[12px] text-center mt-3 break-keep leading-relaxed tracking-wide w-full px-2">
                   {disableTyping ? subText : <Typewriter text={subText} speed={30} delay={typingDelay + (text.length * 30)} />}
@@ -256,8 +253,8 @@ const DialogueBox: React.FC<{
           </div>
 
           {centerButton && (
-            <button 
-              onClick={centerButton.onClick} 
+            <button
+              onClick={centerButton.onClick}
               className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hover:opacity-70 transition-opacity animate-bounce z-10"
             >
               <img src={`${import.meta.env.BASE_URL}icon/dowm.png`} alt="down" className="h-[12px] w-auto object-contain" />
@@ -265,8 +262,8 @@ const DialogueBox: React.FC<{
           )}
 
           {leftButton && (
-            <button 
-              onClick={leftButton.onClick} 
+            <button
+              onClick={leftButton.onClick}
               className="absolute bottom-4 left-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 animate-bounce-left"
             >
               <img src={`${import.meta.env.BASE_URL}icon/left.png`} alt="prev" className="h-[12px] w-auto object-contain" />
@@ -275,8 +272,8 @@ const DialogueBox: React.FC<{
           )}
 
           {rightButton && (
-            <button 
-              onClick={rightButton.onClick} 
+            <button
+              onClick={rightButton.onClick}
               className="absolute bottom-4 right-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 animate-bounce-right"
             >
               <span className="text-white text-[13px] tracking-widest leading-none">{rightButton.label}</span>
@@ -293,7 +290,7 @@ const DialogueBox: React.FC<{
 export const SpreadGuideTab: React.FC = () => {
   const [tabState, setTabState] = useState<'selection' | 'reading'>('selection');
   const [previewSpread, setPreviewSpread] = useState<SpreadDef | null>(null);
-  
+
   const [activeSpread, setActiveSpread] = useState<SpreadDef | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [searchCode, setSearchCode] = useState<string[]>(['', '', '']);
@@ -308,33 +305,33 @@ export const SpreadGuideTab: React.FC = () => {
     const type = card.type;
     const name = card.name;
 
-    if (type === 'major' && ['죽음', '악마', '탑', '달'].some(k => name.includes(k))) 
-      return { status: '부정', color: 'text-[#E19D3B]' };
-    
-    if (type === 'swords' && ['3', '5', '6', '7', '8', '9', '10', '기사'].some(k => name === k)) 
-      return { status: '부정', color: 'text-[#E19D3B]' };
-    if (type === 'cups' && ['5', '7', '8'].some(k => name === k)) 
-      return { status: '부정', color: 'text-[#E19D3B]' };
-    if (type === 'pentacles' && name === '5') 
+    if (type === 'major' && ['죽음', '악마', '탑', '달'].some(k => name.includes(k)))
       return { status: '부정', color: 'text-[#E19D3B]' };
 
-    if (type === 'major' && ['은둔자', '매달린 사람'].some(k => name.includes(k))) 
+    if (type === 'swords' && ['3', '5', '6', '7', '8', '9', '10', '기사'].some(k => name === k))
+      return { status: '부정', color: 'text-[#E19D3B]' };
+    if (type === 'cups' && ['5', '7', '8'].some(k => name === k))
+      return { status: '부정', color: 'text-[#E19D3B]' };
+    if (type === 'pentacles' && name === '5')
+      return { status: '부정', color: 'text-[#E19D3B]' };
+
+    if (type === 'major' && ['은둔자', '매달린 사람'].some(k => name.includes(k)))
       return { status: '중립', color: 'text-gray-400' };
-    if ((type === 'swords' && name === '4') || (type === 'cups' && name === '4')) 
+    if ((type === 'swords' && name === '4') || (type === 'cups' && name === '4'))
       return { status: '중립', color: 'text-gray-400' };
 
-    if (type === 'wands' && ['5', '7'].some(k => name === k)) 
-      return { 
-        status: '조건부 Yes', 
-        color: 'text-[#E19D3B]', 
-        desc: '*해당 카드가 나오면 결과는 Yes이지만 원하는 것을 얻기 위해 치열하게 노력하고 싸워야 함을 뜻한다.' 
+    if (type === 'wands' && ['5', '7'].some(k => name === k))
+      return {
+        status: '조건부 Yes',
+        color: 'text-[#E19D3B]',
+        desc: '*해당 카드가 나오면 결과는 Yes이지만 원하는 것을 얻기 위해 치열하게 노력하고 싸워야 함을 뜻한다.'
       };
 
-    if ((type === 'swords' && name === '2') || (type === 'wands' && name === '10')) 
-      return { 
-        status: '알 수 없음', 
-        color: 'text-gray-400', 
-        desc: '*해당 카드가 나오면 현재로서는 결과를 알 수 없는 상태를 의미한다.' 
+    if ((type === 'swords' && name === '2') || (type === 'wands' && name === '10'))
+      return {
+        status: '알 수 없음',
+        color: 'text-gray-400',
+        desc: '*해당 카드가 나오면 현재로서는 결과를 알 수 없는 상태를 의미한다.'
       };
 
     return { status: '긍정', color: 'text-white' };
@@ -380,63 +377,61 @@ export const SpreadGuideTab: React.FC = () => {
     >
       <div className="flex-1 flex flex-col justify-center items-center w-full">
         <div className="text-white text-[14px] mb-6 leading-relaxed tracking-wide min-h-[21px]">
-        <Typewriter text="어떤 것을 점쳐보시겠습니까?" speed={40} />
-      </div>
+          <Typewriter text="어떤 것을 점쳐보시겠습니까?" speed={40} />
+        </div>
 
-      {/* TV / Table Outline mimicking Image 1 */}
-      <div className="relative w-full max-w-[340px] mx-auto flex items-center justify-center py-4">
-        {/* The Table Image */}
-        <img src={`${import.meta.env.BASE_URL}Table.png`} alt="Table" className="w-full h-auto object-contain pointer-events-none" />
-        
-        {/* Overlay Cards Container */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-4 pb-8">
-          {/* Top Row: 4 cards */}
-          <div className="flex justify-center gap-2 mb-3 w-full">
-            {SPREADS.slice(0, 4).map((spread) => (
-              <button
-                key={spread.id}
-                onClick={() => handlePreviewSpread(spread)}
-                className={`w-[45px] aspect-[60/96] border flex items-center justify-center transition-colors ${
-                  previewSpread?.id === spread.id ? 'bg-white text-black font-bold border-white' : 'border-white bg-black hover:bg-white/20 text-white'
-                }`}
-              >
-                <span className="text-[9px] whitespace-pre-line text-center leading-relaxed">
-                  {spread.displayName}
-                </span>
-              </button>
-            ))}
-          </div>
-          {/* Bottom Row: 5 cards */}
-          <div className="flex justify-center gap-1.5 w-full">
-            {SPREADS.slice(4, 9).map((spread) => (
-              <button
-                key={spread.id}
-                onClick={() => handlePreviewSpread(spread)}
-                className={`w-[45px] aspect-[60/96] border flex items-center justify-center transition-colors ${
-                  previewSpread?.id === spread.id ? 'bg-white text-black font-bold border-white' : 'border-white bg-black hover:bg-white/20 text-white'
-                }`}
-              >
-                <span className="text-[9px] whitespace-pre-line text-center leading-relaxed">
-                  {spread.displayName}
-                </span>
-              </button>
-            ))}
+        {/* TV / Table Outline mimicking Image 1 */}
+        <div className="relative w-full max-w-[340px] mx-auto flex items-center justify-center py-4">
+          {/* The Table Image */}
+          <img src={`${import.meta.env.BASE_URL}Table.png`} alt="Table" className="w-full h-auto object-contain pointer-events-none" />
+
+          {/* Overlay Cards Container */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-4 pb-8">
+            {/* Top Row: 4 cards */}
+            <div className="flex justify-center gap-2 mb-3 w-full">
+              {SPREADS.slice(0, 4).map((spread) => (
+                <button
+                  key={spread.id}
+                  onClick={() => handlePreviewSpread(spread)}
+                  className={`w-[45px] aspect-[60/96] border flex items-center justify-center transition-colors ${previewSpread?.id === spread.id ? 'bg-white text-black font-bold border-white' : 'border-white bg-black hover:bg-white/20 text-white'
+                    }`}
+                >
+                  <span className="text-[9px] whitespace-pre-line text-center leading-relaxed">
+                    {spread.displayName}
+                  </span>
+                </button>
+              ))}
+            </div>
+            {/* Bottom Row: 5 cards */}
+            <div className="flex justify-center gap-1.5 w-full">
+              {SPREADS.slice(4, 9).map((spread) => (
+                <button
+                  key={spread.id}
+                  onClick={() => handlePreviewSpread(spread)}
+                  className={`w-[45px] aspect-[60/96] border flex items-center justify-center transition-colors ${previewSpread?.id === spread.id ? 'bg-white text-black font-bold border-white' : 'border-white bg-black hover:bg-white/20 text-white'
+                    }`}
+                >
+                  <span className="text-[9px] whitespace-pre-line text-center leading-relaxed">
+                    {spread.displayName}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
       </div>
 
       {previewSpread ? (
-        <DialogueBox 
+        <DialogueBox
           text={previewSpread.description}
           rightButton={{ label: '운세 보기', onClick: handleStartReading }}
           disableTyping={true}
         />
       ) : (
-        <DialogueBox 
+        <DialogueBox
           text={'스프레드를 선택해주세요.'}
-          centerButton={{ onClick: () => {} }}
+          centerButton={{ onClick: () => { } }}
           typingDelay={800}
         />
       )}
@@ -446,9 +441,8 @@ export const SpreadGuideTab: React.FC = () => {
   const renderDetailLayout = (spread: SpreadDef, highlightId: number) => {
     const getCardStyle = (posId: number, widthClass: string = 'w-[63px]') => {
       const isSelected = highlightId === posId;
-      return `${widthClass} aspect-[60/96] border-[1px] transition-all flex flex-col items-center justify-center p-1 relative select-none ${
-        isSelected ? 'border-[#ffd700] bg-[#111] z-10 shadow-[0_0_8px_rgba(255,215,0,0.5)]' : 'border-white/50 bg-black'
-      }`;
+      return `${widthClass} aspect-[60/96] border-[1px] transition-all flex flex-col items-center justify-center p-1 relative select-none ${isSelected ? 'border-[#ffd700] bg-[#111] z-10 shadow-[0_0_8px_rgba(255,215,0,0.5)]' : 'border-white/50 bg-black'
+        }`;
     };
 
     if (spread.layout === '1-card') {
@@ -496,31 +490,31 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="flex flex-col items-center gap-2 mt-4 relative h-[300px]">
           {/* pos 1 (Center bottom) */}
           <div className="absolute bottom-4" style={{ left: '50%', transform: 'translateX(-50%)' }}>
-             <div className={getCardStyle(1)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[0].name}</span>
-             </div>
+            <div className={getCardStyle(1)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[0].name}</span>
+            </div>
           </div>
           {/* pos 2 & 4 (Middle) */}
           <div className="absolute bottom-28" style={{ left: '20%' }}>
-             <div className={getCardStyle(2)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[1].name}</span>
-             </div>
+            <div className={getCardStyle(2)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[1].name}</span>
+            </div>
           </div>
           <div className="absolute bottom-28" style={{ right: '20%' }}>
-             <div className={getCardStyle(4)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[3].name}</span>
-             </div>
+            <div className={getCardStyle(4)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[3].name}</span>
+            </div>
           </div>
           {/* pos 3 & 5 (Top) */}
           <div className="absolute top-4" style={{ left: '10%' }}>
-             <div className={getCardStyle(3)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[2].name}</span>
-             </div>
+            <div className={getCardStyle(3)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[2].name}</span>
+            </div>
           </div>
           <div className="absolute top-4" style={{ right: '10%' }}>
-             <div className={getCardStyle(5)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[4].name}</span>
-             </div>
+            <div className={getCardStyle(5)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[4].name}</span>
+            </div>
           </div>
         </div>
       );
@@ -532,16 +526,16 @@ export const SpreadGuideTab: React.FC = () => {
           {/* 4 rows, 2 cards each */}
           {[0, 1, 2, 3].map(row => (
             <div key={`row-${row}`} className="flex justify-center gap-8 w-full border-b border-white/10 pb-2 mb-2 last:border-0">
-               <div className="flex flex-col items-center gap-1">
-                 <div className={getCardStyle(row * 2 + 1, 'w-[50px]')}>
-                    <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[row * 2].name}</span>
-                 </div>
-               </div>
-               <div className="flex flex-col items-center gap-1">
-                 <div className={getCardStyle(row * 2 + 2, 'w-[50px]')}>
-                    <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[row * 2 + 1].name}</span>
-                 </div>
-               </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className={getCardStyle(row * 2 + 1, 'w-[50px]')}>
+                  <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[row * 2].name}</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className={getCardStyle(row * 2 + 2, 'w-[50px]')}>
+                  <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[row * 2 + 1].name}</span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -553,33 +547,33 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[320px] mt-4 flex items-center justify-center max-w-[340px] mx-auto">
           {/* pos 5 (Center) */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(5)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[4].name}</span>
-             </div>
+            <div className={getCardStyle(5)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[4].name}</span>
+            </div>
           </div>
           {/* pos 1 (Left) */}
           <div style={{ position: 'absolute', left: '15%', top: '50%', transform: 'translateY(-50%)' }}>
-             <div className={getCardStyle(1)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[0].name}</span>
-             </div>
+            <div className={getCardStyle(1)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[0].name}</span>
+            </div>
           </div>
           {/* pos 3 (Right) */}
           <div style={{ position: 'absolute', right: '15%', top: '50%', transform: 'translateY(-50%)' }}>
-             <div className={getCardStyle(3)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[2].name}</span>
-             </div>
+            <div className={getCardStyle(3)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[2].name}</span>
+            </div>
           </div>
           {/* pos 2 (Top) */}
           <div style={{ position: 'absolute', left: '50%', top: '10%', transform: 'translateX(-50%)' }}>
-             <div className={getCardStyle(2)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[1].name}</span>
-             </div>
+            <div className={getCardStyle(2)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[1].name}</span>
+            </div>
           </div>
           {/* pos 4 (Bottom) */}
           <div style={{ position: 'absolute', left: '50%', bottom: '10%', transform: 'translateX(-50%)' }}>
-             <div className={getCardStyle(4)}>
-                <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[3].name}</span>
-             </div>
+            <div className={getCardStyle(4)}>
+              <span className="text-white text-[12px] whitespace-pre-line text-center">{spread.positions[3].name}</span>
+            </div>
           </div>
         </div>
       );
@@ -590,60 +584,60 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[350px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
           {/* pos 1 (Center) */}
           <div style={{ position: 'absolute', left: '35%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(1, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
-             </div>
+            <div className={getCardStyle(1, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
+            </div>
           </div>
           {/* pos 2 (Across 1) */}
           <div style={{ position: 'absolute', left: '35%', top: '50%', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
-             <div className={getCardStyle(2, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[1].name}</span>
-             </div>
+            <div className={getCardStyle(2, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[1].name}</span>
+            </div>
           </div>
           {/* pos 3 (Top) */}
           <div style={{ position: 'absolute', left: '35%', top: '15%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(3, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[2].name}</span>
-             </div>
+            <div className={getCardStyle(3, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[2].name}</span>
+            </div>
           </div>
           {/* pos 4 (Bottom) */}
           <div style={{ position: 'absolute', left: '35%', bottom: '15%', transform: 'translate(-50%, 50%)' }}>
-             <div className={getCardStyle(4, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[3].name}</span>
-             </div>
+            <div className={getCardStyle(4, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[3].name}</span>
+            </div>
           </div>
           {/* pos 5 (Left) */}
           <div style={{ position: 'absolute', left: '10%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(5, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[4].name}</span>
-             </div>
+            <div className={getCardStyle(5, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[4].name}</span>
+            </div>
           </div>
           {/* pos 6 (Right) */}
           <div style={{ position: 'absolute', left: '60%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(6, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[5].name}</span>
-             </div>
+            <div className={getCardStyle(6, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[5].name}</span>
+            </div>
           </div>
 
           {/* Right Column: 7, 8, 9, 10 */}
           <div style={{ position: 'absolute', left: '90%', bottom: '10%', transform: 'translate(-50%, 50%)' }}>
-             <div className={getCardStyle(7, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[6].name}</span>
-             </div>
+            <div className={getCardStyle(7, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[6].name}</span>
+            </div>
           </div>
           <div style={{ position: 'absolute', left: '90%', bottom: '38%', transform: 'translate(-50%, 50%)' }}>
-             <div className={getCardStyle(8, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[7].name}</span>
-             </div>
+            <div className={getCardStyle(8, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[7].name}</span>
+            </div>
           </div>
           <div style={{ position: 'absolute', left: '90%', top: '38%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(9, 'w-[42px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[8].name}</span>
-             </div>
+            <div className={getCardStyle(9, 'w-[42px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[8].name}</span>
+            </div>
           </div>
           <div style={{ position: 'absolute', left: '90%', top: '10%', transform: 'translate(-50%, -50%)' }}>
             <div className={getCardStyle(10, 'w-[42px]')}>
-               <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[9].name}</span>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[9].name}</span>
             </div>
           </div>
         </div>
@@ -661,26 +655,26 @@ export const SpreadGuideTab: React.FC = () => {
         6: 0,      // 토
         7: 205.7   // 일
       };
-      
+
       return (
         <div className="relative w-full h-[320px] mt-4 flex items-center justify-center max-w-[340px] mx-auto">
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(1, 'w-[48px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
-             </div>
+            <div className={getCardStyle(1, 'w-[48px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
+            </div>
           </div>
           {/* Circular items */}
           {spread.positions.slice(1).map((pos, i) => {
-            const angleDeg = angles[(i + 1) as keyof typeof angles] - 90; 
+            const angleDeg = angles[(i + 1) as keyof typeof angles] - 90;
             const angleRad = (angleDeg * Math.PI) / 180;
             const left = `calc(50% + ${Math.cos(angleRad) * radius}px)`;
             const top = `calc(50% + ${Math.sin(angleRad) * radius}px)`;
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
-                 <div className={getCardStyle(pos.id, 'w-[45px]')}>
-                    <span className="text-white text-[9px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
-                 </div>
+                <div className={getCardStyle(pos.id, 'w-[45px]')}>
+                  <span className="text-white text-[9px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
+                </div>
               </div>
             );
           })}
@@ -694,21 +688,21 @@ export const SpreadGuideTab: React.FC = () => {
         <div className="relative w-full h-[380px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
-             <div className={getCardStyle(1, 'w-[45px]')}>
-                <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
-             </div>
+            <div className={getCardStyle(1, 'w-[45px]')}>
+              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
+            </div>
           </div>
           {/* Clock items */}
           {spread.positions.slice(1).map((pos, i) => {
-            const angleDeg = (i * 30) - 90; 
+            const angleDeg = (i * 30) - 90;
             const angleRad = (angleDeg * Math.PI) / 180;
             const left = `calc(50% + ${Math.cos(angleRad) * radius}px)`;
             const top = `calc(50% + ${Math.sin(angleRad) * radius}px)`;
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
-                 <div className={getCardStyle(pos.id, 'w-[36px]')}>
-                    <span className="text-white text-[7px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
-                 </div>
+                <div className={getCardStyle(pos.id, 'w-[36px]')}>
+                  <span className="text-white text-[7px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
+                </div>
               </div>
             );
           })}
@@ -744,7 +738,7 @@ export const SpreadGuideTab: React.FC = () => {
       >
         {/* Header with back button */}
         <div className="flex items-center gap-3 py-4 select-none">
-          <button 
+          <button
             onClick={handleBackToSelection}
             className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity"
           >
@@ -818,9 +812,16 @@ export const SpreadGuideTab: React.FC = () => {
         )}
 
         {/* Bottom Dialogue Box */}
-        <DialogueBox 
+        <DialogueBox
           text={currentStep?.text || ''}
-          subText={highlightId !== -1 ? `(${spread.positions.find(p => p.id === highlightId)?.meaning})` : undefined}
+          subText={(() => {
+            if (currentStep?.subText) return currentStep.subText;
+            if (highlightId !== -1) {
+              const meaning = spread.positions.find(p => p.id === highlightId)?.meaning;
+              return meaning ? `(${meaning})` : undefined;
+            }
+            return undefined;
+          })()}
           leftButton={!isFirstStep ? { label: '이전', onClick: handlePrevStep } : undefined}
           rightButton={!isLastStep ? { label: '다음', onClick: handleNextStep } : undefined}
           disableTyping={true}
