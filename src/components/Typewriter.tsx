@@ -16,14 +16,15 @@ export const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 50, delay 
     
     let timer: NodeJS.Timeout;
     const startTyping = () => {
-      // Immediate first character if speed > 0, or just start interval
+      const startTime = Date.now();
       timer = setInterval(() => {
-        setDisplayedText(text.substring(0, index + 1));
-        index++;
-        if (index === text.length) {
+        const elapsed = Date.now() - startTime;
+        const charsToShow = Math.floor(elapsed / speed) + 1;
+        setDisplayedText(text.substring(0, charsToShow));
+        if (charsToShow >= text.length) {
           clearInterval(timer);
         }
-      }, speed);
+      }, Math.min(speed, 16)); // update at 60fps or the speed itself
     };
 
     const delayTimer = setTimeout(startTyping, delay);
