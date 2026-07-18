@@ -781,6 +781,12 @@ export const SpreadGuideTab: React.FC = () => {
                       document.getElementById(`search-input-${idx - 1}`)?.focus();
                     }
                   }}
+                  onClick={() => {
+                    if (searchCode.some(val => val !== '')) {
+                      setSearchCode(['', '', '']);
+                      setTimeout(() => document.getElementById('search-input-0')?.focus(), 0);
+                    }
+                  }}
                   className="w-9 h-9 border border-white bg-black text-white text-center text-[15px] focus:outline-none focus:border-[#E19D3B]"
                 />
               ))}
