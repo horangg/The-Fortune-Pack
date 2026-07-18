@@ -23,7 +23,7 @@ export const RulebookTab: React.FC = () => {
             이 게임은 '엉터리 타로술사'가 되어 서로의 고민을 상담해 주는 파티 게임입니다. 카드의 정해진 의미를 억지로 외울 필요는 없습니다.
           </p>
           <p className="text-white leading-[1.6] text-[13px]">
-            당신의 입담과 상상력이 곧 리딩입니다. 가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아, 가장 많은 복채(코인)를 모은 타로술사가 승리합니다.
+            당신의 말이 곧 카드의 해석입니다.<br />가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아, 가장 많은 복채를 획득해 최고의 타로술사가 되어보세요!
           </p>
         </div>
       ),
@@ -35,13 +35,12 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-3 text-center">
           <div className="space-y-1">
-            <p className="text-white">Tissue Office Fortune Pack 78장</p>
-            <p className="text-white">+ The Tissue 카드 2장 (총 80장)</p>
-            <p className="text-white">게임 룰북 QR Card 1장</p>
-            <p className="text-white">게임 코인 + 주사위 (복채 옵션)</p>
+            <p className="text-white">Tissue Office Fortune Pack 80장(the Tissue카드 2장 포함)</p>
+            <p className="text-white">타로 치트키 QR Card 1장</p>
+            <p className="text-white">게임 코인 20개 + 주사위 1개</p>
           </div>
           <div className="pt-2 border-t border-white/10 text-white text-[12px] leading-[1.6]">
-            타로카드 80장, 복채, 주사위를 세팅한 후 의뢰인을 정한다. 의뢰인이 아닌 사람은 모두 타로술사다.
+            타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다. 의뢰인이 아닌 사람은 모두 타로술사다.
           </div>
         </div>
       ),
@@ -58,7 +57,7 @@ export const RulebookTab: React.FC = () => {
           </div>
           <div className="flex gap-2">
             <span className="text-[#FF9900]">2.</span>
-            <p className="text-white">의뢰인 바로 왼편에 앉은 사람이 카드를 펼친다.</p>
+            <p className="text-white">의뢰인 바로 왼편에 앉은 사람이 카드를 섞은 뒤 펼친다.</p>
           </div>
           <div className="flex gap-2">
             <span className="text-[#FF9900]">3.</span>
@@ -92,7 +91,7 @@ export const RulebookTab: React.FC = () => {
         <div className="space-y-3 text-left px-2">
           <div className="flex gap-2">
             <span className="text-[#FF9900]">6.</span>
-            <p className="text-white">타로술사들의 해석을 듣고 의뢰인은 복채를 누구에게 줄지 결정한다. 결정은 오롯이 의뢰인의 몫이다.</p>
+            <p className="text-white">의뢰인은 모든 타로술사들의 해석을 듣고, 누구에게 복채를 줄지 결정한다. 결정은 오롯이 의뢰인의 몫이다.</p>
           </div>
           <div className="flex gap-2">
             <span className="text-[#FF9900]">7.</span>
@@ -160,12 +159,12 @@ export const RulebookTab: React.FC = () => {
 
   const handleInteraction = () => {
     if (isSwiping.current) return;
-    
+
     const scrollContainer = document.getElementById('rulebook-scroll');
     if (scrollContainer) {
       const isScrollable = scrollContainer.scrollHeight > scrollContainer.clientHeight;
       const isScrolledToBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 5;
-      
+
       if (isScrollable && !isScrolledToBottom) {
         // Scroll down instead of moving to next slide
         scrollContainer.scrollBy({ top: 80, behavior: 'smooth' });
@@ -181,7 +180,7 @@ export const RulebookTab: React.FC = () => {
 
   return (
     <div className="flex-1 flex flex-col justify-between px-6 py-4 w-full text-white bg-black select-none max-w-md mx-auto tracking-tight break-keep leading-[1.6]">
-      
+
       {/* Upper header section */}
       <div className="space-y-3">
 
@@ -191,11 +190,10 @@ export const RulebookTab: React.FC = () => {
             <button
               key={slide.id}
               onClick={() => setCurrentIndex(idx)}
-              className={`px-2 py-1 text-[11px]  border transition-all cursor-pointer ${
-                currentIndex === idx
-                  ? 'bg-white text-white border-white '
-                  : 'bg-black text-white border-neutral-800 hover:border-neutral-500 hover:text-white'
-              }`}
+              className={`px-2 py-1 text-[11px]  border transition-all cursor-pointer ${currentIndex === idx
+                ? 'bg-white text-white border-white '
+                : 'bg-black text-white border-neutral-800 hover:border-neutral-500 hover:text-white'
+                }`}
             >
               {`0${idx + 1}`}
             </button>
@@ -206,7 +204,7 @@ export const RulebookTab: React.FC = () => {
       {/* Center Square Frame (Matches Image) */}
       <div className="flex-1 flex flex-col items-center justify-center py-6">
         <div className="relative flex items-center justify-center">
-          
+
           {/* Square Outline Box */}
           <div className="w-[200px] h-[200px] border border-white flex items-center justify-center p-4 text-center bg-black/50 select-none shadow-[inset_0_0_10px_rgba(255,255,255,0.05)]">
             <span className="text-[15px] text-white">
@@ -225,7 +223,7 @@ export const RulebookTab: React.FC = () => {
         </div>
 
         {/* Bottom Double-Border Dialogue Frame */}
-        <div 
+        <div
           onClick={handleInteraction}
           onTouchStart={(e) => {
             touchStartY.current = e.touches[0].clientY;
@@ -239,7 +237,7 @@ export const RulebookTab: React.FC = () => {
           className="w-full relative cursor-pointer border border-white p-0.5 bg-black hover:border-neutral-300"
         >
           <div className="border border-white p-4 h-[160px] flex flex-col relative bg-black overflow-hidden">
-            
+
             <div id="rulebook-scroll" className="flex-1 flex flex-col overflow-y-auto pr-2 pb-14 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <div className="w-full flex flex-col min-h-full">
                 {slides[currentIndex].content}
@@ -249,14 +247,14 @@ export const RulebookTab: React.FC = () => {
             {/* Gradient and Arrow at the bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black via-black/90 to-transparent flex items-end justify-center pb-2 pointer-events-none">
               <div className="animate-bounce">
-                <img 
-                  src={`${import.meta.env.BASE_URL}icon/dowm.png`} 
-                  alt="Down" 
+                <img
+                  src={`${import.meta.env.BASE_URL}icon/dowm.png`}
+                  alt="Down"
                   className="w-4 h-4 object-contain opacity-80"
                 />
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
