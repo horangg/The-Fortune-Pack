@@ -235,7 +235,8 @@ const DialogueBox: React.FC<{
   rightButton?: { label: string; onClick: () => void };
   centerButton?: { onClick: () => void };
   typingDelay?: number;
-}> = ({ text, subText, leftButton, rightButton, centerButton, typingDelay = 0 }) => {
+  disableTyping?: boolean;
+}> = ({ text, subText, leftButton, rightButton, centerButton, typingDelay = 0, disableTyping = false }) => {
   return (
     <div className="w-full max-w-[340px] mt-auto pb-4 mx-auto font-serif shrink-0">
       <div className="border-[1.5px] border-white p-[3px] bg-black h-[155px]">
@@ -244,12 +245,12 @@ const DialogueBox: React.FC<{
           <div className="absolute inset-x-4 top-2 bottom-10 overflow-y-auto custom-scrollbar flex flex-col">
             <div className="min-h-full flex flex-col justify-center items-center">
               <p className="text-white text-[14px] text-center whitespace-pre-wrap break-keep leading-relaxed tracking-wide w-full px-2">
-                <Typewriter text={text} speed={30} delay={typingDelay} />
+                {disableTyping ? text : <Typewriter text={text} speed={30} delay={typingDelay} />}
               </p>
               
               {subText && (
                 <p className="text-white/60 text-[12px] text-center mt-3 break-keep tracking-wide w-full px-2">
-                  <Typewriter text={subText} speed={30} delay={typingDelay + (text.length * 30)} />
+                  {disableTyping ? subText : <Typewriter text={subText} speed={30} delay={typingDelay + (text.length * 30)} />}
                 </p>
               )}
             </div>
@@ -721,6 +722,7 @@ export const SpreadGuideTab: React.FC = () => {
           subText={highlightId !== -1 ? `(${spread.positions.find(p => p.id === highlightId)?.meaning})` : undefined}
           leftButton={!isFirstStep ? { label: '이전', onClick: handlePrevStep } : undefined}
           rightButton={!isLastStep ? { label: '다음', onClick: handleNextStep } : undefined}
+          disableTyping={true}
         />
       </motion.div>
     );
