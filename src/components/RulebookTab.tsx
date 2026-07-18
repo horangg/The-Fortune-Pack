@@ -22,7 +22,7 @@ export const RulebookTab: React.FC = () => {
           <p className="text-white leading-[1.6] text-[13px]">
             이 게임은 '엉터리 타로술사'가 되어 서로의 고민을 상담해 주는 파티 게임입니다.
           </p>
-          <p className="text-white leading-[1.6] text-[13px]">
+          <p className="text-white/60 leading-[1.6] text-[13px]">
             *4~6인 플레이를 권장합니다.
           </p>
         </div>
