@@ -197,16 +197,15 @@ export const RulebookTab: React.FC = () => {
         </div>
       </div>
 
-      {/* Center Square Frame (Matches Image) */}
-      <div className="flex-1 flex flex-col items-center justify-center py-6">
+      {/* Center Image */}
+      <div className="flex-1 flex flex-col items-center justify-center py-6 mt-8">
         <div className="relative flex items-center justify-center">
 
-          {/* Square Outline Box */}
-          <div className="w-[200px] h-[200px] border border-white flex items-center justify-center p-4 text-center bg-black/50 select-none shadow-[inset_0_0_10px_rgba(255,255,255,0.05)]">
-            <span className="text-[15px] text-white">
-              {slides[currentIndex].boxText}
-            </span>
-          </div>
+          <img 
+            src={`${import.meta.env.BASE_URL}tarot master.png`} 
+            alt="Tarot Master" 
+            className="w-[200px] h-[200px] object-contain opacity-90"
+          />
 
         </div>
       </div>
