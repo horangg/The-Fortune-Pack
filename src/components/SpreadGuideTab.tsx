@@ -61,7 +61,7 @@ const SPREADS: SpreadDef[] = [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
       { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 2 },
-      { stepLabel: 'Step 4', text: '뽑힌 카드들이 긍정, 부정, 중립 인지\n확인합니다.', subText: '*숫자코드를 입력해 확인하세요.' },
+      { stepLabel: 'Step 4', text: '뽑힌 카드의 긍정/부정/중립 여부를 확인합니다.', subText: '*숫자코드를 입력해 확인하세요.' },
       { stepLabel: 'Step 5', text: '3장이 모두 Yes면 확실한 긍정,\n2장이 Yes면 긍정적이나 시간이 걸릴 수 있음,\nNo가 많다면 부정적인 결론에 가깝습니다.\n*역방향은 무조건 No로 해석합니다.' }
     ],
     positions: [
@@ -812,7 +812,7 @@ export const SpreadGuideTab: React.FC = () => {
                             return (
                               <>
                                 <span className="text-[#E19D3B] text-[13px] font-bold tracking-widest">{getCardDisplayName(card)}</span>
-                                <span className={`${yesNoInfo.color} text-[13px] font-bold tracking-widest mt-1`}>{yesNoInfo.status}</span>
+                                <span className="text-[#E19D3B] text-[13px] font-bold tracking-widest mt-1">{yesNoInfo.status}</span>
                                 {yesNoInfo.desc && (
                                   <span className="text-white/60 text-[10px] mt-1 max-w-[280px] text-center leading-relaxed break-keep">
                                     {yesNoInfo.desc}
