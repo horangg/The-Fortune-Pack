@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Typewriter } from './Typewriter';
 
 interface RuleSlide {
   id: string;
@@ -9,7 +10,18 @@ interface RuleSlide {
 }
 
 export const RulebookTab: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(() => {
+    const saved = localStorage.getItem('rulebookCurrentIndex');
+    if (saved !== null) {
+      const parsed = parseInt(saved, 10);
+      if (!isNaN(parsed)) return parsed;
+    }
+    return 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('rulebookCurrentIndex', currentIndex.toString());
+  }, [currentIndex]);
 
   const slides: RuleSlide[] = [
     {
@@ -18,12 +30,12 @@ export const RulebookTab: React.FC = () => {
       boxText: '개요 및 목적',
       content: (
         <div className="space-y-4 text-center">
-          <p className="text-[#FF9900]">엉터리 타로술사의 탄생</p>
+          <p className="text-[#FF9900]"><Typewriter text="엉터리 타로술사의 탄생" speed={40}/></p>
           <p className="text-white leading-[1.6] text-[13px]">
-            이 게임은 '엉터리 타로술사'가 되어 서로의 고민을 상담해 주는 파티 게임입니다.
+            <Typewriter text="이 게임은 '엉터리 타로술사'가 되어 서로의 고민을 상담해 주는 파티 게임입니다." speed={40} delay={600}/>
           </p>
           <p className="text-white/60 leading-[1.6] text-[13px]">
-            *4~6인 플레이를 권장합니다.
+            <Typewriter text="*4~6인 플레이를 권장합니다." speed={40} delay={2000}/>
           </p>
         </div>
       ),
@@ -35,10 +47,10 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center mt-4">
           <p className="text-white leading-[1.6] text-[13px]">
-            카드의 정해진 의미를 억지로 외울 필요는 없습니다.<br />당신의 말이 곧 카드의 의미입니다.
+            <Typewriter text="카드의 정해진 의미를 억지로 외울 필요는 없습니다.\n당신의 말이 곧 카드의 의미입니다." speed={40}/>
           </p>
           <p className="text-white leading-[1.6] text-[13px]">
-            가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아,<br />가장 많은 복채를 획득해 최고의 타로술사가 되어보세요!
+            <Typewriter text="가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아,\n가장 많은 복채를 획득해 최고의 타로술사가 되어보세요!" speed={40} delay={1800}/>
           </p>
         </div>
       ),
@@ -50,12 +62,12 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center">
           <div className="space-y-2">
-            <p className="text-white text-[13px]">Tissue Office Fortune Pack 80장<br />(the Tissue카드 2장 포함)</p>
-            <p className="text-white text-[13px]">타로 치트키 QR Card 1장</p>
-            <p className="text-white text-[13px]">게임 코인 20개 + 주사위 1개</p>
+            <p className="text-white text-[13px]"><Typewriter text="Tissue Office Fortune Pack 80장\n(the Tissue카드 2장 포함)" speed={30}/></p>
+            <p className="text-white text-[13px]"><Typewriter text="타로 치트키 QR Card 1장" speed={30} delay={1000}/></p>
+            <p className="text-white text-[13px]"><Typewriter text="게임 코인 20개 + 주사위 1개" speed={30} delay={1500}/></p>
           </div>
           <div className="pt-4 border-t border-white/10 text-white text-[13px] leading-[1.6]">
-            타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다.<br />의뢰인이 아닌 사람은 모두 타로술사다.
+            <Typewriter text="타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다.\n의뢰인이 아닌 사람은 모두 타로술사다." speed={30} delay={2200}/>
           </div>
         </div>
       ),
@@ -66,9 +78,9 @@ export const RulebookTab: React.FC = () => {
       boxText: '타로카드 펼치기',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1">1.</span>의뢰인이 고민 혹은 질문을 말한다.</p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">2.</span>의뢰인 바로 왼쪽의 타로술사가<br />카드를 섞은 뒤 펼친다.</p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">3.</span>의뢰인은 카드 3장을<br /><span className="text-[#FF9900]">주로 사용하는 손의 반대 손</span>으로 뽑는다.</p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">1.</span><Typewriter text="의뢰인이 고민 혹은 질문을 말한다." speed={30}/></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">2.</span><Typewriter text="의뢰인 바로 왼쪽의 타로술사가\n카드를 섞은 뒤 펼친다." speed={30} delay={700}/></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">3.</span><Typewriter text="의뢰인은 카드 3장을\n" speed={30} delay={1600}/><span className="text-[#FF9900]"><Typewriter text="주로 사용하는 손의 반대 손" speed={30} delay={2000}/></span><Typewriter text="으로 뽑는다." speed={30} delay={2500}/></p>
         </div>
       ),
     },
@@ -78,8 +90,8 @@ export const RulebookTab: React.FC = () => {
       boxText: '타로 카드 해석',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1">4.</span>뽑힌 카드 3장을<br />의뢰인과 타로술사가 함께 확인한다.</p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">5.</span>먼저 준비된 타로술사가<br />고민에 대한 카드 해석을 진행한다.</p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">4.</span><Typewriter text="뽑힌 카드 3장을\n의뢰인과 타로술사가 함께 확인한다." speed={30}/></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">5.</span><Typewriter text="먼저 준비된 타로술사가\n고민에 대한 카드 해석을 진행한다." speed={30} delay={1000}/></p>
         </div>
       ),
     },
@@ -89,8 +101,8 @@ export const RulebookTab: React.FC = () => {
       boxText: '복채 전달 & 역할 교체',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1">6.</span>의뢰인은 모든 타로술사들의 해석을 듣고,<br />누구에게 복채를 줄지 결정한다.</p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">7.</span>복채까지 줬다면 의뢰인의 왼쪽 사람이<br />새로운 의뢰인이 된다.</p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">6.</span><Typewriter text="의뢰인은 모든 타로술사들의 해석을 듣고,\n누구에게 복채를 줄지 결정한다." speed={30}/></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1">7.</span><Typewriter text="복채까지 줬다면 의뢰인의 왼쪽 사람이\n새로운 의뢰인이 된다." speed={30} delay={1300}/></p>
         </div>
       ),
     },
@@ -102,19 +114,19 @@ export const RulebookTab: React.FC = () => {
         <div className="space-y-4 text-center text-[13px] leading-[1.6]">
           <p className="text-white">
             <span className="text-white font-bold mr-1">-</span>
-            필요한 경우, 타로술사는 인당 1장의 카드를<br />추가로 뽑아 3장의 카드 중 1장을 가려<br />새로운 카드로 대체할 수 있다.
+            <Typewriter text="필요한 경우, 타로술사는 인당 1장의 카드를\n추가로 뽑아 3장의 카드 중 1장을 가려\n새로운 카드로 대체할 수 있다." speed={30}/>
           </p>
           <p className="text-white">
             <span className="text-white font-bold mr-1">-</span>
-            이때, 추가로 뽑은 카드는 <span className="text-[#FF9900]">반드시 사용</span>해야 한다.
+            <Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={1600}/><span className="text-[#FF9900]"><Typewriter text="반드시 사용" speed={30} delay={2200}/></span><Typewriter text="해야 한다." speed={30} delay={2500}/>
           </p>
           <p className="text-white">
             <span className="text-white font-bold mr-1">-</span>
-            한번 대체된(덮인) 카드는 돌이킬 수 없다.<br />단, 다른 타로술사가 새로운 카드로 덮어<br />대체할 수는 있다.
+            <Typewriter text="한번 대체된(덮인) 카드는 돌이킬 수 없다.\n단, 다른 타로술사가 새로운 카드로 덮어\n대체할 수는 있다." speed={30} delay={2800}/>
           </p>
           <p className="text-white">
             <span className="text-white font-bold mr-1">-</span>
-            타로술사는 카드의 순서를 마음대로 변경해<br />해석할 수 있다.
+            <Typewriter text="타로술사는 카드의 순서를 마음대로 변경해\n해석할 수 있다." speed={30} delay={4200}/>
           </p>
         </div>
       ),
@@ -125,10 +137,10 @@ export const RulebookTab: React.FC = () => {
       boxText: '종료 및 승점 계산',
       content: (
         <div className="space-y-4 text-center text-[13px] leading-[1.6]">
-          <p className="text-white">모든 플레이어가 의뢰인이 되고 나면 라운드가 종료된다.</p>
-          <p className="text-white">라운드는 <span className="text-[#FF9900]">3라운드</span>를 기본으로 한다.</p>
+          <p className="text-white"><Typewriter text="모든 플레이어가 의뢰인이 되고 나면 라운드가 종료된다." speed={30}/></p>
+          <p className="text-white"><Typewriter text="라운드는 " speed={30} delay={1000}/><span className="text-[#FF9900]"><Typewriter text="3라운드" speed={30} delay={1200}/></span><Typewriter text="를 기본으로 한다." speed={30} delay={1500}/></p>
           <p className="text-white">
-            라운드 종료 후 가진 복채만큼 주사위를 굴려, 주사위의 합이 가장 큰 사람이 승리한다.
+            <Typewriter text="라운드 종료 후 가진 복채만큼 주사위를 굴려,\n주사위의 합이 가장 큰 사람이 승리한다." speed={30} delay={2000}/>
           </p>
         </div>
       ),
@@ -238,7 +250,9 @@ export const RulebookTab: React.FC = () => {
 
             <div id="rulebook-scroll" className="flex-1 min-h-0 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <div className="w-full flex flex-col">
-                {slides[currentIndex].content}
+                <div key={currentIndex}>
+                  {slides[currentIndex].content}
+                </div>
                 {/* Spacer block to ensure the last line clears the gradient */}
                 <div className="h-16 shrink-0 w-full" aria-hidden="true" />
               </div>
