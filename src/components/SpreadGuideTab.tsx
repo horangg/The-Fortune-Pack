@@ -35,7 +35,22 @@ const SPREADS: SpreadDef[] = [
     name: '원 카드 리딩 (One-Card Daily Reading)',
     displayName: '원\n카드',
     layout: '1-card',
-    description: '데일리 리딩이나 빠르고 직관적인 조언이 필요할 때. 예/아니오 보다는 구체적인 질문에 적합합니다.',
+    description: '데일리 리딩이나 빠르고 직관적인 조언이 필요할 때 사용합니다. 예/아니오 보다는 구체적인 질문에 적합합니다.',
+    readingSteps: [
+      { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
+      { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
+      { stepLabel: 'Step 3', text: '카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 1 }
+    ],
+    positions: [
+      { id: 1, name: '결과', meaning: '질문에 대한 직접적인 답변이나 조언을 상징합니다.' }
+    ]
+  },
+  {
+    id: 'past-present-future',
+    name: '과거, 현재, 미래 스프레드 (Past, Present, Future)',
+    displayName: '과거\n현재\n미래',
+    layout: '3-card',
+    description: '미니 리딩이나 전반적인 상황 흐름을 빠르게 파악하고 싶을 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -46,9 +61,9 @@ const SPREADS: SpreadDef[] = [
       { stepLabel: 'Step 4', text: '(조언을 더 얻고 싶다면 각 카드 아래에 추가 카드를 한 장씩 더 배치해 총 6장으로 리딩할 수도 있습니다.)' }
     ],
     positions: [
-      { id: 1, name: '1번 카드', meaning: '과거. 최근에 일어났던 일이나 발생한 사건, 배경을 상징합니다.' },
-      { id: 2, name: '2번 카드', meaning: '현재. 질문자가 현재 처한 상황이나 느끼고 있는 상태를 보여줍니다.' },
-      { id: 3, name: '3번 카드', meaning: '미래. 앞으로 가까운 미래에 전개될 상황이나 다가올 주요 영향력을 나타냅니다.' }
+      { id: 1, name: '과거', meaning: '최근에 일어났던 일이나 발생한 사건, 배경을 상징합니다.' },
+      { id: 2, name: '현재', meaning: '질문자가 현재 처한 상황이나 느끼고 있는 상태를 보여줍니다.' },
+      { id: 3, name: '미래', meaning: '앞으로 가까운 미래에 전개될 상황이나 다가올 주요 영향력을 나타냅니다.' }
     ]
   },
   {
@@ -60,7 +75,7 @@ const SPREADS: SpreadDef[] = [
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
-      { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 2 },
+      { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.' },
       { stepLabel: 'Step 4', text: '뽑힌 카드의 긍정/부정/중립 여부를 확인합니다.', subText: '*숫자코드를 입력해 확인하세요.' },
       { stepLabel: 'Step 5', text: '3장이 모두 Yes면 확실한 긍정,\n2장이 Yes면 긍정적이나 시간이 걸릴 수 있음,\nNo가 많다면 부정적인 결론에 가깝습니다.\n*역방향은 무조건 No로 해석합니다.' }
     ],
@@ -75,7 +90,7 @@ const SPREADS: SpreadDef[] = [
     name: '켈틱 크로스 스프레드 (The Celtic Cross)',
     displayName: '자세한\n해석',
     layout: 'celtic-cross',
-    description: '특정 질문에 대해 매우 상세히 분석하거나, 현재 삶의 전반적인 흐름과 장애물을 짚어보고 싶을 때 가장 널리 쓰이는 스프레드입니다.',
+    description: '질문에 대해 상세히 분석하거나, 전반적인 흐름과 장애물을 짚어보고 싶을 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -109,7 +124,7 @@ const SPREADS: SpreadDef[] = [
     name: '양자택일',
     displayName: '양자\n택일',
     layout: '5-card',
-    description: '두 가지 대안을 두고 선택을 고민하는 상황에 적합합니다.',
+    description: '두 가지 선택지 사이에서 고민하는 상황에 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -128,7 +143,7 @@ const SPREADS: SpreadDef[] = [
     name: '연애운',
     displayName: '연애운',
     layout: 'love-cross',
-    description: '특정 상대와의 관계 흐름 및 서로의 성향을 파악하고자 하는 상황에 적합합니다.',
+    description: '상대방의 마음을 읽거나 관계의 흐름을 파악하고자 할 때 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -147,7 +162,7 @@ const SPREADS: SpreadDef[] = [
     name: '1년 운세',
     displayName: '1년\n운세',
     layout: 'yearly-layout',
-    description: '앞으로 다가올 12개월의 흐름을 시계 방향으로 배열하여 한눈에 파악하는 방법입니다.',
+    description: '앞으로 다가올 1년 동안의 흐름을 파악하고 싶을 때 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -175,7 +190,7 @@ const SPREADS: SpreadDef[] = [
     name: '1달 운세',
     displayName: '1달\n운세',
     layout: 'monthly-layout',
-    description: '향후 4주일 동안 나에게 미칠 영향력과 흐름을 확인하는 방법입니다.',
+    description: '향후 4주일 동안 나에게 미칠 영향력과 흐름을 확인하고 싶을 때 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -197,7 +212,7 @@ const SPREADS: SpreadDef[] = [
     name: '1주일 운세',
     displayName: '1주일\n운세',
     layout: 'weekly-layout',
-    description: '한 주간의 매일의 운세를 살펴보는 방법입니다.',
+    description: '한 주 동안 매일의 운세를 살펴보고자 할 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },

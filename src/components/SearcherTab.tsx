@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  RotateCcw, 
-  Send, 
-  Star, 
-  Sparkles, 
-  Moon, 
-  Heart, 
-  Crown, 
-  Flame, 
-  Sword, 
-  Droplet, 
-  Coins 
+import {
+  RotateCcw,
+  Send,
+  Star,
+  Sparkles,
+  Moon,
+  Heart,
+  Crown,
+  Flame,
+  Sword,
+  Droplet,
+  Coins
 } from 'lucide-react';
 import { Typewriter } from './Typewriter';
 import { findCardByCode } from '../data/tarotData';
@@ -19,9 +19,9 @@ import { TarotCard } from '../types';
 
 // A custom image replacing the retro pixelated eye SVG
 const RetroEye: React.FC = () => (
-  <img 
-    src={`${import.meta.env.BASE_URL}custom-icon.png`} 
-    alt="Custom Icon" 
+  <img
+    src={`${import.meta.env.BASE_URL}custom-icon.png`}
+    alt="Custom Icon"
     className="mx-auto opacity-90 w-[40px] h-auto object-contain"
   />
 );
@@ -118,7 +118,7 @@ export const SearcherTab: React.FC = () => {
   };
 
   return (
-    <div 
+    <div
       className="flex-1 flex flex-col justify-between items-center px-6 py-8 min-h-[580px] select-none text-white bg-black w-full"
       onClick={handleContainerClick}
     >
@@ -177,15 +177,15 @@ export const SearcherTab: React.FC = () => {
               <div className="border border-white p-1 bg-black">
                 <div className="border border-white py-6 px-4 text-center space-y-4">
                   <p className="text-white leading-relaxed min-h-[44px]">
-                    {searchError 
-                      ? <Typewriter text="기록되지 않은 신비한 코드입니다. 다시 입력해 주세요." speed={40} />
+                    {searchError
+                      ? <Typewriter text="등록되지 않은 코드입니다. 다시 입력해 주세요." speed={40} />
                       : <Typewriter text={"네모칸을 클릭하여\n세 자리 숫자코드를 입력하세요."} speed={40} />
                     }
                   </p>
                   <span className="block pulsing-arrow flex justify-center">
-                    <img 
-                      src={`${import.meta.env.BASE_URL}icon/dowm.png`} 
-                      alt="Down" 
+                    <img
+                      src={`${import.meta.env.BASE_URL}icon/dowm.png`}
+                      alt="Down"
                       className="w-4 h-4 object-contain opacity-80"
                     />
                   </span>
@@ -211,8 +211,8 @@ export const SearcherTab: React.FC = () => {
 
             {/* Card Image Box (Sharp rectangle) */}
             <div className="w-48 aspect-[60/103] border-[1px] border-white flex flex-col items-center justify-center bg-black relative overflow-hidden">
-              <img 
-                src={getCardImageSrc(selectedCard.englishName)} 
+              <img
+                src={getCardImageSrc(selectedCard.englishName)}
                 alt={selectedCard.name}
                 className="w-full h-full object-cover"
               />
@@ -232,7 +232,7 @@ export const SearcherTab: React.FC = () => {
                   {selectedCard.uprightMeaning}
                 </p>
               </div>
-              
+
               {/* Reversed Meaning */}
               {selectedCard.reversedMeaning && (
                 <div>
@@ -246,8 +246,8 @@ export const SearcherTab: React.FC = () => {
 
             {/* Bottom Actions Buttons (Vertical style: icon + label) */}
             <div className="flex justify-center items-center gap-16 pt-4 w-full select-none">
-              <button 
-                onClick={handleClear} 
+              <button
+                onClick={handleClear}
                 className="flex flex-col items-center gap-2 text-white hover:opacity-80 transition-opacity cursor-pointer group"
               >
                 <img src={`${import.meta.env.BASE_URL}icon/back.png`} alt="Back" className="w-5 h-5 object-contain" />
