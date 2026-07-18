@@ -102,20 +102,16 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center text-[13px] leading-[1.6]">
           <p className="text-white">
-            <span className="text-white font-bold mr-1"><Typewriter text={"-"} speed={30}/></span>
-            <Typewriter text={"필요한 경우, 타로술사는 인당 1장의 카드를\n추가로 뽑아 3장의 카드 중 1장을 가려\n새로운 카드로 대체할 수 있다."} speed={30} delay={80}/>
+            <Typewriter text={"필요한 경우, 타로술사는 인당 1장의 카드를\n추가로 뽑아 3장의 카드 중 1장을 가려\n새로운 카드로 대체할 수 있다."} speed={30}/>
           </p>
           <p className="text-white">
-            <span className="text-white font-bold mr-1">-</span>
-            <Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={2080}/><span className="text-[#FF9900]"><Typewriter text="반드시 사용" speed={30} delay={2580}/></span><Typewriter text="해야 한다." speed={30} delay={2810}/>
+            <Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={2000}/><span className="text-[#FF9900]"><Typewriter text="반드시 사용" speed={30} delay={2500}/></span><Typewriter text="해야 한다." speed={30} delay={2730}/>
           </p>
           <p className="text-white">
-            <span className="text-white font-bold mr-1"><Typewriter text={"-"} speed={30} delay={3040}/></span>
-            <Typewriter text={"한번 대체된(덮인) 카드는 돌이킬 수 없다.\n단, 다른 타로술사가 새로운 카드로 덮어\n대체할 수는 있다."} speed={30} delay={3120}/>
+            <Typewriter text={"한번 대체된(덮인) 카드는 돌이킬 수 없다.\n단, 다른 타로술사가 새로운 카드로 덮어\n대체할 수는 있다."} speed={30} delay={2960}/>
           </p>
           <p className="text-white">
-            <span className="text-white font-bold mr-1"><Typewriter text={"-"} speed={30} delay={4910}/></span>
-            <Typewriter text={"타로술사는 카드의 순서를 마음대로 변경해\n해석할 수 있다."} speed={30} delay={4990}/>
+            <Typewriter text={"타로술사는 카드의 순서를 마음대로 변경해\n해석할 수 있다."} speed={30} delay={4750}/>
           </p>
         </div>
       ),
