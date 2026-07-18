@@ -59,7 +59,7 @@ const SPREADS: SpreadDef[] = [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
       { stepLabel: 'Step 3', text: '질문을 마음 속으로 생각하며 세 장의 카드를 뽑아 좌, 중, 우 순서대로 놓습니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.', highlightPositionId: 2 },
-      { stepLabel: 'Step 4', text: '뽑힌 카드들이 긍정, 부정, 중립 인지 확인합니다.' },
+      { stepLabel: 'Step 4', text: '뽑힌 카드들이 긍정, 부정, 중립 인지 확인합니다.\n\n*세 자리 숫자코드를 입력하면 확인할 수 있습니다.' },
       { stepLabel: 'Step 5', text: '3장이 모두 Yes면 확실한 긍정,\n2장이 Yes면 긍정적이나 시간이 걸릴 수 있음,\nNo가 많다면 부정적인 결론에 가깝습니다.\n*역방향 카드를 사용하는 경우 역방향은 무조건 No로 해석합니다.' },
       { stepLabel: '상세 해석', text: '* Yes 카드: 아래의 No, 중립, 예외 카드를 제외한 모든 카드\n* No 카드\n  * 메이저: 죽음, 악마, 탑, 달\n  * 마이너: 검(3, 5, 6, 7, 8, 9, 10, 기사), 컵(5, 7, 8), 펜타클(5)' },
       { stepLabel: '상세 해석', text: '* 중립 카드: 은둔자, 매달린 사람, 검 4, 컵 4\n* 조건부 Yes : 지팡이 5, 7\n  *해당 카드가 나오면 결과는 Yes이지만 원하는 것을 얻기 위해 치열하게 노력하고 싸워야 함을 뜻한다.' },
@@ -300,6 +300,42 @@ export const SpreadGuideTab: React.FC = () => {
     if (card.type === 'major') return `[${card.englishName}]`;
     const typeName: Record<string, string> = { swords: 'Sword', cups: 'Cup', wands: 'Wand', pentacles: 'Pentacle' };
     return `[${typeName[card.type] || card.type} ${card.name}]`;
+  };
+
+  const getYesNoStatus = (card: TarotCard) => {
+    const type = card.type;
+    const name = card.name;
+
+    if (type === 'major' && ['죽음', '악마', '탑', '달'].some(k => name.includes(k))) 
+      return { status: '부정', color: 'text-[#E19D3B]' };
+    
+    if (type === 'swords' && ['3', '5', '6', '7', '8', '9', '10', '기사'].some(k => name === k)) 
+      return { status: '부정', color: 'text-[#E19D3B]' };
+    if (type === 'cups' && ['5', '7', '8'].some(k => name === k)) 
+      return { status: '부정', color: 'text-[#E19D3B]' };
+    if (type === 'pentacles' && name === '5') 
+      return { status: '부정', color: 'text-[#E19D3B]' };
+
+    if (type === 'major' && ['은둔자', '매달린 사람'].some(k => name.includes(k))) 
+      return { status: '중립', color: 'text-gray-400' };
+    if ((type === 'swords' && name === '4') || (type === 'cups' && name === '4')) 
+      return { status: '중립', color: 'text-gray-400' };
+
+    if (type === 'wands' && ['5', '7'].some(k => name === k)) 
+      return { 
+        status: '조건부 Yes', 
+        color: 'text-[#E19D3B]', 
+        desc: '*해당 카드가 나오면 결과는 Yes이지만 원하는 것을 얻기 위해 치열하게 노력하고 싸워야 함을 뜻한다.' 
+      };
+
+    if ((type === 'swords' && name === '2') || (type === 'wands' && name === '10')) 
+      return { 
+        status: '알 수 없음', 
+        color: 'text-gray-400', 
+        desc: '*해당 카드가 나오면 현재로서는 결과를 알 수 없는 상태를 의미한다.' 
+      };
+
+    return { status: '긍정', color: 'text-white' };
   };
 
   const handlePreviewSpread = (spread: SpreadDef) => {
@@ -722,8 +758,8 @@ export const SpreadGuideTab: React.FC = () => {
         </div>
 
         {/* Yes/No Card Search UI */}
-        {spread.id === 'yesno' && currentStepIndex >= 3 && (
-          <div className="flex flex-col items-center mb-2 shrink-0">
+        {spread.id === 'yesno' && (
+          <div className={`flex flex-col items-center mb-2 shrink-0 transition-opacity duration-300 ${currentStepIndex >= 3 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <div className="flex gap-4">
               {[0, 1, 2].map((idx) => (
                 <input
