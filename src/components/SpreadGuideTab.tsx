@@ -268,7 +268,7 @@ const DialogueBox: React.FC<{
           {leftButton && (
             <button 
               onClick={leftButton.onClick} 
-              className="absolute bottom-4 left-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1"
+              className="absolute bottom-4 left-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 animate-bounce-left"
             >
               <img src={`${import.meta.env.BASE_URL}icon/left.png`} alt="prev" className="h-[12px] w-auto object-contain" />
               <span className="text-white text-[13px] tracking-widest leading-none">{leftButton.label}</span>
@@ -278,7 +278,7 @@ const DialogueBox: React.FC<{
           {rightButton && (
             <button 
               onClick={rightButton.onClick} 
-              className="absolute bottom-4 right-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1"
+              className="absolute bottom-4 right-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 animate-bounce-right"
             >
               <span className="text-white text-[13px] tracking-widest leading-none">{rightButton.label}</span>
               <img src={`${import.meta.env.BASE_URL}icon/right.png`} alt="next" className="h-[12px] w-auto object-contain" />
