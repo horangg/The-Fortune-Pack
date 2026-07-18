@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RulebookTab } from './components/RulebookTab';
 import { SearcherTab } from './components/SearcherTab';
 import { SpreadGuideTab } from './components/SpreadGuideTab';
@@ -7,7 +7,13 @@ import { motion, AnimatePresence } from 'motion/react';
 type TabType = 'rulebook' | 'searcher' | 'spread';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>('searcher');
+  const [activeTab, setActiveTab] = useState<TabType>(() => {
+    return (localStorage.getItem('activeTab') as TabType) || 'searcher';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('activeTab', activeTab);
+  }, [activeTab]);
 
   const renderActiveTab = () => {
     switch (activeTab) {

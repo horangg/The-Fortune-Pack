@@ -10,18 +10,7 @@ interface RuleSlide {
 }
 
 export const RulebookTab: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(() => {
-    const saved = localStorage.getItem('rulebookCurrentIndex');
-    if (saved !== null) {
-      const parsed = parseInt(saved, 10);
-      if (!isNaN(parsed)) return parsed;
-    }
-    return 0;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('rulebookCurrentIndex', currentIndex.toString());
-  }, [currentIndex]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const slides: RuleSlide[] = [
     {
