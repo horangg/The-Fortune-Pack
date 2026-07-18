@@ -228,6 +228,67 @@ const SPREADS: SpreadDef[] = [
   }
 ];
 
+const DialogueBox: React.FC<{
+  text: string;
+  subText?: string;
+  leftButton?: { label: string; onClick: () => void };
+  rightButton?: { label: string; onClick: () => void };
+  centerButton?: { onClick: () => void };
+}> = ({ text, subText, leftButton, rightButton, centerButton }) => {
+  return (
+    <div className="w-full max-w-[340px] mt-auto pb-4 mx-auto font-serif shrink-0">
+      <div className="border-[1.5px] border-white p-[3px] bg-black h-[155px]">
+        <div className="border-[1.5px] border-white h-full relative">
+          
+          <div className="absolute inset-x-4 top-2 bottom-10 overflow-y-auto custom-scrollbar flex flex-col">
+            <div className="min-h-full flex flex-col justify-center items-center">
+              <p className="text-white text-[14px] text-center whitespace-pre-line leading-relaxed tracking-wide w-full px-2">
+                {text}
+              </p>
+              
+              {subText && (
+                <p className="text-white/60 text-[12px] text-center mt-3 tracking-wide w-full px-2">
+                  {subText}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {centerButton && (
+            <button 
+              onClick={centerButton.onClick} 
+              className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hover:opacity-70 transition-opacity animate-bounce z-10"
+            >
+              <img src={`${import.meta.env.BASE_URL}icon/dowm.png`} alt="down" className="h-[12px] w-auto object-contain" />
+            </button>
+          )}
+
+          {leftButton && (
+            <button 
+              onClick={leftButton.onClick} 
+              className="absolute bottom-4 left-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1"
+            >
+              <img src={`${import.meta.env.BASE_URL}icon/left.png`} alt="prev" className="h-[12px] w-auto object-contain" />
+              <span className="text-white text-[13px] tracking-widest leading-none mt-[2px]">{leftButton.label}</span>
+            </button>
+          )}
+
+          {rightButton && (
+            <button 
+              onClick={rightButton.onClick} 
+              className="absolute bottom-4 right-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1"
+            >
+              <span className="text-white text-[13px] tracking-widest leading-none mt-[2px]">{rightButton.label}</span>
+              <img src={`${import.meta.env.BASE_URL}icon/right.png`} alt="next" className="h-[12px] w-auto object-contain" />
+            </button>
+          )}
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const SpreadGuideTab: React.FC = () => {
   const [tabState, setTabState] = useState<'selection' | 'reading'>('selection');
   const [previewSpread, setPreviewSpread] = useState<SpreadDef | null>(null);
@@ -271,9 +332,10 @@ export const SpreadGuideTab: React.FC = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="flex-1 flex flex-col justify-center items-center w-full min-h-[500px]"
+      className="flex-1 flex flex-col justify-between w-full h-full"
     >
-      <div className="text-white text-[14px] mb-6 tracking-wide min-h-[21px]">
+      <div className="flex-1 flex flex-col justify-center items-center w-full">
+        <div className="text-white text-[14px] mb-6 tracking-wide min-h-[21px]">
         <Typewriter text="어떤 것을 점쳐보시겠습니까?" speed={40} />
       </div>
 
@@ -319,32 +381,19 @@ export const SpreadGuideTab: React.FC = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-[340px] mt-6">
-        <div className="border border-white p-1 bg-black">
-          <div className="border border-white py-6 px-5 text-center min-h-[145px] flex flex-col justify-between items-center relative">
-            {previewSpread ? (
-              <div className="flex-1 flex flex-col justify-between items-center w-full">
-                <p className="text-white text-[12px] leading-relaxed mb-6 whitespace-pre-line break-keep">
-                  {previewSpread.description}
-                </p>
-                <button 
-                  onClick={handleStartReading}
-                  className="bg-white text-black font-bold py-2.5 px-8 text-[14px] hover:bg-[#ddd] transition-colors w-full border border-transparent"
-                >
-                  [운세 보기]
-                </button>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col justify-center items-center w-full">
-                <p className="text-white/50 text-[12px]">스프레드를 선택해주세요</p>
-              </div>
-            )}
-            {!previewSpread && (
-              <span className="text-white block pulsing-arrow mt-4 absolute bottom-4">▽</span>
-            )}
-          </div>
-        </div>
       </div>
+
+      {previewSpread ? (
+        <DialogueBox 
+          text={previewSpread.description}
+          rightButton={{ label: '운세 보기', onClick: handleStartReading }}
+        />
+      ) : (
+        <DialogueBox 
+          text={'스프레드를 선택해주세요.'}
+          centerButton={{ onClick: () => {} }}
+        />
+      )}
     </motion.div>
   );
 
@@ -653,7 +702,7 @@ export const SpreadGuideTab: React.FC = () => {
             onClick={handleBackToSelection}
             className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity"
           >
-            <img src={`${import.meta.env.BASE_URL}icon/back.png`} alt="Back" className="w-5 h-5 object-contain" />
+            <img src={`${import.meta.env.BASE_URL}icon/left.png`} alt="Back" className="w-5 h-5 object-contain" />
             <span className="text-[14px]">돌아가기</span>
           </button>
           <span className="text-white font-bold text-[14px] ml-auto">{spread.name}</span>
@@ -665,45 +714,12 @@ export const SpreadGuideTab: React.FC = () => {
         </div>
 
         {/* Bottom Dialogue Box */}
-        <div className="w-full px-2 mt-auto pb-4 pt-6">
-          <div className="border border-white p-1 bg-black">
-            <div className="border border-white py-5 px-4 text-center min-h-[145px] flex flex-col justify-between">
-              
-              <div className="flex-1 flex flex-col justify-center items-center">
-                <p className="text-[#ffd700] text-[13px] font-bold mb-3">Step {currentStepIndex + 1}</p>
-                <p className="text-white/90 leading-relaxed text-[13px] whitespace-pre-line max-w-[280px]">
-                  {currentStep?.text}
-                </p>
-                {highlightId !== -1 && (
-                  <p className="text-white/60 text-[11px] mt-3">
-                    ({spread.positions.find(p => p.id === highlightId)?.meaning})
-                  </p>
-                )}
-              </div>
-
-              <div className="flex justify-between items-center mt-5 pt-4 border-t border-white/20">
-                <button 
-                  onClick={handlePrevStep}
-                  disabled={isFirstStep}
-                  className={`px-4 py-2 text-[12px] transition-colors border ${isFirstStep ? 'text-white/30 border-transparent cursor-not-allowed' : 'text-white border-white/30 hover:bg-white/10'}`}
-                >
-                  ◀ 이전
-                </button>
-                <span className="text-white/40 text-[11px] font-mono">
-                  {currentStepIndex + 1} / {spread.readingSteps.length}
-                </span>
-                <button 
-                  onClick={handleNextStep}
-                  disabled={isLastStep}
-                  className={`px-4 py-2 text-[12px] transition-colors border ${isLastStep ? 'text-white/30 border-transparent cursor-not-allowed' : 'text-[#ffd700] border-[#ffd700]/50 hover:bg-[#ffd700]/10'}`}
-                >
-                  다음 ▶
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
+        <DialogueBox 
+          text={currentStep?.text || ''}
+          subText={highlightId !== -1 ? `(${spread.positions.find(p => p.id === highlightId)?.meaning})` : undefined}
+          leftButton={!isFirstStep ? { label: '이전', onClick: handlePrevStep } : undefined}
+          rightButton={!isLastStep ? { label: '다음', onClick: handleNextStep } : undefined}
+        />
       </motion.div>
     );
   };
