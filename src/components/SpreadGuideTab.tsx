@@ -29,7 +29,7 @@ const SPREADS: SpreadDef[] = [
   {
     id: 'one-card',
     name: '원 카드 리딩 (One-Card Daily Reading)',
-    displayName: '원 카드\n리딩',
+    displayName: '원\n카드',
     layout: '1-card',
     description: '데일리 리딩이나 빠르고 직관적인 조언이 필요할 때. 예/아니오 보다는 구체적인 질문에 적합합니다.',
     readingSteps: [
@@ -44,7 +44,7 @@ const SPREADS: SpreadDef[] = [
   {
     id: 'past-present-future',
     name: '과거, 현재, 미래 스프레드 (Past, Present, Future)',
-    displayName: '과거·현재\n미래',
+    displayName: '과거\n현재\n미래',
     layout: '3-card',
     description: '미니 리딩이나 전반적인 상황 흐름을 빠르게 파악하고 싶을 때 적합합니다.',
     readingSteps: [
@@ -84,7 +84,7 @@ const SPREADS: SpreadDef[] = [
   {
     id: 'celtic-cross',
     name: '켈틱 크로스 스프레드 (The Celtic Cross)',
-    displayName: '켈틱\n크로스',
+    displayName: '자세한\n해석',
     layout: 'celtic-cross',
     description: '특정 질문에 대해 매우 상세히 분석하거나, 현재 삶의 전반적인 흐름과 장애물을 짚어보고 싶을 때 가장 널리 쓰이는 스프레드입니다.',
     readingSteps: [
