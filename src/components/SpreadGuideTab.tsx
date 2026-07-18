@@ -228,13 +228,13 @@ const SPREADS: SpreadDef[] = [
     ],
     positions: [
       { id: 1, name: 'Significator', meaning: '일주일 전반의 흐름을 나타냅니다.' },
-      { id: 2, name: '월', meaning: '1번 카드 (월요일)' },
-      { id: 3, name: '수', meaning: '2번 카드 (수요일)' },
-      { id: 4, name: '금', meaning: '3번 카드 (금요일)' },
-      { id: 5, name: '일', meaning: '4번 카드 (일요일)' },
-      { id: 6, name: '화', meaning: '5번 카드 (화요일)' },
-      { id: 7, name: '목', meaning: '6번 카드 (목요일)' },
-      { id: 8, name: '토', meaning: '7번 카드 (토요일)' }
+      { id: 2, name: '월', meaning: '' },
+      { id: 3, name: '수', meaning: '' },
+      { id: 4, name: '금', meaning: '' },
+      { id: 5, name: '일', meaning: '' },
+      { id: 6, name: '화', meaning: '' },
+      { id: 7, name: '목', meaning: '' },
+      { id: 8, name: '토', meaning: '' }
     ]
   }
 ];
