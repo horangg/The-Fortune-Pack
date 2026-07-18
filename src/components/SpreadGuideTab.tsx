@@ -234,7 +234,8 @@ const DialogueBox: React.FC<{
   leftButton?: { label: string; onClick: () => void };
   rightButton?: { label: string; onClick: () => void };
   centerButton?: { onClick: () => void };
-}> = ({ text, subText, leftButton, rightButton, centerButton }) => {
+  typingDelay?: number;
+}> = ({ text, subText, leftButton, rightButton, centerButton, typingDelay = 0 }) => {
   return (
     <div className="w-full max-w-[340px] mt-auto pb-4 mx-auto font-serif shrink-0">
       <div className="border-[1.5px] border-white p-[3px] bg-black h-[155px]">
@@ -242,13 +243,13 @@ const DialogueBox: React.FC<{
           
           <div className="absolute inset-x-4 top-2 bottom-10 overflow-y-auto custom-scrollbar flex flex-col">
             <div className="min-h-full flex flex-col justify-center items-center">
-              <p className="text-white text-[14px] text-center whitespace-pre-line leading-relaxed tracking-wide w-full px-2">
-                {text}
+              <p className="text-white text-[14px] text-center whitespace-pre-wrap break-keep leading-relaxed tracking-wide w-full px-2">
+                <Typewriter text={text} speed={30} delay={typingDelay} />
               </p>
               
               {subText && (
-                <p className="text-white/60 text-[12px] text-center mt-3 tracking-wide w-full px-2">
-                  {subText}
+                <p className="text-white/60 text-[12px] text-center mt-3 break-keep tracking-wide w-full px-2">
+                  <Typewriter text={subText} speed={30} delay={typingDelay + (text.length * 30)} />
                 </p>
               )}
             </div>
@@ -392,6 +393,7 @@ export const SpreadGuideTab: React.FC = () => {
         <DialogueBox 
           text={'스프레드를 선택해주세요.'}
           centerButton={{ onClick: () => {} }}
+          typingDelay={800}
         />
       )}
     </motion.div>
