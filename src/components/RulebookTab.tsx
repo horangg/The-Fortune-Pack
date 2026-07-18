@@ -35,7 +35,10 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center mt-4">
           <p className="text-white leading-[1.6] text-[13px]">
-            카드의 정해진 의미를 억지로 외울 필요는 없습니다.<br />당신의 말이 곧 카드의 의미입니다.<br />가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아,<br />가장 많은 복채를 획득해 최고의 타로술사가 되어보세요!
+            카드의 정해진 의미를 억지로 외울 필요는 없습니다.<br />당신의 말이 곧 카드의 의미입니다.
+          </p>
+          <p className="text-white leading-[1.6] text-[13px]">
+            가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아,<br />가장 많은 복채를 획득해 최고의 타로술사가 되어보세요!
           </p>
         </div>
       ),
@@ -201,9 +204,9 @@ export const RulebookTab: React.FC = () => {
       <div className="flex-1 flex flex-col items-center justify-center py-6 mt-8">
         <div className="relative flex items-center justify-center">
 
-          <img 
-            src={`${import.meta.env.BASE_URL}tarot master.png`} 
-            alt="Tarot Master" 
+          <img
+            src={`${import.meta.env.BASE_URL}tarot master.png`}
+            alt="Tarot Master"
             className="w-[200px] h-[200px] object-contain opacity-90"
           />
 
