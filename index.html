@@ -17,6 +17,32 @@
         user-select: none;
         touch-action: pan-y; /* Prevent double-tap zoom but allow scrolling */
       }
+      
+      /* Enforce portrait mode visually */
+      @media screen and (orientation: landscape) and (max-height: 600px) {
+        #root {
+          display: none !important;
+        }
+        body::before {
+          content: "세로 모드에 최적화된 화면입니다.\A기기를 세로로 회전해 주세요.";
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          width: 100vw;
+          height: 100vh;
+          background-color: #000;
+          color: #FF9900;
+          font-size: 16px;
+          font-weight: bold;
+          white-space: pre-wrap;
+          line-height: 1.6;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 9999;
+        }
+      }
     </style>
   </head>
   <body>
