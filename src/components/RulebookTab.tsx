@@ -115,18 +115,22 @@ export const RulebookTab: React.FC = () => {
       boxText: '규칙 및 제약 사항',
       content: (
         <div className="space-y-2 text-left text-[12px] leading-[1.6]">
-          <p className="text-white">
-            - 타로술사는 필요하다면 추가로 1장의 카드를 뽑아 이미 의뢰인이 뽑은 3장의 카드 중 1장을 가리고 새로운 카드로 대체할 수 있다.
-          </p>
-          <p className="text-white pl-2">
-            - 이때, 추가로 뽑은 카드는 <span className="text-[#FF9900]">반드시 사용</span>해야 한다.
-          </p>
-          <p className="text-white pl-2">
-            - 타로술사는 카드의 순서를 마음대로 변경해 해석할 수 있다.
-          </p>
-          <p className="text-white pl-2">
-            - 한번 새로운 카드로 대체된(덮인) 카드는 돌이킬 수 없다.<br />단, 다른 타로술사가 새로운 카드로 새롭게 대체할 수는 있다.
-          </p>
+          <div className="flex items-start gap-1.5 text-white">
+            <span className="shrink-0">-</span>
+            <p>타로술사는 필요하다면 추가로 1장의 카드를 뽑아 이미 의뢰인이 뽑은 3장의 카드 중 1장을 가리고 새로운 카드로 대체할 수 있다.</p>
+          </div>
+          <div className="flex items-start gap-1.5 text-white">
+            <span className="shrink-0">-</span>
+            <p>이때, 추가로 뽑은 카드는 <span className="text-[#FF9900]">반드시 사용</span>해야 한다.</p>
+          </div>
+          <div className="flex items-start gap-1.5 text-white">
+            <span className="shrink-0">-</span>
+            <p>타로술사는 카드의 순서를 마음대로 변경해 해석할 수 있다.</p>
+          </div>
+          <div className="flex items-start gap-1.5 text-white">
+            <span className="shrink-0">-</span>
+            <p>한번 새로운 카드로 대체된(덮인) 카드는 돌이킬 수 없다.<br />단, 다른 타로술사가 새로운 카드로 새롭게 대체할 수는 있다.</p>
+          </div>
         </div>
       ),
     },
