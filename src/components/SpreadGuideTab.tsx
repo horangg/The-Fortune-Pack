@@ -755,7 +755,7 @@ export const SpreadGuideTab: React.FC = () => {
 
         {/* Yes/No Card Search UI */}
         {spread.id === 'yesno' && (
-          <div className={`flex flex-col items-center -mt-16 mb-4 shrink-0 relative z-20 transition-opacity duration-300 ${currentStepIndex >= 3 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <div className={`flex flex-col items-center -mt-24 mb-2 shrink-0 relative z-20 transition-opacity duration-300 ${currentStepIndex >= 3 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <div className="flex gap-3">
               {[0, 1, 2].map((idx) => (
                 <input
@@ -788,7 +788,7 @@ export const SpreadGuideTab: React.FC = () => {
             {(() => {
               const codeStr = searchCode.join('');
               return (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 w-full mt-4 flex flex-col items-center pointer-events-none">
+                <div className="w-full h-[75px] mt-4 flex flex-col items-center pointer-events-none">
                   <AnimatePresence>
                     {codeStr.length === 3 && (
                       <motion.div
