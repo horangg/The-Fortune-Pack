@@ -280,6 +280,7 @@ export const RulebookTab: React.FC = () => {
           </div>
         </div>
       </div>
+      </div>
 
     </div>
   );
