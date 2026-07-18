@@ -32,7 +32,7 @@ interface SpreadDef {
 const SPREADS: SpreadDef[] = [
   {
     id: 'one-card',
-    name: '원 카드 리딩 (One-Card Daily Reading)',
+    name: '원 카드 리딩',
     displayName: '원\n카드',
     layout: '1-card',
     description: '데일리 리딩이나 빠르고 직관적인 조언이 필요할 때 사용합니다.\n예/아니오 보다는 구체적인 질문에 적합합니다.',
@@ -47,7 +47,7 @@ const SPREADS: SpreadDef[] = [
   },
   {
     id: 'past-present-future',
-    name: '과거, 현재, 미래 스프레드 (Past, Present, Future)',
+    name: '과거, 현재, 미래',
     displayName: '과거\n현재\n미래',
     layout: '3-card',
     description: '미니 리딩이나 전반적인 상황 흐름을\n빠르게 파악하고 싶을 때 적합합니다.',
@@ -68,7 +68,7 @@ const SPREADS: SpreadDef[] = [
   },
   {
     id: 'yesno',
-    name: '예스 or 노 스프레드 (Yes or No?)',
+    name: 'Yes or No',
     displayName: 'Yes\nNo',
     layout: '3-card',
     description: '빠르게 명확한 결정을\n내리고 싶을 때 적합합니다.',
@@ -87,7 +87,7 @@ const SPREADS: SpreadDef[] = [
   },
   {
     id: 'celtic-cross',
-    name: '켈틱 크로스 스프레드 (The Celtic Cross)',
+    name: '켈틱 크로스 (The Celtic Cross)',
     displayName: '자세한\n해석',
     layout: 'celtic-cross',
     description: '질문에 대해 상세히 분석하거나,\n전반적인 흐름과 장애물을 짚어보고 싶을 때 적합합니다.',
@@ -218,23 +218,23 @@ const SPREADS: SpreadDef[] = [
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
       { stepLabel: 'Step 3', text: 'Significator 카드를 뽑아 중앙에 위치합니다.', highlightPositionId: 1 },
       { stepLabel: 'Step 4', text: '그 주변으로 각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다. 카드를 뒤집을 때는 반드시 왼쪽에서 오른쪽 방향으로 뒤집습니다.' },
-      { stepLabel: 'Step 4', text: '월요일 운세', highlightPositionId: 2 },
-      { stepLabel: 'Step 4', text: '화요일 운세', highlightPositionId: 3 },
-      { stepLabel: 'Step 4', text: '수요일 운세', highlightPositionId: 4 },
-      { stepLabel: 'Step 4', text: '목요일 운세', highlightPositionId: 5 },
-      { stepLabel: 'Step 4', text: '금요일 운세', highlightPositionId: 6 },
-      { stepLabel: 'Step 4', text: '토요일 운세', highlightPositionId: 7 },
-      { stepLabel: 'Step 4', text: '일요일 운세', highlightPositionId: 8 }
+      { stepLabel: 'Step 4', text: '1번 카드 (월요일)', highlightPositionId: 2 },
+      { stepLabel: 'Step 4', text: '2번 카드 (수요일)', highlightPositionId: 3 },
+      { stepLabel: 'Step 4', text: '3번 카드 (금요일)', highlightPositionId: 4 },
+      { stepLabel: 'Step 4', text: '4번 카드 (일요일)', highlightPositionId: 5 },
+      { stepLabel: 'Step 4', text: '5번 카드 (화요일)', highlightPositionId: 6 },
+      { stepLabel: 'Step 4', text: '6번 카드 (목요일)', highlightPositionId: 7 },
+      { stepLabel: 'Step 4', text: '7번 카드 (토요일)', highlightPositionId: 8 }
     ],
     positions: [
-      { id: 1, name: '중앙', meaning: 'Significator 카드를 뽑아 중앙에 위치합니다.' },
-      { id: 2, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' },
-      { id: 3, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' },
-      { id: 4, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' },
-      { id: 5, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' },
-      { id: 6, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' },
-      { id: 7, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' },
-      { id: 8, name: '카드', meaning: '각 요일에 해당하는 카드를 아래의 정해진 번호 위치에 따라 배치합니다.' }
+      { id: 1, name: 'Significator', meaning: '일주일 전반의 흐름을 나타냅니다.' },
+      { id: 2, name: '월', meaning: '1번 카드 (월요일)' },
+      { id: 3, name: '수', meaning: '2번 카드 (수요일)' },
+      { id: 4, name: '금', meaning: '3번 카드 (금요일)' },
+      { id: 5, name: '일', meaning: '4번 카드 (일요일)' },
+      { id: 6, name: '화', meaning: '5번 카드 (화요일)' },
+      { id: 7, name: '목', meaning: '6번 카드 (목요일)' },
+      { id: 8, name: '토', meaning: '7번 카드 (토요일)' }
     ]
   }
 ];
