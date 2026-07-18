@@ -660,35 +660,33 @@ export const SpreadGuideTab: React.FC = () => {
     }
 
     if (spread.layout === 'weekly-layout') {
-      const radius = 110;
-      const angles = {
-        1: 51.4,   // 월
-        2: 257.1,  // 화
-        3: 102.8,  // 수
-        4: 308.5,  // 목
-        5: 154.2,  // 금
-        6: 0,      // 토
-        7: 205.7   // 일
+      const customPositions = {
+        1: { x: 90, y: -45 },  // 1번: 월
+        2: { x: 90, y: 55 },   // 2번: 수
+        3: { x: 38, y: 120 },  // 3번: 금
+        4: { x: -38, y: 120 }, // 4번: 일
+        5: { x: -90, y: 55 },  // 5번: 화
+        6: { x: -90, y: -45 }, // 6번: 목
+        7: { x: 0, y: -110 }   // 7번: 토
       };
 
       return (
-        <div className="relative w-full h-[320px] mt-4 flex items-center justify-center max-w-[340px] mx-auto">
+        <div className="relative w-full h-[340px] mt-2 flex items-center justify-center max-w-[340px] mx-auto">
           {/* Center */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
             <div className={getCardStyle(1, 'w-[48px]')}>
-              <span className="text-white text-[8px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
+              <span className="text-white text-[10px] whitespace-pre-line text-center leading-relaxed">{spread.positions[0].name}</span>
             </div>
           </div>
-          {/* Circular items */}
+          {/* Custom positioned items */}
           {spread.positions.slice(1).map((pos, i) => {
-            const angleDeg = angles[(i + 1) as keyof typeof angles] - 90;
-            const angleRad = (angleDeg * Math.PI) / 180;
-            const left = `calc(50% + ${Math.cos(angleRad) * radius}px)`;
-            const top = `calc(50% + ${Math.sin(angleRad) * radius}px)`;
+            const posData = customPositions[(i + 1) as keyof typeof customPositions];
+            const left = `calc(50% + ${posData.x}px)`;
+            const top = `calc(50% + ${posData.y}px)`;
             return (
               <div key={pos.id} style={{ position: 'absolute', left, top, transform: 'translate(-50%, -50%)' }}>
                 <div className={getCardStyle(pos.id, 'w-[45px]')}>
-                  <span className="text-white text-[9px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
+                  <span className="text-white text-[11px] whitespace-pre-line text-center leading-relaxed">{pos.name}</span>
                 </div>
               </div>
             );
