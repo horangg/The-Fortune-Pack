@@ -271,7 +271,7 @@ const DialogueBox: React.FC<{
               className="absolute bottom-4 left-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1"
             >
               <img src={`${import.meta.env.BASE_URL}icon/left.png`} alt="prev" className="h-[12px] w-auto object-contain" />
-              <span className="text-white text-[13px] tracking-widest leading-none mt-[2px]">{leftButton.label}</span>
+              <span className="text-white text-[13px] tracking-widest leading-none">{leftButton.label}</span>
             </button>
           )}
 
@@ -280,7 +280,7 @@ const DialogueBox: React.FC<{
               onClick={rightButton.onClick} 
               className="absolute bottom-4 right-6 flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1"
             >
-              <span className="text-white text-[13px] tracking-widest leading-none mt-[2px]">{rightButton.label}</span>
+              <span className="text-white text-[13px] tracking-widest leading-none">{rightButton.label}</span>
               <img src={`${import.meta.env.BASE_URL}icon/right.png`} alt="next" className="h-[12px] w-auto object-contain" />
             </button>
           )}
@@ -389,6 +389,7 @@ export const SpreadGuideTab: React.FC = () => {
         <DialogueBox 
           text={previewSpread.description}
           rightButton={{ label: '운세 보기', onClick: handleStartReading }}
+          disableTyping={true}
         />
       ) : (
         <DialogueBox 
