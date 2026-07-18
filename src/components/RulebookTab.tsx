@@ -147,23 +147,29 @@ export const RulebookTab: React.FC = () => {
     }
   }, [currentIndex]);
 
+  useEffect(() => {
+    const scrollContainer = document.getElementById('rulebook-scroll');
+    const contentInner = document.getElementById('rulebook-content-inner');
+    if (!scrollContainer || !contentInner) return;
+
+    const observer = new MutationObserver(() => {
+      // If near the bottom, auto-scroll down naturally
+      const isAtBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 60;
+      if (isAtBottom) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+      }
+    });
+
+    observer.observe(contentInner, { childList: true, subtree: true, characterData: true });
+
+    return () => observer.disconnect();
+  }, [currentIndex]);
+
   const touchStartY = useRef(0);
   const isSwiping = useRef(false);
 
   const handleInteraction = () => {
     if (isSwiping.current) return;
-
-    const scrollContainer = document.getElementById('rulebook-scroll');
-    if (scrollContainer) {
-      const isScrollable = scrollContainer.scrollHeight > scrollContainer.clientHeight;
-      const isScrolledToBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + 5;
-
-      if (isScrollable && !isScrolledToBottom) {
-        // Scroll down instead of moving to next slide
-        scrollContainer.scrollBy({ top: 80, behavior: 'smooth' });
-        return;
-      }
-    }
     nextSlide();
   };
 
@@ -215,9 +221,9 @@ export const RulebookTab: React.FC = () => {
       </div>
 
       {/* Bottom Area: Title + Dialogue Frame */}
-      <div className="w-full flex flex-col items-start gap-1">
+      <div className="w-full max-w-[340px] mx-auto flex flex-col items-start gap-1 shrink-0 pb-4">
         {/* Slide Title Indicator (Outside box, top left) */}
-        <div className="text-[11px] text-white/90 uppercase pl-1 tracking-wider">
+        <div className="text-[11px] text-white/90 uppercase pl-1 tracking-wider font-sans">
           {slides[currentIndex].title}
         </div>
 
@@ -233,19 +239,18 @@ export const RulebookTab: React.FC = () => {
               isSwiping.current = true;
             }
           }}
-          className="w-full relative cursor-pointer border border-white p-0.5 bg-black hover:border-neutral-300"
+          className="w-full relative cursor-pointer font-serif"
         >
-          <div className="border border-white p-4 h-auto min-h-[140px] max-h-[25vh] flex flex-col relative bg-black overflow-hidden">
+          <div className="border-[1.5px] border-white p-[3px] bg-black h-[155px]">
+            <div className="border-[1.5px] border-white h-full relative overflow-hidden flex flex-col bg-black">
 
-            <div id="rulebook-scroll" className="flex-1 min-h-0 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <div className="w-full flex flex-col">
-                <div key={currentIndex}>
-                  {slides[currentIndex].content}
+              <div id="rulebook-scroll" className="flex-1 min-h-0 overflow-y-auto px-4 pt-4 pb-14 custom-scrollbar">
+                <div id="rulebook-content-inner" className="w-full flex flex-col">
+                  <div key={currentIndex}>
+                    {slides[currentIndex].content}
+                  </div>
                 </div>
-                {/* Spacer block to ensure the last line clears the gradient */}
-                <div className="h-6 shrink-0 w-full" aria-hidden="true" />
               </div>
-            </div>
 
             {/* Gradient and Previous/Next buttons at the bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-black via-black/90 to-transparent flex items-end justify-between px-6 pb-4 pointer-events-none">
