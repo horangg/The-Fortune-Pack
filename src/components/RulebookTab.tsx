@@ -207,7 +207,7 @@ export const RulebookTab: React.FC = () => {
           <img
             src={`${import.meta.env.BASE_URL}tarot master.png`}
             alt="Tarot Master"
-            className="w-[200px] h-[200px] object-contain opacity-90"
+            className="w-[240px] h-[240px] object-contain opacity-90"
           />
 
         </div>
