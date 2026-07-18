@@ -7,6 +7,7 @@ interface RuleSlide {
   title: string;
   boxText: string;
   content: React.ReactNode;
+  image?: string;
 }
 
 export const RulebookTab: React.FC = () => {
@@ -33,6 +34,7 @@ export const RulebookTab: React.FC = () => {
       id: 'overview2',
       title: '게임 개요',
       boxText: '개요 및 목적',
+      image: 'pick.png',
       content: (
         <div className="space-y-4 text-center mt-4">
           <p className="text-white leading-[1.6] text-[13px]">
@@ -65,6 +67,7 @@ export const RulebookTab: React.FC = () => {
       id: 'step1',
       title: '진행 방식',
       boxText: '타로카드 펼치기',
+      image: 'shuffle.png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
           <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"1."} speed={30}/></span><Typewriter text="의뢰인이 고민 혹은 질문을 말한다." speed={30} delay={110}/></p>
@@ -99,6 +102,7 @@ export const RulebookTab: React.FC = () => {
       id: 'rules',
       title: '규칙 및 제약',
       boxText: '규칙 및 제약 사항',
+      image: 'one card.png',
       content: (
         <div className="space-y-4 text-center text-[13px] leading-[1.6]">
           <p className="text-white">
@@ -208,8 +212,8 @@ export const RulebookTab: React.FC = () => {
         <div className="relative flex items-center justify-center">
 
           <img
-            src={`${import.meta.env.BASE_URL}tarot master.png`}
-            alt="Tarot Master"
+            src={`${import.meta.env.BASE_URL}${slides[currentIndex].image || 'msgic ball.png'}`}
+            alt="Center graphic"
             className="w-[240px] h-[240px] object-contain opacity-90"
           />
 
