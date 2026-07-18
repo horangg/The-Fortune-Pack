@@ -35,7 +35,7 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-3 text-center">
           <div className="space-y-1">
-            <p className="text-white">Tissue Office Fortune Pack 80장(the Tissue카드 2장 포함)</p>
+            <p className="text-white">Tissue Office Fortune Pack 80장<br />(the Tissue카드 2장 포함)</p>
             <p className="text-white">타로 치트키 QR Card 1장</p>
             <p className="text-white">게임 코인 20개 + 주사위 1개</p>
           </div>
@@ -113,13 +113,13 @@ export const RulebookTab: React.FC = () => {
             • 타로술사는 필요하다면 추가로 1장의 카드를 뽑아 이미 의뢰인이 뽑은 3장의 카드 중 1장을 가리고 새로운 카드로 대체할 수 있다.
           </p>
           <p className="text-white pl-2">
-            - 이때 추가 카드를 덱에서 뽑으면 돌이킬 수는 없고, <span className="text-[#FF9900]">반드시 사용</span>해야 한다.
+            - 이때, 추가로 뽑은 카드는 <span className="text-[#FF9900]">반드시 사용</span>해야 한다.
           </p>
           <p className="text-white pl-2">
-            - 타로술사는 카드의 순서를 마음대로 변경해도 된다.
+            - 타로술사는 카드의 순서를 마음대로 변경해 해석할 수 있다.
           </p>
           <p className="text-white pl-2">
-            - 한번 새로운 카드로 대체된(덮인) 카드는 돌이킬 수 없다. 단, 다른 타로술사가 새로운 카드로 새롭게 대체할 수는 있다.
+            - 한번 새로운 카드로 대체된(덮인) 카드는 돌이킬 수 없다.<br />단, 다른 타로술사가 새로운 카드로 새롭게 대체할 수는 있다.
           </p>
         </div>
       ),
@@ -244,15 +244,29 @@ export const RulebookTab: React.FC = () => {
               </div>
             </div>
 
-            {/* Gradient and Arrow at the bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black via-black/90 to-transparent flex items-end justify-center pb-2 pointer-events-none">
-              <div className="animate-bounce">
-                <img
-                  src={`${import.meta.env.BASE_URL}icon/dowm.png`}
-                  alt="Down"
-                  className="w-4 h-4 object-contain opacity-80"
-                />
-              </div>
+            {/* Gradient and Previous/Next buttons at the bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-black via-black/90 to-transparent flex items-end justify-between px-6 pb-4 pointer-events-none">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex(Math.max(0, currentIndex - 1));
+                }}
+                className={`flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 pointer-events-auto ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : 'animate-bounce-left'}`}
+              >
+                <img src={`${import.meta.env.BASE_URL}icon/left.png`} alt="prev" className="h-[12px] w-auto object-contain" />
+                <span className="text-white text-[13px] tracking-widest leading-none">이전</span>
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex(Math.min(slides.length - 1, currentIndex + 1));
+                }}
+                className={`flex items-center gap-2 hover:opacity-70 transition-opacity z-10 bg-black px-1 pointer-events-auto ${currentIndex === slides.length - 1 ? 'opacity-0 pointer-events-none' : 'animate-bounce-right'}`}
+              >
+                <span className="text-white text-[13px] tracking-widest leading-none">다음</span>
+                <img src={`${import.meta.env.BASE_URL}icon/right.png`} alt="next" className="h-[12px] w-auto object-contain" />
+              </button>
             </div>
 
           </div>
