@@ -35,7 +35,7 @@ const SPREADS: SpreadDef[] = [
     name: '원 카드 리딩 (One-Card Daily Reading)',
     displayName: '원\n카드',
     layout: '1-card',
-    description: '데일리 리딩이나 빠르고 직관적인 조언이 필요할 때 사용합니다. 예/아니오 보다는 구체적인 질문에 적합합니다.',
+    description: '데일리 리딩이나 빠르고 직관적인 조언이 필요할 때 사용합니다.\n예/아니오 보다는 구체적인 질문에 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -50,7 +50,7 @@ const SPREADS: SpreadDef[] = [
     name: '과거, 현재, 미래 스프레드 (Past, Present, Future)',
     displayName: '과거\n현재\n미래',
     layout: '3-card',
-    description: '미니 리딩이나 전반적인 상황 흐름을 빠르게 파악하고 싶을 때 적합합니다.',
+    description: '미니 리딩이나 전반적인 상황 흐름을\n빠르게 파악하고 싶을 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -71,7 +71,7 @@ const SPREADS: SpreadDef[] = [
     name: '예스 or 노 스프레드 (Yes or No?)',
     displayName: 'Yes\nNo',
     layout: '3-card',
-    description: '빠르게 명확한 결정을 내리고 싶을 때 적합합니다.',
+    description: '빠르게 명확한 결정을\n내리고 싶을 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -90,7 +90,7 @@ const SPREADS: SpreadDef[] = [
     name: '켈틱 크로스 스프레드 (The Celtic Cross)',
     displayName: '자세한\n해석',
     layout: 'celtic-cross',
-    description: '질문에 대해 상세히 분석하거나, 전반적인 흐름과 장애물을 짚어보고 싶을 때 적합합니다.',
+    description: '질문에 대해 상세히 분석하거나,\n전반적인 흐름과 장애물을 짚어보고 싶을 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -124,7 +124,7 @@ const SPREADS: SpreadDef[] = [
     name: '양자택일',
     displayName: '양자\n택일',
     layout: '5-card',
-    description: '두 가지 선택지 사이에서 고민하는 상황에 적합합니다.',
+    description: '두 가지 선택지 사이에서\n고민하는 상황에 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -143,7 +143,7 @@ const SPREADS: SpreadDef[] = [
     name: '연애운',
     displayName: '연애운',
     layout: 'love-cross',
-    description: '상대방의 마음을 읽거나 관계의 흐름을 파악하고자 할 때 적합합니다.',
+    description: '상대방의 마음을 읽거나\n관계의 흐름을 파악하고자 할 때 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -162,7 +162,7 @@ const SPREADS: SpreadDef[] = [
     name: '1년 운세',
     displayName: '1년\n운세',
     layout: 'yearly-layout',
-    description: '앞으로 다가올 1년 동안의 흐름을 파악하고 싶을 때 적합합니다.',
+    description: '앞으로 다가올 1년 동안의\n흐름을 파악하고 싶을 때 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -190,7 +190,7 @@ const SPREADS: SpreadDef[] = [
     name: '1달 운세',
     displayName: '1달\n운세',
     layout: 'monthly-layout',
-    description: '향후 4주일 동안 나에게 미칠 영향력과 흐름을 확인하고 싶을 때 적합합니다.',
+    description: '향후 4주일 동안 나에게 미칠\n영향력과 흐름을 확인하고 싶을 때 적합합니다.',
     readingSteps: [
       { text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -212,7 +212,7 @@ const SPREADS: SpreadDef[] = [
     name: '1주일 운세',
     displayName: '1주일\n운세',
     layout: 'weekly-layout',
-    description: '한 주 동안 매일의 운세를 살펴보고자 할 때 적합합니다.',
+    description: '한 주 동안 매일의 운세를\n살펴보고자 할 때 적합합니다.',
     readingSteps: [
       { stepLabel: 'Step 1', text: '알고 싶은 상황이나 질문에 집중하며 카드를 섞습니다.' },
       { stepLabel: 'Step 2', text: '카드를 뒷면이 보이게 부채꼴로 넓게 펼친 후, 주로 사용하지 않는 손으로 카드를 뽑습니다.' },
@@ -403,7 +403,7 @@ export const SpreadGuideTab: React.FC = () => {
           {/* Overlay Cards Container */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-4 pb-8">
             {/* Top Row: 4 cards */}
-            <div className="flex justify-center gap-2 mb-3 w-full">
+            <div className="flex justify-center gap-3 mb-3 w-full">
               {SPREADS.slice(0, 4).map((spread) => (
                 <button
                   key={spread.id}
@@ -418,7 +418,7 @@ export const SpreadGuideTab: React.FC = () => {
               ))}
             </div>
             {/* Bottom Row: 5 cards */}
-            <div className="flex justify-center gap-1.5 w-full">
+            <div className="flex justify-center gap-3 w-full">
               {SPREADS.slice(4, 9).map((spread) => (
                 <button
                   key={spread.id}
