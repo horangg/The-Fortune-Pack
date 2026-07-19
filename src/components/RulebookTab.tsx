@@ -22,7 +22,7 @@ export const RulebookTab: React.FC = () => {
       image: 'magic ball(1).png',
       content: (
         <div className="space-y-4 text-center">
-          <p className="text-white"><Typewriter text="엉터리 타로술사의 탄생" speed={40} /></p>
+          <p className="text-[#FF9900]"><Typewriter text="엉터리 타로술사의 탄생" speed={40} /></p>
           <p className="text-white leading-[1.6] text-[13px]">
             <Typewriter text="이 게임은 '엉터리 타로술사'가 되어 서로의 고민을 상담해 주는 파티 게임입니다." speed={40} delay={530} />
           </p>
@@ -40,10 +40,11 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center mt-4">
           <p className="text-white leading-[1.6] text-[13px]">
-            <Typewriter text={"카드의 원래 의미는 중요하지 않습니다.\n당신의 말이 곧 카드의 의미입니다."} speed={40} />
+            <Typewriter text="카드의 원래 의미는 중요하지 않습니다. " speed={40} />
+            <span className="text-[#FF9900]"><Typewriter text="당신의 말이 곧 카드의 의미입니다." speed={40} delay={900} /></span>
           </p>
           <p className="text-white leading-[1.6] text-[13px]">
-            <Typewriter text={"가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아,\n많은 복채를 획득해 최고의 타로술사가 되어보세요!"} speed={40} delay={1970} />
+            <Typewriter text="가장 그럴싸한 해석으로 의뢰인의 마음을 사로잡아, 많은 복채를 획득해 최고의 타로술사가 되어보세요!" speed={40} delay={1970} />
           </p>
         </div>
       ),
@@ -56,7 +57,7 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center">
           <div className="space-y-2">
-            <p className="text-white text-[13px]"><Typewriter text={"Tissue Office Fortune Pack 80장\n(the Tissue카드 2장 포함)"} speed={30} /></p>
+            <p className="text-white text-[13px]"><Typewriter text="Tissue Office Fortune Pack 80장 (the Tissue카드 2장 포함)" speed={30} /></p>
             <p className="text-white text-[13px]"><Typewriter text="타로 치트키 QR Card 1장" speed={30} delay={1580} /></p>
             <p className="text-white text-[13px]"><Typewriter text="게임 코인 20개 + 주사위 1개" speed={30} delay={2140} /></p>
           </div>
@@ -71,7 +72,7 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center mt-4">
           <div className="text-white text-[13px] leading-[1.6]">
-            <Typewriter text={"타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다.\n의뢰인이 아닌 사람은 모두 타로술사다."} speed={30} />
+            <Typewriter text="타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다. 의뢰인이 아닌 사람은 모두 타로술사다." speed={30} />
           </div>
         </div>
       ),
@@ -83,9 +84,9 @@ export const RulebookTab: React.FC = () => {
       image: 'shuffle(1).png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"1."} speed={30} /></span><Typewriter text="의뢰인이 고민 혹은 질문을 말한다." speed={30} delay={110} /></p>
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"2."} speed={30} delay={730} /></span><Typewriter text={"의뢰인 바로 왼쪽의 타로술사가\n카드를 섞은 뒤 펼친다."} speed={30} delay={840} /></p>
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"3."} speed={30} delay={1790} /></span><Typewriter text={"의뢰인은 카드 3장을\n"} speed={30} delay={1900} /><span className="text-white"><Typewriter text="주로 사용하는 손의 반대 손" speed={30} delay={2310} /></span><Typewriter text="으로 뽑는다." speed={30} delay={2810} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"1."} speed={30} /></span><Typewriter text="의뢰인이 고민 혹은 질문을 말한다." speed={30} delay={110} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"2."} speed={30} delay={730} /></span><Typewriter text="의뢰인 바로 왼쪽의 타로술사가 카드를 섞은 뒤 펼친다." speed={30} delay={840} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"3."} speed={30} delay={1790} /></span><Typewriter text="의뢰인은 카드 3장을 " speed={30} delay={1900} /><span className="text-white"><Typewriter text="주로 사용하는 손의 반대 손" speed={30} delay={2310} /></span><Typewriter text="으로 뽑는다." speed={30} delay={2810} /></p>
         </div>
       ),
     },
@@ -96,8 +97,8 @@ export const RulebookTab: React.FC = () => {
       image: 'three card spread(1).png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"4."} speed={30} /></span><Typewriter text={"뽑힌 카드 3장을\n의뢰인과 타로술사가 함께 확인한다."} speed={30} delay={110} /></p>
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"5."} speed={30} delay={1030} /></span><Typewriter text={"먼저 준비된 타로술사가\n고민에 대한 카드 해석을 진행한다."} speed={30} delay={1140} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"4."} speed={30} /></span><Typewriter text="뽑힌 카드 3장을 의뢰인과 타로술사가 함께 확인한다." speed={30} delay={110} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"5."} speed={30} delay={1030} /></span><Typewriter text="먼저 준비된 타로술사가 고민에 대한 카드 해석을 진행한다." speed={30} delay={1140} /></p>
         </div>
       ),
     },
@@ -108,8 +109,8 @@ export const RulebookTab: React.FC = () => {
       image: 'coin.png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"6."} speed={30} /></span><Typewriter text={"의뢰인은 모든 타로술사들의 해석을 듣고,\n누구에게 복채를 줄지 결정한다."} speed={30} delay={110} /></p>
-          <p className="text-white"><span className="text-white mr-1"><Typewriter text={"7."} speed={30} delay={1360} /></span><Typewriter text={"복채까지 줬다면 의뢰인의 왼쪽 사람이\n새로운 의뢰인이 된다."} speed={30} delay={1470} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"6."} speed={30} /></span><Typewriter text="의뢰인은 모든 타로술사들의 해석을 듣고, 누구에게 복채를 줄지 결정한다." speed={30} delay={110} /></p>
+          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"7."} speed={30} delay={1360} /></span><Typewriter text="복채까지 줬다면 의뢰인의 왼쪽 사람이 새로운 의뢰인이 된다." speed={30} delay={1470} /></p>
         </div>
       ),
     },
@@ -121,16 +122,18 @@ export const RulebookTab: React.FC = () => {
       content: (
         <div className="space-y-4 text-center text-[13px] leading-[1.6]">
           <p className="text-white">
-            <Typewriter text={"필요한 경우, 타로술사는 인당 1장의 카드를\n추가로 뽑아 3장의 카드 중 1장을 가려\n새로운 카드로 대체할 수 있다."} speed={30} />
+            <Typewriter text="필요한 경우, 타로술사는 인당 1장의 카드를 추가로 뽑아 3장의 카드 중 1장을 가려 새로운 카드로 대체할 수 있다." speed={30} />
           </p>
           <p className="text-white">
-            <Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={2000} /><span className="text-white"><Typewriter text="반드시 사용" speed={30} delay={2500} /></span><Typewriter text="해야 한다." speed={30} delay={2730} />
+            <Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={2000} /><span className="text-[#FF9900]"><Typewriter text="반드시 사용" speed={30} delay={2500} /></span><Typewriter text="해야 한다." speed={30} delay={2730} />
           </p>
           <p className="text-white">
-            <Typewriter text={"한번 대체된(덮인) 카드는 돌이킬 수 없다.\n단, 다른 타로술사가 새로운 카드로 덮어\n대체할 수는 있다."} speed={30} delay={2960} />
+            <Typewriter text="한번 대체된(덮인) 카드는 " speed={30} delay={2960} />
+            <span className="text-[#FF9900]"><Typewriter text="돌이킬 수 없다." speed={30} delay={3440} /></span>
+            <Typewriter text=" 단, 다른 타로술사가 새로운 카드로 덮어 대체할 수는 있다." speed={30} delay={3710} />
           </p>
           <p className="text-white">
-            <Typewriter text={"타로술사는 카드의 순서를 마음대로 변경해\n해석할 수 있다."} speed={30} delay={4750} />
+            <Typewriter text="타로술사는 카드의 순서를 마음대로 변경해 해석할 수 있다." speed={30} delay={4750} />
           </p>
         </div>
       ),
@@ -144,7 +147,9 @@ export const RulebookTab: React.FC = () => {
           <p className="text-white"><Typewriter text="모든 플레이어가 의뢰인이 되고 나면 라운드가 종료된다." speed={30} /></p>
           <p className="text-white"><Typewriter text="라운드는 " speed={30} delay={950} /><span className="text-white"><Typewriter text="3라운드" speed={30} delay={1150} /></span><Typewriter text="를 기본으로 한다." speed={30} delay={1320} /></p>
           <p className="text-white">
-            <Typewriter text={"라운드 종료 후 가진 복채만큼 주사위를 굴려,\n주사위의 합이 가장 큰 사람이 승리한다."} speed={30} delay={1670} />
+            <Typewriter text="라운드 종료 후 가진 복채만큼 주사위를 굴려, " speed={30} delay={1670} />
+            <span className="text-[#FF9900]"><Typewriter text="주사위의 합이 가장 큰" speed={30} delay={2420} /></span>
+            <Typewriter text=" 사람이 승리한다." speed={30} delay={2750} />
           </p>
         </div>
       ),
@@ -274,7 +279,7 @@ export const RulebookTab: React.FC = () => {
                   contents: [slides.find(s => s.id === 'preparation')?.content]
                 },
                 {
-                  title: '진행 방식 + 규칙 및 제약',
+                  title: '진행 규칙',
                   contents: [
                     slides.find(s => s.id === 'step1')?.content,
                     slides.find(s => s.id === 'step2')?.content,
@@ -288,7 +293,7 @@ export const RulebookTab: React.FC = () => {
                 }
               ].map((group, idx) => (
                 <div key={group.title} className="space-y-4">
-                  <h3 className="text-white text-sm font-bold border-b border-white/10 pb-2">
+                  <h3 className="text-[#FF9900] text-sm font-bold border-b border-white/10 pb-2">
                     {idx + 1}. {group.title}
                   </h3>
                   <TypewriterContext.Provider value={{ skip: true }}>
