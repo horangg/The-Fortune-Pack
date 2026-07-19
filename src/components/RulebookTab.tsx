@@ -265,17 +265,8 @@ export const RulebookTab: React.FC = () => {
                   <h3 className="text-[#FF9900] text-sm font-bold border-b border-white/10 pb-2">
                     {idx + 1}. {slide.title} <span className="text-white/50 text-xs ml-2 font-normal">{slide.boxText}</span>
                   </h3>
-                  {slide.image && (
-                    <div className="flex justify-center">
-                      <img
-                        src={`${import.meta.env.BASE_URL}${slide.image}`}
-                        alt={slide.title}
-                        className="w-[120px] h-[120px] object-contain opacity-90"
-                      />
-                    </div>
-                  )}
                   <TypewriterContext.Provider value={{ skip: true }}>
-                    <div className="text-sm">
+                    <div className="text-sm !text-left [&_div]:!text-left [&_p]:!text-left">
                       {slide.content}
                     </div>
                   </TypewriterContext.Provider>
