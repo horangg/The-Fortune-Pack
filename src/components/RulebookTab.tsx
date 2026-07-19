@@ -50,8 +50,8 @@ export const RulebookTab: React.FC = () => {
     },
     {
       id: 'components',
-      title: '구성물',
-      boxText: '구성품 및 게임 준비',
+      title: '준비물',
+      boxText: '게임 준비물',
       image: 'setting(1).png',
       content: (
         <div className="space-y-4 text-center">
@@ -60,8 +60,18 @@ export const RulebookTab: React.FC = () => {
             <p className="text-white text-[13px]"><Typewriter text="타로 치트키 QR Card 1장" speed={30} delay={1580} /></p>
             <p className="text-white text-[13px]"><Typewriter text="게임 코인 20개 + 주사위 1개" speed={30} delay={2140} /></p>
           </div>
-          <div className="pt-4 border-t border-white/10 text-white text-[13px] leading-[1.6]">
-            <Typewriter text={"타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다.\n의뢰인이 아닌 사람은 모두 타로술사다."} speed={30} delay={2730} />
+        </div>
+      ),
+    },
+    {
+      id: 'preparation',
+      title: '게임 준비',
+      boxText: '게임 준비',
+      image: 'setting(1).png',
+      content: (
+        <div className="space-y-4 text-center mt-4">
+          <div className="text-white text-[13px] leading-[1.6]">
+            <Typewriter text={"타로카드, 복채, 주사위를 세팅한 후 의뢰인을 정한다.\n의뢰인이 아닌 사람은 모두 타로술사다."} speed={30} />
           </div>
         </div>
       ),
@@ -186,18 +196,9 @@ export const RulebookTab: React.FC = () => {
     <div className="relative flex-1 flex flex-col justify-between px-6 py-4 w-full text-white bg-black select-none max-w-md mx-auto tracking-tight break-keep leading-[1.6]">
 
       {/* Upper header section */}
-      <div className="space-y-3 relative">
-        <div className="absolute right-0 top-0">
-          <button
-            onClick={() => setShowAllRules(true)}
-            className="text-[11px] text-white/60 hover:text-white px-2 py-1 rounded border border-white/20 hover:border-white/60 transition-colors z-20"
-          >
-            전체보기
-          </button>
-        </div>
-
+      <div className="w-full flex flex-col pt-4 gap-4 relative">
         {/* Progress Indicator (Line + Circle style) */}
-        <div className="flex items-center justify-center w-full px-4 pt-2">
+        <div className="flex items-center justify-center w-full px-4">
           {slides.map((slide, idx) => (
             <React.Fragment key={slide.id}>
               {/* Circle */}
@@ -212,11 +213,21 @@ export const RulebookTab: React.FC = () => {
               />
               {/* Line */}
               {idx < slides.length - 1 && (
-                <div className={`h-[1px] flex-1 max-w-[16px] transition-all duration-300 ${currentIndex > idx ? 'bg-white/80' : 'bg-neutral-600'
+                <div className={`h-[1px] flex-1 max-w-[24px] mx-1 transition-all duration-300 ${currentIndex > idx ? 'bg-white/80' : 'bg-neutral-600'
                   }`} />
               )}
             </React.Fragment>
           ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="flex justify-end w-full">
+          <button
+            onClick={() => setShowAllRules(true)}
+            className="text-[11px] text-white/60 hover:text-white px-2 py-1 rounded border border-white/20 hover:border-white/60 transition-colors z-20"
+          >
+            전체보기
+          </button>
         </div>
       </div>
 
