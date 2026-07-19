@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 
 interface TypewriterProps {
   text: string;
@@ -7,10 +7,18 @@ interface TypewriterProps {
   className?: string;
 }
 
+export const TypewriterContext = createContext({ skip: false });
+
 export const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 50, delay = 0, className = '' }) => {
   const [displayedText, setDisplayedText] = useState('');
+  const { skip } = useContext(TypewriterContext);
 
   useEffect(() => {
+    if (skip) {
+      setDisplayedText(text);
+      return;
+    }
+
     let index = 0;
     setDisplayedText('');
     
@@ -33,7 +41,7 @@ export const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 50, delay 
       clearTimeout(delayTimer);
       clearInterval(timer);
     };
-  }, [text, speed, delay]);
+  }, [text, speed, delay, skip]);
 
   return (
     <span className={`whitespace-pre-line ${className}`}>

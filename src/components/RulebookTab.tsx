@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Typewriter } from './Typewriter';
+import { Typewriter, TypewriterContext } from './Typewriter';
 
 interface RuleSlide {
   id: string;
@@ -12,6 +12,7 @@ interface RuleSlide {
 
 export const RulebookTab: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [showAllRules, setShowAllRules] = useState<boolean>(false);
 
   const slides: RuleSlide[] = [
     {
@@ -182,10 +183,18 @@ export const RulebookTab: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between px-6 py-4 w-full text-white bg-black select-none max-w-md mx-auto tracking-tight break-keep leading-[1.6]">
+    <div className="relative flex-1 flex flex-col justify-between px-6 py-4 w-full text-white bg-black select-none max-w-md mx-auto tracking-tight break-keep leading-[1.6]">
 
       {/* Upper header section */}
-      <div className="space-y-3">
+      <div className="space-y-3 relative">
+        <div className="absolute right-0 top-0">
+          <button
+            onClick={() => setShowAllRules(true)}
+            className="text-[11px] text-white/60 hover:text-white px-2 py-1 rounded border border-white/20 hover:border-white/60 transition-colors z-20"
+          >
+            전체보기
+          </button>
+        </div>
 
         {/* Progress Indicator (Line + Circle style) */}
         <div className="flex items-center justify-center w-full px-4 pt-2">
@@ -223,6 +232,48 @@ export const RulebookTab: React.FC = () => {
 
         </div>
       </div>
+
+      {/* View All Modal */}
+      <AnimatePresence>
+        {showAllRules && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="absolute inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col p-6"
+          >
+            <div className="flex justify-between items-center pb-4 border-b border-white/20 shrink-0">
+              <h2 className="text-white text-lg font-bold">전체 룰북</h2>
+              <button onClick={() => setShowAllRules(false)} className="text-white/60 hover:text-white text-xl px-2">
+                ✕
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto pt-6 space-y-8 custom-scrollbar pb-10">
+              {slides.map((slide, idx) => (
+                <div key={slide.id} className="space-y-4">
+                  <h3 className="text-[#FF9900] text-sm font-bold border-b border-white/10 pb-2">
+                    {idx + 1}. {slide.title} <span className="text-white/50 text-xs ml-2 font-normal">{slide.boxText}</span>
+                  </h3>
+                  {slide.image && (
+                    <div className="flex justify-center">
+                      <img
+                        src={`${import.meta.env.BASE_URL}${slide.image}`}
+                        alt={slide.title}
+                        className="w-[120px] h-[120px] object-contain opacity-90"
+                      />
+                    </div>
+                  )}
+                  <TypewriterContext.Provider value={{ skip: true }}>
+                    <div className="text-sm">
+                      {slide.content}
+                    </div>
+                  </TypewriterContext.Provider>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Bottom Area: Title + Dialogue Frame */}
       <div className="w-full max-w-[340px] mx-auto flex flex-col items-start gap-1 shrink-0 pb-4">
