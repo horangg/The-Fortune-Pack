@@ -153,7 +153,7 @@ export const SearcherTab: React.FC = () => {
             <div className="text-center space-y-1">
               <RetroEye />
               <h1 className="text-white">
-                Tarot Card Guide
+                The Fortune Pack
               </h1>
             </div>
 

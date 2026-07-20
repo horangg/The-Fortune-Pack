@@ -84,9 +84,18 @@ export const RulebookTab: React.FC = () => {
       image: 'shuffle(1).png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"1."} speed={30} /></span><Typewriter text="의뢰인이 고민 혹은 질문을 말한다." speed={30} delay={110} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"2."} speed={30} delay={730} /></span><Typewriter text="의뢰인 바로 왼쪽의 타로술사가 카드를 섞은 뒤 펼친다." speed={30} delay={840} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"3."} speed={30} delay={1790} /></span><Typewriter text="의뢰인은 카드 3장을 " speed={30} delay={1900} /><span className="text-white"><Typewriter text="주로 사용하는 손의 반대 손" speed={30} delay={2310} /></span><Typewriter text="으로 뽑는다." speed={30} delay={2810} /></p>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"1."} speed={30} /></span>
+            <span><Typewriter text="의뢰인이 고민 혹은 질문을 말한다." speed={30} delay={110} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"2."} speed={30} delay={730} /></span>
+            <span><Typewriter text="의뢰인 바로 왼쪽의 타로술사가 카드를 섞은 뒤 펼친다." speed={30} delay={840} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"3."} speed={30} delay={1790} /></span>
+            <span><Typewriter text="의뢰인은 카드 3장을 " speed={30} delay={1900} /><span className="text-white"><Typewriter text="주로 사용하는 손의 반대 손" speed={30} delay={2310} /></span><Typewriter text="으로 뽑는다." speed={30} delay={2810} /></span>
+          </div>
         </div>
       ),
     },
@@ -97,8 +106,14 @@ export const RulebookTab: React.FC = () => {
       image: 'three card spread(1).png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"4."} speed={30} /></span><Typewriter text="뽑힌 카드 3장을 의뢰인과 타로술사가 함께 확인한다." speed={30} delay={110} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"5."} speed={30} delay={1030} /></span><Typewriter text="먼저 준비된 타로술사가 고민에 대한 카드 해석을 진행한다." speed={30} delay={1140} /></p>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"4."} speed={30} /></span>
+            <span><Typewriter text="뽑힌 카드 3장을 의뢰인과 타로술사가 함께 확인한다." speed={30} delay={110} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"5."} speed={30} delay={1030} /></span>
+            <span><Typewriter text="먼저 준비된 타로술사가 고민에 대한 카드 해석을 진행한다." speed={30} delay={1140} /></span>
+          </div>
         </div>
       ),
     },
@@ -109,8 +124,14 @@ export const RulebookTab: React.FC = () => {
       image: 'coin.png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"6."} speed={30} /></span><Typewriter text="의뢰인은 모든 타로술사들의 해석을 듣고, 누구에게 복채를 줄지 결정한다." speed={30} delay={110} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1"><Typewriter text={"7."} speed={30} delay={1360} /></span><Typewriter text="복채까지 줬다면 의뢰인의 왼쪽 사람이 새로운 의뢰인이 된다." speed={30} delay={1470} /></p>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"6."} speed={30} /></span>
+            <span><Typewriter text="의뢰인은 모든 타로술사들의 해석을 듣고, 누구에게 복채를 줄지 결정한다." speed={30} delay={110} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0"><Typewriter text={"7."} speed={30} delay={1360} /></span>
+            <span><Typewriter text="복채까지 줬다면 의뢰인의 왼쪽 사람이 새로운 의뢰인이 된다." speed={30} delay={1470} /></span>
+          </div>
         </div>
       ),
     },
@@ -121,10 +142,22 @@ export const RulebookTab: React.FC = () => {
       image: 'one card(1).png',
       content: (
         <div className="space-y-4 text-center px-2 text-[13px] leading-[1.6]">
-          <p className="text-white"><span className="text-[#FF9900] mr-1">-</span><Typewriter text="필요한 경우, 타로술사는 인당 1장의 카드를 추가로 뽑아 3장의 카드 중 1장을 가려 새로운 카드로 대체할 수 있다." speed={30} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">-</span><Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={2000} /><span className="text-[#FF9900]"><Typewriter text="반드시 사용" speed={30} delay={2500} /></span><Typewriter text="해야 한다." speed={30} delay={2730} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">-</span><Typewriter text="한번 대체된(덮인) 카드는 " speed={30} delay={2960} /><span className="text-[#FF9900]"><Typewriter text="돌이킬 수 없다." speed={30} delay={3440} /></span><Typewriter text=" 단, 다른 타로술사가 새로운 카드로 덮어 대체할 수는 있다." speed={30} delay={3710} /></p>
-          <p className="text-white"><span className="text-[#FF9900] mr-1">-</span><Typewriter text="타로술사는 카드의 순서를 마음대로 변경해 해석할 수 있다." speed={30} delay={4750} /></p>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0">-</span>
+            <span><Typewriter text="필요한 경우, 타로술사는 인당 1장의 카드를 추가로 뽑아 3장의 카드 중 1장을 가려 새로운 카드로 대체할 수 있다." speed={30} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0">-</span>
+            <span><Typewriter text="이때, 추가로 뽑은 카드는 " speed={30} delay={2000} /><span className="text-[#FF9900]"><Typewriter text="반드시 사용" speed={30} delay={2500} /></span><Typewriter text="해야 한다." speed={30} delay={2730} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0">-</span>
+            <span><Typewriter text="한번 대체된(덮인) 카드는 " speed={30} delay={2960} /><span className="text-[#FF9900]"><Typewriter text="돌이킬 수 없다." speed={30} delay={3440} /></span><Typewriter text=" 단, 다른 타로술사가 새로운 카드로 덮어 대체할 수는 있다." speed={30} delay={3710} /></span>
+          </div>
+          <div className="text-white flex items-start text-left">
+            <span className="text-[#FF9900] mr-1.5 shrink-0">-</span>
+            <span><Typewriter text="타로술사는 카드의 순서를 마음대로 변경해 해석할 수 있다." speed={30} delay={4750} /></span>
+          </div>
         </div>
       ),
     },
