@@ -1,57 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  RotateCcw,
-  Send,
-  Star,
-  Sparkles,
-  Moon,
-  Heart,
-  Crown,
-  Flame,
-  Sword,
-  Droplet,
-  Coins
-} from 'lucide-react';
-import { Typewriter } from './Typewriter';
-import { findCardByCode } from '../data/tarotData';
-import { TarotCard } from '../types';
-
-// A custom image replacing the retro pixelated eye SVG
-const RetroEye: React.FC = () => (
-  <img
-    src={`${import.meta.env.BASE_URL}custom-icon.png`}
-    alt="Custom Icon"
-    className="mx-auto opacity-90 w-[40px] h-auto object-contain"
-  />
-);
-
-const getCardImageSrc = (englishName: string) => {
-  let fileName = englishName;
-  if (englishName === "The Hierophant") fileName = "The HiePophant";
-  else if (englishName === "The Lovers") fileName = "The Lover";
-  else if (englishName === "Judgment") fileName = "Judgement";
-  return `${import.meta.env.BASE_URL}Card/${fileName}.jpg`;
-};
-
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { findCardByCode } from "../data/tarotData";
+import { TarotCard } from "../types";
+import { SpreadGuideTab } from "./SpreadGuideTab";
+import { getCardImageSrc } from "../utils/imageUtils";
 export const SearcherTab: React.FC = () => {
-  const [code, setCode] = useState<string>('');
+  const [activeSubTab, setActiveSubTab] = useState<"search" | "spread">(
+    "search",
+  );
+  const [code, setCode] = useState<string>("");
   const [selectedCard, setSelectedCard] = useState<TarotCard | null>(null);
   const [searchError, setSearchError] = useState<boolean>(false);
+  const [saveStatus, setSaveStatus] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // Focus the input on mount
   useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  // Sync state with code
+    if (activeSubTab === "search") {
+      inputRef.current?.focus();
+    }
+  }, [activeSubTab]);
   useEffect(() => {
     if (code.length === 3) {
       const card = findCardByCode(code);
       if (card) {
         setSelectedCard(card);
         setSearchError(false);
+        setSaveStatus("");
         inputRef.current?.blur();
       } else {
         setSelectedCard(null);
@@ -62,202 +35,228 @@ export const SearcherTab: React.FC = () => {
       setSearchError(false);
     }
   }, [code]);
-
   const handleContainerClick = () => {
-    inputRef.current?.focus();
+    if (!selectedCard && activeSubTab === "search") {
+      inputRef.current?.focus();
+    }
   };
-
   const handleClear = () => {
-    setCode('');
+    setCode("");
     setSelectedCard(null);
     setSearchError(false);
-    // Keep focused
+    setSaveStatus("");
     setTimeout(() => {
       inputRef.current?.focus();
     }, 50);
   };
-
-  // Helper to get card symbol icon
-  const getSymbolIcon = (type: string, symbol: string) => {
-    const size = "w-8 h-8 text-white";
-    switch (type) {
-      case 'major':
-        if (symbol === 'Moon') return <Moon className={size} />;
-        if (symbol === 'Heart') return <Heart className={size} />;
-        if (symbol === 'Crown') return <Crown className={size} />;
-        return <Star className={size} />;
-      case 'swords':
-        return <Sword className={size} />;
-      case 'cups':
-        return <Droplet className={size} />;
-      case 'pentacles':
-        return <Coins className={size} />;
-      case 'wands':
-        return <Flame className={size} />;
-      default:
-        return <Sparkles className={size} />;
-    }
-  };
-
-  // Extract meaning into paragraphs
-  const getFormattedParagraphs = (card: TarotCard) => {
-    return {
-      p1: card.keyword ? `${card.keyword}.` : `${card.englishName}.`,
-      p2: card.uprightMeaning || `${card.englishName} 카드가 알려주는 당신의 미래 에너지는 순수하고 찬란한 변화를 이끕니다.`
-    };
-  };
-
-  const paragraphs = selectedCard ? getFormattedParagraphs(selectedCard) : null;
-
-  // Extract keywords
   const getKeywords = (card: TarotCard) => {
     if (card.keyword) {
-      return card.keyword.split(/[,/]/).map(w => `#${w.trim().replace(/\s+/g, '')}`).join(' ');
+      return card.keyword
+        .split(/[,/]/)
+        .map((w) => `#${w.trim().replace(/\s+/g, "")}`)
+        .join(" ");
     }
-    return `#신비 #운명 #${card.englishName.replace(/\s+/g, '')}`;
+    return `#신비 #운명 #${card.englishName.replace(/\s+/g, "")}`;
   };
-
+  const saveToCalendar = () => {
+    if (!selectedCard) return;
+    const today = new Date();
+    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+    try {
+      const existingDataStr = localStorage.getItem("tarotCalendarData");
+      const data = existingDataStr ? JSON.parse(existingDataStr) : {};
+      data[todayStr] = selectedCard;
+      localStorage.setItem("tarotCalendarData", JSON.stringify(data));
+      setSaveStatus("SAVED");
+      setTimeout(() => setSaveStatus(""), 2000);
+    } catch (e) {
+      console.error("Failed to save to calendar", e);
+    }
+  };
   return (
     <div
-      className="flex-1 flex flex-col justify-between items-center px-6 py-8 min-h-[580px] select-none text-white bg-black w-full"
+      className="flex-1 flex flex-col justify-start items-center px-4 py-4 min-h-[580px] select-none text-black bg-[#F2F2F7] w-full"
       onClick={handleContainerClick}
     >
-      {/* Hidden inputs to capture physical keyboard/mobile keypad typing */}
-      <input
-        ref={inputRef}
-        type="text"
-        pattern="[0-9]*"
-        inputMode="numeric"
-        maxLength={3}
-        value={code}
-        onChange={(e) => {
-          const val = e.target.value.replace(/\D/g, '').slice(0, 3);
-          setCode(val);
-        }}
-        className="absolute opacity-0 pointer-events-none w-0 h-0"
-        autoFocus
-      />
-
-      <AnimatePresence mode="wait">
-        {!selectedCard ? (
-          // ================= IMAGE 1: CODE INPUT VIEW =================
-          <motion.div
-            key="input-view"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="w-full max-w-sm flex flex-col justify-between items-center flex-1 py-4 space-y-12"
+      {" "}
+      {/* Sub Navigation */}
+      <div className="w-full flex justify-center mb-6 pt-4 shrink-0">
+        <div className="flex bg-neutral-200/60 p-1 rounded-2xl w-full max-w-[200px]">
+          <button
+            onClick={() => setActiveSubTab("search")}
+            className={`flex-1 py-1.5 text-[14px] rounded-xl transition-all ${
+              activeSubTab === "search"
+                ? "bg-white text-black font-bold"
+                : "text-neutral-500"
+            }`}
           >
-            {/* Top Logo and Title */}
-            <div className="text-center space-y-1">
-              <RetroEye />
-              <h1 className="text-white">
-                The Fortune Pack
-              </h1>
-            </div>
-
-            {/* Three entry card boxes */}
-            <div className="flex justify-center items-center gap-4 py-4 w-full">
-              {[0, 1, 2].map((idx) => {
-                const digit = code[idx] || '';
-                return (
-                  <div
-                    key={idx}
-                    className="w-16 h-16 border-[1px] border-white flex items-center justify-center text-white bg-black"
-                  >
-                    {digit}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Lower dialogue container with double white outline */}
-            <div className="w-full px-2">
-              <div className="border border-white p-1 bg-black">
-                <div className="border border-white py-6 px-4 text-center space-y-4">
-                  <p className="text-white leading-relaxed min-h-[44px]">
-                    {searchError
-                      ? <Typewriter text="등록되지 않은 코드입니다. 다시 입력해 주세요." speed={40} />
-                      : <Typewriter text={"네모칸을 클릭하여\n세 자리 숫자코드를 입력하세요."} speed={40} />
-                    }
-                  </p>
-                  <span className="block pulsing-arrow flex justify-center">
+            SEARCH
+          </button>
+          <button
+            onClick={() => setActiveSubTab("spread")}
+            className={`flex-1 py-1.5 text-[14px] rounded-xl transition-all ${
+              activeSubTab === "spread"
+                ? "bg-white text-black font-bold"
+                : "text-neutral-500"
+            }`}
+          >
+            SPREADS
+          </button>
+        </div>
+      </div>
+      <div className="flex-1 w-full max-w-sm relative">
+        {" "}
+        <AnimatePresence mode="wait">
+          {" "}
+          {activeSubTab === "spread" ? (
+            <motion.div
+              key="spread-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="absolute inset-0"
+            >
+              {" "}
+              <SpreadGuideTab />{" "}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="search-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="absolute inset-0 flex flex-col items-center"
+            >
+              {" "}
+              <input
+                ref={inputRef}
+                type="text"
+                pattern="[0-9]*"
+                inputMode="numeric"
+                maxLength={3}
+                value={code}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, "").slice(0, 3);
+                  setCode(val);
+                }}
+                className="absolute opacity-0 pointer-events-none w-0 h-0"
+                autoFocus
+              />{" "}
+              {!selectedCard ? (
+                <div className="w-full flex flex-col justify-between items-center flex-1 py-4 space-y-12">
+                  {" "}
+                  <div className="text-center space-y-1 mt-8">
+                    {" "}
+                    <h1 className="text-black text-[18px] tracking-widest font-light">
+                      {" "}
+                      FORTUNE PACK{" "}
+                    </h1>{" "}
+                  </div>{" "}
+                  <div className="flex justify-center items-center gap-4 py-4 w-full">
+                    {" "}
+                    {[0, 1, 2].map((idx) => {
+                      const digit = code[idx] || "";
+                      return (
+                        <div
+                          key={idx}
+                          className={`w-14 h-16 flex items-center justify-center text-black bg-white transition-colors ${digit ? " text-black" : ""}`}
+                        >
+                          {" "}
+                          <span className="text-[18px] font-light">
+                            {digit}
+                          </span>{" "}
+                        </div>
+                      );
+                    })}{" "}
+                  </div>{" "}
+                  <div className="w-full px-4 mt-auto mb-10 text-center">
+                    {" "}
+                    <p
+                      className={`text-[12px] leading-relaxed whitespace-pre-line ${searchError ? "text-black" : "text-neutral-500"}`}
+                    >
+                      {" "}
+                      {searchError
+                        ? "등록되지 않은 코드입니다. 다시 입력해 주세요."
+                        : "코드를 입력하세요.\n세 자리 숫자 코드입니다."}{" "}
+                    </p>{" "}
+                  </div>{" "}
+                </div>
+              ) : (
+                <div className="w-full flex flex-col items-center flex-1 py-2 space-y-4 tracking-tight break-keep overflow-y-auto pb-10 custom-scrollbar">
+                  {" "}
+                  <h2 className="text-center text-black mt-2 flex flex-col items-center gap-1">
+                    {" "}
+                    <span className="text-[18px]">{selectedCard.name}</span>{" "}
+                    <span className="text-[12px] text-neutral-500 font-sans tracking-widest uppercase">
+                      {selectedCard.englishName}
+                    </span>{" "}
+                  </h2>{" "}
+                  <div className="w-48 aspect-[60/103] flex flex-col items-center justify-center bg-white relative overflow-hidden">
+                    {" "}
                     <img
-                      src={`${import.meta.env.BASE_URL}icon/dowm.png`}
-                      alt="Down"
-                      className="w-4 h-4 object-contain opacity-80"
-                    />
-                  </span>
+                      src={getCardImageSrc(selectedCard.englishName)}
+                      alt={selectedCard.name}
+                      className="w-full h-full object-cover"
+                    />{" "}
+                  </div>{" "}
+                  <p className="text-black text-center text-[12px] pt-1 font-medium">
+                    {" "}
+                    {getKeywords(selectedCard)}{" "}
+                  </p>{" "}
+                  <div className="space-y-4 px-2 text-center pt-2 w-full max-w-[280px]">
+                    {" "}
+                    <div>
+                      {" "}
+                      <div className="inline-block text-black text-[10px] px-2 py-0.5 mb-1.5 tracking-widest uppercase">
+                        UPRIGHT
+                      </div>{" "}
+                      <p className="text-black leading-relaxed text-[13px] break-keep">
+                        {" "}
+                        {selectedCard.uprightMeaning}{" "}
+                      </p>{" "}
+                    </div>{" "}
+                    {selectedCard.reversedMeaning && (
+                      <div className="mt-4">
+                        {" "}
+                        <div className="inline-block text-neutral-600 text-[10px] px-2 py-0.5 mb-1.5 tracking-widest uppercase">
+                          REVERSED
+                        </div>{" "}
+                        <p className="text-neutral-700 leading-relaxed text-[13px] break-keep">
+                          {" "}
+                          {selectedCard.reversedMeaning}{" "}
+                        </p>{" "}
+                      </div>
+                    )}{" "}
+                  </div>{" "}
+                  <div className="flex flex-col justify-center items-center gap-4 pt-6 w-full select-none">
+                    <button
+                      onClick={saveToCalendar}
+                      disabled={saveStatus === "SAVED"}
+                      className={`w-full max-w-[220px] py-3.5 rounded-full text-[12px] font-bold tracking-widest uppercase transition-all ${
+                        saveStatus === "SAVED"
+                          ? "bg-neutral-300 text-white"
+                          : "bg-black text-white shadow-sm"
+                      }`}
+                    >
+                      {saveStatus === "SAVED"
+                        ? "SAVED TO CALENDAR"
+                        : "SAVE TO CALENDAR"}
+                    </button>
+                    <button
+                      onClick={handleClear}
+                      className="text-[12px] text-neutral-500 hover:text-black tracking-widest uppercase py-2 font-medium"
+                    >
+                      BACK TO SEARCH
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        ) : (
-          // ================= IMAGE 2: CARD DETAILS VIEW =================
-          <motion.div
-            key="detail-view"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="w-full max-w-sm flex flex-col items-center flex-1 py-2 space-y-4 tracking-tight break-keep"
-          >
-            {/* Card Name Header */}
-            <h2 className="text-center text-white mt-2 flex flex-col items-center gap-1">
-              <span className="text-lg">{selectedCard.name}</span>
-              <span className="text-[14px] font-normal text-gray-400 font-sans tracking-normal">{selectedCard.englishName}</span>
-            </h2>
-
-            {/* Card Image Box (Sharp rectangle) */}
-            <div className="w-48 aspect-[60/103] border-[1px] border-white flex flex-col items-center justify-center bg-black relative overflow-hidden">
-              <img
-                src={getCardImageSrc(selectedCard.englishName)}
-                alt={selectedCard.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Keywords in custom golden/orange color */}
-            <p className="text-[#FF9900] text-center text-[12px] pt-1">
-              {getKeywords(selectedCard)}
-            </p>
-
-            {/* Description Text blocks */}
-            <div className="space-y-4 px-2 text-center pt-2 w-full max-w-[280px]">
-              {/* Upright Meaning */}
-              <div>
-                <div className="inline-block border border-[#FF9900] text-[#FF9900] text-[10px] px-1.5 py-0.5 mb-1.5 rounded-sm bg-[#FF9900]/10">정방향</div>
-                <p className="text-[#FF9900] leading-[1.6] text-[13px] break-keep">
-                  {selectedCard.uprightMeaning}
-                </p>
-              </div>
-
-              {/* Reversed Meaning */}
-              {selectedCard.reversedMeaning && (
-                <div>
-                  <div className="inline-block border border-neutral-500 text-neutral-400 text-[10px] px-1.5 py-0.5 mb-1.5 rounded-sm bg-neutral-500/10">역방향</div>
-                  <p className="text-neutral-300 leading-[1.6] text-[13px] break-keep">
-                    {selectedCard.reversedMeaning}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom Actions Buttons (Vertical style: icon + label) */}
-            <div className="flex justify-center items-center gap-16 pt-4 w-full select-none">
-              <button
-                onClick={handleClear}
-                className="flex flex-col items-center gap-2 text-white hover:opacity-80 transition-opacity cursor-pointer group"
-              >
-                <img src={`${import.meta.env.BASE_URL}icon/back.png`} alt="Back" className="w-5 h-5 object-contain" />
-                <span className="text-[11px]">돌아가기</span>
-              </button>
-
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              )}{" "}
+            </motion.div>
+          )}{" "}
+        </AnimatePresence>{" "}
+      </div>{" "}
     </div>
   );
 };
