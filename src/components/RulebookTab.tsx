@@ -1,7 +1,7 @@
 import React from "react";
 export const RulebookTab: React.FC = () => {
   return (
-    <div className="flex-1 flex flex-col w-full text-black bg-white select-none max-w-md mx-auto tracking-tight break-keep leading-[1.6]">
+    <div className="flex-1 flex flex-col w-full text-black bg-white rounded-2xl shadow-sm select-none max-w-md mx-auto tracking-tight break-keep leading-[1.6]">
       {" "}
       <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-8">
         {" "}
@@ -9,16 +9,27 @@ export const RulebookTab: React.FC = () => {
           {" "}
           Rulebook{" "}
         </h1>{" "}
-        
         {/* Game Introduction Video Placeholder */}
-        <div className="w-full aspect-video bg-neutral-100 rounded-2xl flex flex-col items-center justify-center mb-10 text-neutral-400">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-2 opacity-50">
+        <div className="w-full aspect-video bg-neutral-100 rounded-[32px] flex flex-col items-center justify-center mb-10 text-neutral-400">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mb-2 opacity-50"
+          >
             <circle cx="12" cy="12" r="10"></circle>
             <polygon points="10 8 16 12 10 16 10 8"></polygon>
           </svg>
-          <span className="text-[12px] font-medium tracking-widest">게임 소개 영상</span>
+          <span className="text-[12px] font-medium tracking-widest">
+            게임 소개 영상
+          </span>
         </div>
-
         <div className="space-y-12 pb-16">
           {" "}
           <section className="space-y-4">

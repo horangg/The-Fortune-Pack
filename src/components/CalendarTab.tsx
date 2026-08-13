@@ -13,21 +13,21 @@ const DayItem = React.memo(
     daysStrIndex,
     onClick,
   }: any) => {
-    const daysStr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const daysStr = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     return (
       <div
         className="flex flex-col items-center cursor-pointer group px-1 min-w-[calc(100%/7)] shrink-0 snap-center"
         onClick={() => onClick(wYear, wMonth, wDate)}
       >
         <span
-          className={`text-[10px] mb-1 transition-colors ${isSelected ? "text-[#0085CA] font-bold" : "text-neutral-400 group-hover:text-neutral-600"}`}
+          className={`text-[10px] tracking-wider mb-1 transition-colors ${isSelected ? "text-[#0085CA] font-bold px-1 rounded-[10px] font-bold" : "text-neutral-500 font-medium group-hover:text-neutral-600"}`}
         >
           {daysStr[daysStrIndex]}
         </span>
         <div
           className={`w-[32px] h-[32px] rounded-full flex items-center justify-center transition-all ${
             isSelected
-              ? "text-[#0085CA] font-bold"
+              ? "text-[#0085CA] font-bold px-1 rounded-[10px] font-bold"
               : "text-neutral-600 hover:bg-neutral-100"
           }`}
         >
@@ -242,32 +242,76 @@ export const CalendarTab: React.FC = () => {
   const selectedMonthName = monthNames[currentDate.getMonth()];
   const selectedDayNum = currentDate.getDate();
 
-  const renderSegmentedControl = () => (
-    <div className="w-full flex justify-center mb-4 pt-2 shrink-0">
-      <div className="flex bg-neutral-200/60 p-1 rounded-xl w-full max-w-[160px]">
-        <button
-          onClick={() => setViewMode("weekly")}
-          className={`flex-1 py-1 text-[12px] rounded-lg transition-all ${
-            viewMode === "weekly"
-              ? "bg-white text-black shadow-sm font-bold"
-              : "text-neutral-500"
-          }`}
-        >
-          Weekly
-        </button>
-        <button
-          onClick={() => setViewMode("monthly")}
-          className={`flex-1 py-1 text-[12px] rounded-lg transition-all ${
-            viewMode === "monthly"
-              ? "bg-white text-black shadow-sm font-bold"
-              : "text-neutral-500"
-          }`}
-        >
-          Monthly
-        </button>
+  const renderHeader = () => {
+    const isWeekly = viewMode === "weekly";
+    const headerYear = isWeekly ? currentDate.getFullYear() : year;
+    const headerMonth = isWeekly ? currentDate.getMonth() + 1 : month + 1;
+
+    return (
+      <div className="w-full max-w-sm w-full max-w-sm bg-transparent rounded-[24px] px-6 py-2 mb-4 flex flex-col shrink-0">
+        <div className="flex justify-between items-start mb-1">
+          <span className="text-[13px] font-bold text-[#0085CA] tracking-wider uppercase">
+            {headerYear}
+          </span>
+          <div className="flex gap-4 text-[14px] font-bold">
+            <button
+              onClick={() => setViewMode("weekly")}
+              className={`${isWeekly ? "text-[#0085CA] font-bold px-3 py-1 rounded-full" : "text-neutral-400 hover:text-black active:neu-pressed-sm px-3 py-1 px-3 py-1"} transition-colors`}
+            >
+              위클리
+            </button>
+            <button
+              onClick={() => setViewMode("monthly")}
+              className={`${!isWeekly ? "text-[#0085CA] font-bold px-3 py-1 rounded-full" : "text-neutral-400 hover:text-black active:neu-pressed-sm"} transition-colors`}
+            >
+              먼슬리
+            </button>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="text-3xl font-bold tracking-tight text-[#0085CA]">
+            {headerMonth}월
+          </span>
+          <div className="flex items-center gap-1.5">
+            {isWeekly ? (
+              selectedDate !==
+                `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}-${String(new Date().getDate()).padStart(2, "0")}` && (
+                <button
+                  onClick={() => {
+                    const today = new Date();
+                    handleDateClick(
+                      today.getFullYear(),
+                      today.getMonth(),
+                      today.getDate(),
+                    );
+                  }}
+                  className="px-3 py-1 bg-white text-black shadow-sm rounded-full font-bold hover:bg-neutral-50 transition-colors rounded-full text-[12px] font-bold hover:bg-neutral-50 transition-colors"
+                >
+                  오늘
+                </button>
+              )
+            ) : (
+              <>
+                <button
+                  onClick={prevMonth}
+                  className="w-7 h-7 flex items-center justify-center bg-white text-black shadow-sm rounded-full font-bold hover:bg-neutral-50 transition-colors rounded-full font-bold hover:bg-neutral-50 transition-colors"
+                >
+                  &lt;
+                </button>
+                <button
+                  onClick={nextMonth}
+                  className="w-7 h-7 flex items-center justify-center bg-white text-black shadow-sm rounded-full font-bold hover:bg-neutral-50 transition-colors rounded-full font-bold hover:bg-neutral-50 transition-colors"
+                >
+                  &gt;
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderWeeklyView = () => (
     <motion.div
@@ -279,13 +323,17 @@ export const CalendarTab: React.FC = () => {
       className="w-full flex flex-col items-center flex-1"
     >
       {/* Huge Header like Reference Image */}
-      <div className="relative flex items-center justify-center mb-4 w-full px-4 h-10">
+      <div className="relative flex items-center justify-center mb-1 w-full px-4 h-10 shrink-0">
         {selectedDate !==
           `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}-${String(new Date().getDate()).padStart(2, "0")}` && (
           <button
             onClick={() => {
               const today = new Date();
-              handleDateClick(today.getFullYear(), today.getMonth(), today.getDate());
+              handleDateClick(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate(),
+              );
             }}
             className="absolute right-4 px-3 py-1.5 bg-neutral-100 text-neutral-600 rounded-full text-[13px] font-bold hover:bg-neutral-200 transition-colors shadow-sm"
           >
@@ -308,7 +356,7 @@ export const CalendarTab: React.FC = () => {
       </div>
 
       {/* Horizontal Strip */}
-      <div className="w-full max-w-sm mb-4 py-2 relative flex flex-col items-center">
+      <div className="w-full max-w-sm mb-4 py-3 relative flex flex-col items-center shrink-0 bg-transparent">
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -355,14 +403,14 @@ export const CalendarTab: React.FC = () => {
       </div>
 
       {/* Card Info Section for Weekly */}
-      <div className="w-full flex-1 flex flex-col items-center">
+      <div className="w-full flex-1 flex flex-col items-center justify-center min-h-0 mt-2">
         {selectedData ? (
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center w-full pb-4"
+            className="flex flex-col items-center w-full py-6 flex-1 min-h-0 bg-transparent"
           >
-            <div className="w-32 sm:w-40 aspect-[60/103] relative overflow-hidden bg-white mb-4 rounded-2xl shadow-sm">
+            <div className="flex-1 min-h-[120px] max-h-[280px] w-auto aspect-[60/103] relative overflow-hidden bg-white mb-4 rounded-xl shadow-md shrink-1 border border-black/5">
               <img
                 src={getCardImageSrc(selectedData.englishName)}
                 alt={selectedData.name}
@@ -401,28 +449,8 @@ export const CalendarTab: React.FC = () => {
       transition={{ duration: 0.15 }}
       className="w-full flex flex-col items-center"
     >
-      <div className="flex items-center justify-between w-full mb-3 px-4 max-w-sm">
-        <button
-          onClick={prevMonth}
-          className="text-neutral-500 hover:text-black px-4 py-1 text-xl font-medium transition-colors"
-        >
-          &lt;
-        </button>
-        <div className="text-center">
-          <h2 className="text-2xl font-medium tracking-widest">
-            {year}. {String(month + 1).padStart(2, "0")}
-          </h2>
-        </div>
-        <button
-          onClick={nextMonth}
-          className="text-neutral-500 hover:text-black px-4 py-1 text-xl font-medium transition-colors"
-        >
-          &gt;
-        </button>
-      </div>
-
-      <div className="w-full max-w-sm">
-        <div className="grid grid-cols-7 mb-4 text-center">
+      <div className="w-full max-w-sm shrink-0">
+        <div className="grid grid-cols-7 mb-2 text-center shrink-0">
           {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((d) => (
             <div
               key={d}
@@ -433,7 +461,7 @@ export const CalendarTab: React.FC = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-7 gap-y-2 text-center bg-white rounded-3xl p-4 shadow-sm">
+        <div className="grid grid-cols-7 gap-y-2 text-center w-full px-3 py-4 bg-transparent">
           {days.map((day, index) => {
             if (day === null) return <div key={`empty-${index}`} />;
 
@@ -444,13 +472,13 @@ export const CalendarTab: React.FC = () => {
             return (
               <div
                 key={index}
-                className="flex justify-start items-center flex-col min-h-[70px] cursor-pointer group"
+                className="flex justify-start items-center flex-col min-h-[45px] sm:min-h-[50px] cursor-pointer group"
                 onClick={() => handleDateClick(year, month, day)}
               >
                 <span
-                  className={`text-[13px] w-7 h-7 flex shrink-0 items-center justify-center rounded-full transition-colors ${
+                  className={`text-[13px] w-6 h-6 sm:w-7 sm:h-7 flex shrink-0 items-center justify-center rounded-full transition-colors ${
                     isSelected
-                      ? "text-[#0085CA] font-bold"
+                      ? "text-[#0085CA] font-bold px-1 rounded-[10px] font-bold"
                       : "text-neutral-600 group-hover:text-black group-hover:bg-neutral-100"
                   }`}
                 >
@@ -459,7 +487,7 @@ export const CalendarTab: React.FC = () => {
 
                 {hasCard ? (
                   <div
-                    className={`mt-1 relative w-[28px] h-[40px] rounded overflow-hidden transition-all`}
+                    className={`mt-0.5 relative w-[20px] h-[30px] sm:w-[24px] sm:h-[36px] rounded overflow-hidden transition-all`}
                   >
                     <img
                       src={getCardImageSrc(calendarData[dateStr].englishName)}
@@ -468,19 +496,55 @@ export const CalendarTab: React.FC = () => {
                     />
                   </div>
                 ) : (
-                  <div className="mt-1 w-[38px] h-[56px]"></div>
+                  <div className="mt-0.5 w-[20px] h-[30px] sm:w-[24px] sm:h-[36px]"></div>
                 )}
               </div>
             );
           })}
         </div>
       </div>
+
+      {/* Card Info Section for Monthly */}
+      <div className="w-full flex-1 flex flex-col items-center justify-center min-h-0 mt-4">
+        {selectedData ? (
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center w-full py-4 flex-1 min-h-0 bg-transparent"
+          >
+            <div className="flex-1 min-h-[60px] max-h-[160px] w-auto aspect-[60/103] relative overflow-hidden bg-white mb-3 rounded-2xl shadow-sm shrink-1">
+              <img
+                src={getCardImageSrc(selectedData.englishName)}
+                alt={selectedData.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-black text-[18px] font-bold mb-1">
+              {selectedData.name}
+            </span>
+            <span className="text-[12px] text-neutral-500 font-sans tracking-widest uppercase mb-3">
+              {selectedData.englishName}
+            </span>
+            <p className="text-[12px] text-neutral-600 text-center leading-relaxed px-4">
+              {selectedData.keyword
+                ? selectedData.keyword
+                : `#${selectedData.name.replace(/\s+/g, "")}`}
+            </p>
+          </motion.div>
+        ) : (
+          <div className="flex flex-col items-center justify-center p-8 bg-white rounded-3xl w-full max-w-sm shadow-sm mt-4">
+            <span className="text-[13px] text-neutral-400">
+              선택한 날짜에 저장된 카드가 없습니다.
+            </span>
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 
   return (
-    <div className="flex-1 flex flex-col items-center px-4 sm:px-6 py-4 select-none text-black bg-[#F2F2F7] w-full h-full overflow-hidden">
-      {renderSegmentedControl()}
+    <div className="flex-1 flex flex-col items-center px-4 sm:px-6 py-4 select-none text-black bg-transparent w-full h-full overflow-hidden">
+      {renderHeader()}
       <div className="w-full flex-1 flex flex-col relative overflow-y-auto custom-scrollbar pt-2 pb-10">
         <AnimatePresence mode="wait">
           {viewMode === "weekly" ? renderWeeklyView() : renderMonthlyView()}

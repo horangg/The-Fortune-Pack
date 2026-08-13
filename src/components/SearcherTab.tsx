@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { findCardByCode } from "../data/tarotData";
-import { TarotCard } from "../types";
+import { TarotCard, TarotSymbol } from "../types";
 import { SpreadGuideTab } from "./SpreadGuideTab";
-import { getCardImageSrc } from "../utils/imageUtils";
+import { getCardImageSrc, getSymbolImageSrc } from "../utils/imageUtils";
 export const SearcherTab: React.FC = () => {
   const [activeSubTab, setActiveSubTab] = useState<"search" | "spread">(
     "search",
   );
   const [code, setCode] = useState<string>("");
   const [selectedCard, setSelectedCard] = useState<TarotCard | null>(null);
+  const [selectedSymbol, setSelectedSymbol] = useState<TarotSymbol | null>(null);
   const [searchError, setSearchError] = useState<boolean>(false);
   const [saveStatus, setSaveStatus] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,15 +24,18 @@ export const SearcherTab: React.FC = () => {
       const card = findCardByCode(code);
       if (card) {
         setSelectedCard(card);
+        setSelectedSymbol(null);
         setSearchError(false);
         setSaveStatus("");
         inputRef.current?.blur();
       } else {
         setSelectedCard(null);
+        setSelectedSymbol(null);
         setSearchError(true);
       }
     } else {
       setSelectedCard(null);
+      setSelectedSymbol(null);
       setSearchError(false);
     }
   }, [code]);
@@ -43,6 +47,7 @@ export const SearcherTab: React.FC = () => {
   const handleClear = () => {
     setCode("");
     setSelectedCard(null);
+    setSelectedSymbol(null);
     setSearchError(false);
     setSaveStatus("");
     setTimeout(() => {
@@ -75,35 +80,11 @@ export const SearcherTab: React.FC = () => {
   };
   return (
     <div
-      className="flex-1 flex flex-col justify-start items-center px-4 py-4 min-h-[580px] select-none text-black bg-[#F2F2F7] w-full"
+      className="flex-1 flex flex-col justify-start items-center px-4 py-4 min-h-[580px] select-none text-black bg-gradient-to-b from-[#E2F0F7] via-[#D3EBCB] to-[#E2F0F7] w-full"
       onClick={handleContainerClick}
     >
       {" "}
-      {/* Sub Navigation */}
-      <div className="w-full flex justify-center mb-6 pt-4 shrink-0">
-        <div className="flex bg-neutral-200/60 p-1 rounded-2xl w-full max-w-[200px]">
-          <button
-            onClick={() => setActiveSubTab("search")}
-            className={`flex-1 py-1.5 text-[14px] rounded-xl transition-all ${
-              activeSubTab === "search"
-                ? "bg-white text-black font-bold"
-                : "text-neutral-500"
-            }`}
-          >
-            SEARCH
-          </button>
-          <button
-            onClick={() => setActiveSubTab("spread")}
-            className={`flex-1 py-1.5 text-[14px] rounded-xl transition-all ${
-              activeSubTab === "spread"
-                ? "bg-white text-black font-bold"
-                : "text-neutral-500"
-            }`}
-          >
-            SPREADS
-          </button>
-        </div>
-      </div>
+      {/* Sub Navigation (Hidden as per design, keeping logically if needed later, but removed from UI) */}
       <div className="flex-1 w-full max-w-sm relative">
         {" "}
         <AnimatePresence mode="wait">
@@ -145,112 +126,141 @@ export const SearcherTab: React.FC = () => {
                 autoFocus
               />{" "}
               {!selectedCard ? (
-                <div className="w-full flex flex-col justify-between items-center flex-1 py-4 space-y-12">
-                  {" "}
-                  <div className="text-center space-y-1 mt-8">
-                    {" "}
-                    <h1 className="text-black text-[18px] tracking-widest font-light">
-                      {" "}
-                      FORTUNE PACK{" "}
-                    </h1>{" "}
-                  </div>{" "}
+                <div className="w-full flex flex-col justify-center items-center flex-1 py-4">
+                  <div className="text-center space-y-1 mb-8">
+                    <h1 className="text-black text-[15px] tracking-tight">
+                      {searchError ? "등록되지 않은 코드입니다. 다시 입력해 주세요." : "세 자리 숫자코드를 입력하세요"}
+                    </h1>
+                  </div>
                   <div className="flex justify-center items-center gap-4 py-4 w-full">
-                    {" "}
                     {[0, 1, 2].map((idx) => {
                       const digit = code[idx] || "";
                       return (
                         <div
                           key={idx}
-                          className={`w-14 h-16 flex items-center justify-center text-black bg-white transition-colors ${digit ? " text-black" : ""}`}
+                          className={`w-[70px] h-[80px] flex items-center justify-center text-black bg-white/30 backdrop-blur-md rounded-[20px] shadow-[inset_0_2px_10px_rgba(255,255,255,0.7),0_4px_10px_rgba(0,0,0,0.02)] border border-white/60 transition-colors ${digit ? " text-black" : ""}`}
                         >
-                          {" "}
-                          <span className="text-[18px] font-light">
+                          <span className="text-[24px] font-light">
                             {digit}
-                          </span>{" "}
+                          </span>
                         </div>
                       );
-                    })}{" "}
-                  </div>{" "}
-                  <div className="w-full px-4 mt-auto mb-10 text-center">
-                    {" "}
-                    <p
-                      className={`text-[12px] leading-relaxed whitespace-pre-line ${searchError ? "text-black" : "text-neutral-500"}`}
-                    >
-                      {" "}
-                      {searchError
-                        ? "등록되지 않은 코드입니다. 다시 입력해 주세요."
-                        : "코드를 입력하세요.\n세 자리 숫자 코드입니다."}{" "}
-                    </p>{" "}
-                  </div>{" "}
+                    })}
+                  </div>
                 </div>
               ) : (
-                <div className="w-full flex flex-col items-center flex-1 py-2 space-y-4 tracking-tight break-keep overflow-y-auto pb-10 custom-scrollbar">
-                  {" "}
-                  <h2 className="text-center text-black mt-2 flex flex-col items-center gap-1">
-                    {" "}
-                    <span className="text-[18px]">{selectedCard.name}</span>{" "}
-                    <span className="text-[12px] text-neutral-500 font-sans tracking-widest uppercase">
+                <div className="w-full flex flex-col items-center flex-1 py-6 space-y-2 tracking-tight break-keep overflow-y-auto pb-10 custom-scrollbar mt-4">
+                  
+                  {/* Title Area */}
+                  <h2 className="text-center mt-2 flex flex-col items-center gap-1">
+                    <span className="text-[13px] text-slate-600 font-serif tracking-wider">
+                      {selectedCard.type === 'major' ? 'Major Arcana' : 
+                       selectedCard.type === 'wands' ? 'Suit of Wands' : 
+                       selectedCard.type === 'cups' ? 'Suit of Cups' : 
+                       selectedCard.type === 'swords' ? 'Suit of Swords' : 
+                       'Suit of Pentacles'}
+                    </span>
+                    <span className="text-[18px] text-[#0085CA] font-bold tracking-widest uppercase mt-0.5">
                       {selectedCard.englishName}
-                    </span>{" "}
-                  </h2>{" "}
-                  <div className="w-48 aspect-[60/103] flex flex-col items-center justify-center bg-white relative overflow-hidden">
-                    {" "}
-                    <img
-                      src={getCardImageSrc(selectedCard.englishName)}
-                      alt={selectedCard.name}
-                      className="w-full h-full object-cover"
-                    />{" "}
-                  </div>{" "}
-                  <p className="text-black text-center text-[12px] pt-1 font-medium">
-                    {" "}
-                    {getKeywords(selectedCard)}{" "}
-                  </p>{" "}
-                  <div className="space-y-4 px-2 text-center pt-2 w-full max-w-[280px]">
-                    {" "}
-                    <div>
-                      {" "}
-                      <div className="inline-block text-black text-[10px] px-2 py-0.5 mb-1.5 tracking-widest uppercase">
-                        UPRIGHT
-                      </div>{" "}
-                      <p className="text-black leading-relaxed text-[13px] break-keep">
-                        {" "}
-                        {selectedCard.uprightMeaning}{" "}
-                      </p>{" "}
-                    </div>{" "}
-                    {selectedCard.reversedMeaning && (
-                      <div className="mt-4">
-                        {" "}
-                        <div className="inline-block text-neutral-600 text-[10px] px-2 py-0.5 mb-1.5 tracking-widest uppercase">
-                          REVERSED
-                        </div>{" "}
-                        <p className="text-neutral-700 leading-relaxed text-[13px] break-keep">
-                          {" "}
-                          {selectedCard.reversedMeaning}{" "}
-                        </p>{" "}
-                      </div>
-                    )}{" "}
-                  </div>{" "}
-                  <div className="flex flex-col justify-center items-center gap-4 pt-6 w-full select-none">
-                    <button
-                      onClick={saveToCalendar}
-                      disabled={saveStatus === "SAVED"}
-                      className={`w-full max-w-[220px] py-3.5 rounded-full text-[12px] font-bold tracking-widest uppercase transition-all ${
-                        saveStatus === "SAVED"
-                          ? "bg-neutral-300 text-white"
-                          : "bg-black text-white shadow-sm"
-                      }`}
+                    </span>
+                  </h2>
+
+                  {/* Card Image Area with Refresh Button */}
+                  <div className="relative w-full flex justify-center mt-6 mb-6">
+                    <div className="w-[170px] aspect-[60/103] flex flex-col items-center justify-center bg-white rounded-[10px] shadow-sm relative overflow-hidden border-[3px] border-white">
+                      <img
+                        src={getCardImageSrc(selectedCard.englishName)}
+                        alt={selectedCard.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {/* Refresh Button */}
+                    <button 
+                      onClick={handleClear} 
+                      className="absolute -right-2 sm:-right-6 md:-right-10 top-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full shadow-md flex items-center justify-center text-[#0085CA] hover:bg-neutral-50 transition-colors"
+                      aria-label="Back to search"
                     >
-                      {saveStatus === "SAVED"
-                        ? "SAVED TO CALENDAR"
-                        : "SAVE TO CALENDAR"}
-                    </button>
-                    <button
-                      onClick={handleClear}
-                      className="text-[12px] text-neutral-500 hover:text-black tracking-widest uppercase py-2 font-medium"
-                    >
-                      BACK TO SEARCH
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
                     </button>
                   </div>
+
+                  {/* Interpretation Area */}
+                  <div className="flex flex-col items-center text-center px-4 mt-2 mb-4">
+                    <h3 className="text-[17px] font-bold text-[#2A4032] mb-3">
+                      {selectedCard.keyword}
+                    </h3>
+                    <p className="text-[14.5px] text-[#344E3D] leading-[1.6] break-keep max-w-[290px]">
+                      {selectedCard.uprightMeaning}
+                    </p>
+                  </div>
+
+                  {/* Symbols Area */}
+                  {selectedCard.cardSymbols && selectedCard.cardSymbols.length > 0 && (
+                    <div className="w-full flex flex-col items-center mt-6">
+                      <div className="flex justify-center gap-3.5 md:gap-4 flex-wrap px-2 w-full max-w-[340px]">
+                        {selectedCard.cardSymbols.map((sym, idx) => (
+                          <button 
+                            key={idx} 
+                            onClick={() => setSelectedSymbol(sym)}
+                            className="flex flex-col items-center gap-1.5"
+                          >
+                            <div className={`w-[46px] h-[46px] rounded-full overflow-hidden border-[1.5px] transition-all duration-300 ${selectedSymbol?.name === sym.name ? 'border-[#0085CA] scale-110 shadow-md bg-white' : 'border-white shadow-sm hover:scale-105 bg-white/60'}`}>
+                              <div className="w-full h-full flex items-center justify-center text-[10px] text-blue-500">
+                                {sym.imageSrc ? (
+                                  <img 
+                                    src={getSymbolImageSrc(sym.imageSrc)} 
+                                    alt={sym.name} 
+                                    className="w-full h-full object-cover" 
+                                    onError={(e) => { 
+                                      e.currentTarget.style.display = 'none'; 
+                                      if (e.currentTarget.nextElementSibling) {
+                                        (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'block';
+                                      }
+                                    }} 
+                                  />
+                                ) : null}
+                                <span className={sym.imageSrc ? "hidden" : "block"}>{sym.name[0]}</span>
+                              </div>
+                            </div>
+                            <span className={`text-[12.5px] transition-colors mt-0.5 ${selectedSymbol?.name === sym.name ? 'text-[#0085CA] font-bold' : 'text-[#2A4032]'}`}>
+                              {sym.name}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Symbol Meaning Box */}
+                      <AnimatePresence>
+                        {selectedSymbol && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="w-[calc(100%-2.5rem)] max-w-md mt-6 p-5 bg-[#F6FAF4] border border-white/60 rounded-[16px] shadow-sm text-center"
+                          >
+                            {(() => {
+                              const [mainText, ...rest] = selectedSymbol.meaning.split('\n※ ');
+                              const subText = rest.join('\n※ ');
+                              return (
+                                <>
+                                  <p className="text-[14.5px] text-[#0085CA] font-bold mb-3 break-keep leading-relaxed">
+                                    {mainText}
+                                  </p>
+                                  {subText && (
+                                    <p className="text-[13.5px] text-[#344E3D] leading-relaxed break-keep">
+                                      ※ {subText}
+                                    </p>
+                                  )}
+                                </>
+                              );
+                            })()}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
                 </div>
               )}{" "}
             </motion.div>

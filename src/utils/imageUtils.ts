@@ -5,3 +5,7 @@ export const getCardImageSrc = (englishName: string) => {
   else if (englishName === "Judgment") fileName = "Judgement";
   return `${import.meta.env.BASE_URL}Card/${fileName}.jpg`;
 };
+
+export const getSymbolImageSrc = (symbolName: string) => {
+  return `${import.meta.env.BASE_URL}Symbol/${symbolName}.jpg`;
+};

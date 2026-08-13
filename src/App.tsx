@@ -48,7 +48,7 @@ export default function App() {
           </AnimatePresence>{" "}
         </main>{" "}
         {/* Bottom Floating Tab Navigation */}
-        <nav className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-[340px] h-[64px] bg-white/70 backdrop-blur-2xl rounded-full flex justify-around items-center px-2 shadow-[0_8px_32px_rgba(0,0,0,0.06)] border border-white/50 z-50">
+        <nav className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-[340px] h-[64px] bg-[#E0E5EC] neu-flat border-none shadow-none rounded-[32px] flex justify-around items-center px-1.5 shadow-[0_12px_24px_rgba(0,0,0,0.2)] z-50">
           <div className="grid grid-cols-3 w-full h-full gap-1 py-1.5">
             {/* 룰북 Tab Button */}
             <button
@@ -56,10 +56,10 @@ export default function App() {
               className="flex flex-col items-center justify-center cursor-pointer relative w-full h-full"
             >
               <div
-                className={`flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 ${activeTab === "rulebook" ? "bg-black/5" : ""}`}
+                className={`flex flex-col items-center justify-center w-full h-full rounded-[28px] transition-all duration-300 ${activeTab === "rulebook" ? "bg-black/5" : "hover:bg-black/5"}`}
               >
                 <span
-                  className={`text-[14px] tracking-wide ${activeTab === "rulebook" ? "text-black font-bold" : "text-neutral-500 font-medium"}`}
+                  className={`text-[14px] tracking-wide ${activeTab === "rulebook" ? "text-black font-bold" : "text-neutral-400 font-medium"}`}
                 >
                   룰북
                 </span>
@@ -71,10 +71,10 @@ export default function App() {
               className="flex flex-col items-center justify-center cursor-pointer relative w-full h-full"
             >
               <div
-                className={`flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 ${activeTab === "searcher" ? "bg-black/5" : ""}`}
+                className={`flex flex-col items-center justify-center w-full h-full rounded-[28px] transition-all duration-300 ${activeTab === "searcher" ? "bg-black/5" : "hover:bg-black/5"}`}
               >
                 <span
-                  className={`text-[14px] tracking-wide ${activeTab === "searcher" ? "text-black font-bold" : "text-neutral-500 font-medium"}`}
+                  className={`text-[14px] tracking-wide ${activeTab === "searcher" ? "text-black font-bold" : "text-neutral-400 font-medium"}`}
                 >
                   카드 해석
                 </span>
@@ -86,10 +86,10 @@ export default function App() {
               className="flex flex-col items-center justify-center cursor-pointer relative w-full h-full"
             >
               <div
-                className={`flex flex-col items-center justify-center w-full h-full rounded-full transition-all duration-300 ${activeTab === "calendar" ? "bg-black/5" : ""}`}
+                className={`flex flex-col items-center justify-center w-full h-full rounded-[28px] transition-all duration-300 ${activeTab === "calendar" ? "bg-black/5" : "hover:bg-black/5"}`}
               >
                 <span
-                  className={`text-[14px] tracking-wide ${activeTab === "calendar" ? "text-black font-bold" : "text-neutral-500 font-medium"}`}
+                  className={`text-[14px] tracking-wide ${activeTab === "calendar" ? "text-black font-bold" : "text-neutral-400 font-medium"}`}
                 >
                   캘린더
                 </span>

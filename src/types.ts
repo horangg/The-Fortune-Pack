@@ -8,6 +8,13 @@ export interface TarotCard {
   reversedMeaning: string; // 역방향 의미 (Upside down)
   color: string; // Tailwind color theme gradient/border classes
   symbol: string; // SVG icon key or category
+  cardSymbols?: TarotSymbol[]; // Symbols in the card for detailed interpretation
+}
+
+export interface TarotSymbol {
+  name: string; // e.g., "장미"
+  imageSrc?: string; // Image for the symbol chip
+  meaning: string; // Meaning text
 }
 
 export interface RuleStep {
