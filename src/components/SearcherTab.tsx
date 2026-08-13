@@ -209,16 +209,16 @@ export const SearcherTab: React.FC = () => {
 
                   {/* Symbols Area */}
                   {selectedCard.cardSymbols && selectedCard.cardSymbols.length > 0 && (
-                    <div className="w-full flex flex-col items-center mt-6">
-                      <div className="flex justify-center gap-3.5 md:gap-4 flex-wrap px-2 w-full max-w-[340px]">
+                    <div className="w-full flex flex-col items-center mt-6 max-w-full overflow-hidden">
+                      <div className="flex justify-start sm:justify-center gap-2 sm:gap-3 flex-nowrap px-1 w-full overflow-x-auto custom-scrollbar pb-2 pt-2">
                         {selectedCard.cardSymbols.map((sym, idx) => (
                           <button 
                             key={idx} 
                             onClick={() => setSelectedSymbol(sym)}
-                            className="flex flex-col items-center gap-2"
+                            className="flex flex-col items-center gap-1.5 shrink-0"
                           >
-                            <div className={`w-[50px] h-[50px] rounded-full overflow-hidden transition-all duration-300 ${selectedSymbol?.name === sym.name ? 'border-[2px] border-white scale-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)] bg-white' : 'border-[1.5px] border-white/80 shadow-sm hover:scale-105 bg-white/40'}`}>
-                              <div className="w-full h-full flex items-center justify-center text-[10px] text-blue-500">
+                            <div className={`w-[40px] h-[40px] sm:w-[46px] sm:h-[46px] rounded-full overflow-hidden transition-all duration-300 ${selectedSymbol?.name === sym.name ? 'border-[2px] border-white scale-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)] bg-white' : 'border-[1.5px] border-white/80 shadow-sm hover:scale-105 bg-white/40'}`}>
+                              <div className="w-full h-full flex items-center justify-center text-[9px] sm:text-[10px] text-blue-500">
                                 {sym.imageSrc ? (
                                   <img 
                                     src={getSymbolImageSrc(sym.imageSrc)} 
@@ -235,7 +235,7 @@ export const SearcherTab: React.FC = () => {
                                 <span className={sym.imageSrc ? "hidden" : "block"}>{sym.name[0]}</span>
                               </div>
                             </div>
-                            <span className={`text-[13px] transition-colors mt-0.5 font-medium ${selectedSymbol?.name === sym.name ? 'text-[#344E3D] font-bold' : 'text-[#344E3D]'}`}>
+                            <span className={`text-[11.5px] sm:text-[12.5px] transition-colors mt-0.5 font-medium ${selectedSymbol?.name === sym.name ? 'text-[#344E3D] font-bold' : 'text-[#344E3D]'}`}>
                               {sym.name}
                             </span>
                           </button>
