@@ -226,12 +226,12 @@ export const CalendarTab: React.FC = () => {
           <span className="text-[#0085CA] text-[32px] font-mono font-bold tracking-widest drop-shadow-sm">{year}</span>
         </div>
         
-        <div className="w-full flex justify-center overflow-visible px-2 sm:px-4">
+        <div className="w-full flex justify-center overflow-visible px-2 sm:px-4 pb-12">
           <div 
-            className="inline-grid gap-1.5 sm:gap-2 pb-8"
+            className="w-full max-w-[380px] grid gap-[5px] sm:gap-[6px]"
             style={{ 
-              gridTemplateColumns: 'repeat(16, minmax(0, 1fr))',
-              gridTemplateRows: 'repeat(23, minmax(0, 1fr))'
+              gridTemplateColumns: 'repeat(16, 1fr)',
+              gridTemplateRows: 'repeat(23, 1fr)'
             }}
           >
             {days.map((d, i) => {
@@ -242,13 +242,13 @@ export const CalendarTab: React.FC = () => {
                 <div 
                   key={i} 
                   onClick={() => { handleSelectDate(d); setViewMode('daily'); }}
-                  className={`w-[18px] h-[18px] sm:w-[20px] sm:h-[20px] rounded-[6px] flex items-center justify-center cursor-pointer transition-all duration-300 ${card ? "bg-transparent hover:scale-110" : "bg-white/40 hover:bg-white/70"}`}
+                  className={`aspect-square w-full rounded-[4px] sm:rounded-[5px] flex items-center justify-center cursor-pointer transition-all duration-300 ${card ? "bg-transparent hover:scale-110" : "bg-white/40 hover:bg-white/70"}`}
                 >
                   {card ? (
                     <img 
                       src={getCardIconSrc(card)} 
                       alt="icon" 
-                      className="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] object-contain opacity-100 drop-shadow-sm" 
+                      className="w-[85%] h-[85%] object-contain opacity-100 drop-shadow-sm" 
                       style={{ filter: "invert(34%) sepia(83%) saturate(3501%) hue-rotate(178deg) brightness(87%) contrast(102%)" }} 
                       onError={(e) => { 
                         e.currentTarget.style.display = 'none'; 
