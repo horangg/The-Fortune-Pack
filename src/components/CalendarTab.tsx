@@ -208,10 +208,8 @@ export const CalendarTab: React.FC = () => {
   const renderYearlyView = () => {
     const year = currentDate.getFullYear();
     const daysInYear = new Date(year, 1, 29).getMonth() === 1 ? 366 : 365;
-    const startDayOfWeek = new Date(year, 0, 1).getDay(); // 0-6
     
     const days = [];
-    for(let i=0; i<startDayOfWeek; i++) days.push(null);
     for(let i=1; i<=daysInYear; i++) {
       days.push(new Date(year, 0, i));
     }
@@ -228,10 +226,15 @@ export const CalendarTab: React.FC = () => {
           <span className="text-[#0085CA] text-[32px] font-mono font-bold tracking-widest drop-shadow-sm">{year}</span>
         </div>
         
-        <div className="w-full flex justify-center overflow-visible px-4">
-          <div className="inline-grid grid-rows-7 grid-flow-col gap-[5px] sm:gap-1.5 pb-8 overflow-x-auto custom-scrollbar pr-4">
+        <div className="w-full flex justify-center overflow-visible px-2 sm:px-4">
+          <div 
+            className="inline-grid gap-1.5 sm:gap-2 pb-8"
+            style={{ 
+              gridTemplateColumns: 'repeat(16, minmax(0, 1fr))',
+              gridTemplateRows: 'repeat(23, minmax(0, 1fr))'
+            }}
+          >
             {days.map((d, i) => {
-              if (!d) return <div key={`empty-${i}`} className="w-[18px] h-[18px] sm:w-[20px] sm:h-[20px]" />;
               const dStr = toDateStr(d);
               const card = calendarData[dStr];
               
