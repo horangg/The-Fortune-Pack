@@ -167,32 +167,43 @@ export const SearcherTab: React.FC = () => {
 
                   {/* Card Image Area with Refresh Button */}
                   <div className="relative w-full flex justify-center mt-6 mb-6">
-                    <div className="w-[170px] aspect-[60/103] flex flex-col items-center justify-center bg-white rounded-[10px] shadow-sm relative overflow-hidden border-[3px] border-white">
-                      <img
-                        src={getCardImageSrc(selectedCard.englishName)}
-                        alt={selectedCard.name}
-                        className="w-full h-full object-cover"
-                      />
+                    <div className="relative">
+                      <div className="w-[170px] aspect-[60/103] flex flex-col items-center justify-center bg-white rounded-[10px] shadow-[0_4px_12px_rgba(0,0,0,0.1)] relative overflow-hidden border-[3.5px] border-white">
+                        <img
+                          src={getCardImageSrc(selectedCard.englishName)}
+                          alt={selectedCard.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      {/* Refresh Button */}
+                      <button 
+                        onClick={handleClear} 
+                        className="absolute -right-6 -bottom-2 w-11 h-11 bg-white rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center justify-center text-[#0085CA] hover:bg-neutral-50 transition-colors z-10"
+                        aria-label="Back to search"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-[22px] h-[22px]">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                      </button>
                     </div>
-                    {/* Refresh Button */}
-                    <button 
-                      onClick={handleClear} 
-                      className="absolute -right-2 sm:-right-6 md:-right-10 top-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full shadow-md flex items-center justify-center text-[#0085CA] hover:bg-neutral-50 transition-colors"
-                      aria-label="Back to search"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                      </svg>
-                    </button>
                   </div>
 
                   {/* Interpretation Area */}
                   <div className="flex flex-col items-center text-center px-4 mt-2 mb-4">
-                    <h3 className="text-[17px] font-bold text-[#2A4032] mb-3">
+                    <h3 className="text-[18px] font-bold text-[#344E3D] mb-3 drop-shadow-sm tracking-wide">
                       {selectedCard.keyword}
                     </h3>
-                    <p className="text-[14.5px] text-[#344E3D] leading-[1.6] break-keep max-w-[290px]">
-                      {selectedCard.uprightMeaning}
+                    <p className="text-[14.5px] text-[#344E3D] leading-[1.7] break-keep max-w-[300px]">
+                      {selectedCard.uprightMeaning.split('. ').map((sentence, i, arr) => {
+                        // Avoid adding dot if it already ends with punctuation
+                        const hasDot = sentence.endsWith('.') || sentence.endsWith('!') || sentence.endsWith('?');
+                        return (
+                          <span key={i}>
+                            {sentence}{!hasDot && i !== arr.length - 1 ? '.' : ''}
+                            {i !== arr.length - 1 && <br />}
+                          </span>
+                        );
+                      })}
                     </p>
                   </div>
 
@@ -204,9 +215,9 @@ export const SearcherTab: React.FC = () => {
                           <button 
                             key={idx} 
                             onClick={() => setSelectedSymbol(sym)}
-                            className="flex flex-col items-center gap-1.5"
+                            className="flex flex-col items-center gap-2"
                           >
-                            <div className={`w-[46px] h-[46px] rounded-full overflow-hidden border-[1.5px] transition-all duration-300 ${selectedSymbol?.name === sym.name ? 'border-[#0085CA] scale-110 shadow-md bg-white' : 'border-white shadow-sm hover:scale-105 bg-white/60'}`}>
+                            <div className={`w-[50px] h-[50px] rounded-full overflow-hidden transition-all duration-300 ${selectedSymbol?.name === sym.name ? 'border-[2px] border-white scale-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)] bg-white' : 'border-[1.5px] border-white/80 shadow-sm hover:scale-105 bg-white/40'}`}>
                               <div className="w-full h-full flex items-center justify-center text-[10px] text-blue-500">
                                 {sym.imageSrc ? (
                                   <img 
@@ -224,7 +235,7 @@ export const SearcherTab: React.FC = () => {
                                 <span className={sym.imageSrc ? "hidden" : "block"}>{sym.name[0]}</span>
                               </div>
                             </div>
-                            <span className={`text-[12.5px] transition-colors mt-0.5 ${selectedSymbol?.name === sym.name ? 'text-[#0085CA] font-bold' : 'text-[#2A4032]'}`}>
+                            <span className={`text-[13px] transition-colors mt-0.5 font-medium ${selectedSymbol?.name === sym.name ? 'text-[#344E3D] font-bold' : 'text-[#344E3D]'}`}>
                               {sym.name}
                             </span>
                           </button>
@@ -238,18 +249,18 @@ export const SearcherTab: React.FC = () => {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
-                            className="w-[calc(100%-2.5rem)] max-w-md mt-6 p-5 bg-[#F6FAF4] border border-white/60 rounded-[16px] shadow-sm text-center"
+                            className="w-[calc(100%-2.5rem)] max-w-md mt-6 p-6 bg-[#F6F8F3]/90 backdrop-blur-md rounded-[20px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] border border-white/60 text-center"
                           >
                             {(() => {
                               const [mainText, ...rest] = selectedSymbol.meaning.split('\n※ ');
                               const subText = rest.join('\n※ ');
                               return (
                                 <>
-                                  <p className="text-[14.5px] text-[#0085CA] font-bold mb-3 break-keep leading-relaxed">
+                                  <p className="text-[15.5px] text-[#FF5A5A] font-bold mb-2 break-keep leading-relaxed tracking-wide drop-shadow-sm">
                                     {mainText}
                                   </p>
                                   {subText && (
-                                    <p className="text-[13.5px] text-[#344E3D] leading-relaxed break-keep">
+                                    <p className="text-[13.5px] text-[#2A4032] leading-relaxed break-keep mt-3 font-medium">
                                       ※ {subText}
                                     </p>
                                   )}
